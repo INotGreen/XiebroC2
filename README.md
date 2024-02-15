@@ -1,6 +1,6 @@
 ## 特点
 
-- 被控端(Client)由Golang编写，可以兼容WIndows、Linux、MacOS上线（未来会考虑移动端上线）
+- 被控端(Client)由Golang编写，兼容WIndows、Linux、MacOS上线（未来会考虑移动端上线）
 
 - 团队服务器(Teamserver)由.net 8.0 编写、AOT编译，内存占用低，性能支持百万级以上并发
 
@@ -16,11 +16,11 @@
 
 - 用lua实现插件扩展，可以加载90% 以上的外部工具（包含市面上C#/Powershell/C/C++编写的渗透测试工具）
 
-- 用Golang编译后的客户端体积较大，，因此免杀效果较差（Golang的编译器特征已经被许多AV/EDR厂商标黑了）
+- 用Golang编译后的客户端体积较大，因此免杀效果较差（Golang的编译器特征已经被许多AV/EDR厂商标黑了）
 
   
 
-## 兼容
+## 支持平台
 
 **Client(Session)**
 
@@ -69,6 +69,12 @@ Teamserver.exe -c profile.json
 ```
 
 ```
+
+
+
+demo
+
+<video src="https://private-user-images.githubusercontent.com/89376703/305162512-771c2e88-afd8-493d-a575-7e10149837dd.mp4" width="640" height="480" controls></video>
 
 
 
