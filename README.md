@@ -18,8 +18,6 @@
 
 - 控制端(Controller)UI轻量级交互界面，内存占用大约是CobaltStrike的60分之一，是Metasploit的10分之一
 
-- 用lua实现插件扩展，可以加载90% 以上的外部工具（包含市面上C#/Powershell/C/C++编写的渗透测试工具）
-
 - 用Golang编译后的客户端体积较大，因此免杀效果较差（Golang的编译器特征已经被部分AV/EDR厂商标黑了）
 
   
@@ -97,6 +95,8 @@ demo
 | runpe            |      runpe <FilePath> <args>       |          loader C/C++ PE in the memory           |
 | shell            |        shell <cmd command>         |                 Execute  command                 |
 | powershell       |  powershell <powershell command>   |            Execute powershell command            |
+| checkAV          |              checkAV               |             Detect AV/EDR processes              |
+| upload           | upload <uploadFilePath> <FilePath> |            Upload File to the target             |
 | memfd            |      memfd <FilePath> <args>       |        PE loader in the memory for Linux         |
 | help             |                help                |                View command list                 |
 | cls              |                cls                 |                   Clear screen                   |
@@ -124,7 +124,7 @@ demo
 
 ## 免责声明
 
-本工具仅用于渗透测试交流和研究，强烈不建议您用于任何的实际用途（包括黑灰产交易和割韭菜），
+本工具仅用于渗透测试交流和研究，强烈不建议您用于任何的实际用途（包括黑灰产交易和割韭菜）
 
 
 
