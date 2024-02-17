@@ -1,2 +1,0 @@
-set GOOS=darwin&&set GOARCH=amd64&&go build -a -ldflags="-s -w" -installsuffix cgo -o ..\..\XieBro-v3.3\Resources\Intel_x86_64 main.go
-set GOOS=darwin&&set GOARCH=arm64&&go build -a -ldflags="-s -w" -installsuffix cgo -o ..\..\XieBro-v3.3\Resources\M1_x86_64 main.go
