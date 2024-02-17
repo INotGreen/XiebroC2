@@ -2,15 +2,15 @@
 
 - 被控端(Client)由Golang编写，兼容WIndows、Linux、MacOS上线（未来会考虑移动端上线）
 
-- 团队服务器(Teamserver)由.net 8.0 编写、AOT编译，内存占用低，性能支持百万级以上并发
-
-- Teamserver无需安装任何依赖，几乎可以兼容全平台系统
+- 团队服务器(Teamserver)由.net 8.0 编写、AOT编译，内存占用低，无需安装任何依赖，几乎可以兼容全平台系统
 
 - 控制端(Controller)支持反弹shell，文件管理、进程管理、网络流量监控、内存加载、自定义UI背景色等功能
 
 - 支持内存注入PE文件(windows端的RunPE，Linux端的memfd)，即文件不落地执行木马，中转第三方C2/RAT
 
 - 支持内存执行.net 程序集（execute-assembly、inline-assembly)
+
+- 支持通过lua扩展UI控件、Session命令，载荷生成（类似于CobaltStrike的cna脚本）
 
 - 支持Teamserver托管二进制文件、文本、图片(类似SimpleHttpServer)
 
@@ -28,14 +28,14 @@
 
 **Client(Session)**
 
-|    Windows（x86_x64）    | Linux(platform) | MacOS |
-| :----------------------: | :-------------: | :---: |
-|        Windows11         |     ubuntu      | AMD64 |
-|        Windows10         |     Debian      | i386  |
-|       Windows8/8.1       |     CentOS      |  M1   |
-|         Windows7         |     ppc64le     |  M2   |
-|        Windwos-XP        |      mips       |       |
-| Windows Server 2000-2022 |      s390x      |       |
+|    Windows（x86_x64）    | Linux(x86_x64) | MacOS |
+| :----------------------: | :------------: | :---: |
+|        Windows11         |     ubuntu     | AMD64 |
+|        Windows10         |     Debian     | i386  |
+|       Windows8/8.1       |     CentOS     |  M1   |
+|         Windows7         |    ppc64le     |  M2   |
+|        Windwos-XP        |      mips      |       |
+| Windows Server 2000-2022 |     s390x      |       |
 
 
 
