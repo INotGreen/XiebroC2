@@ -6,9 +6,13 @@
 
 - Teamserver无需安装任何依赖，几乎可以兼容全平台系统
 
-- 控制端(Controller)支持反弹shell，文件管理、进程管理、网络流量监控、内存加载等基础功能
+- 控制端(Controller)支持反弹shell，文件管理、进程管理、网络流量监控、内存加载、自定义UI背景色等功能
 
-- 支持内存注入，即文件不落地执行木马，中转第三方C2/RAT
+- 支持内存注入PE文件(windows端的RunPE，Linux端的memfd)，即文件不落地执行木马，中转第三方C2/RAT
+
+- 支持内存执行.net 程序集（execute-assembly、inline-assembly)
+
+- 支持Teamserver托管二进制文件、文本、图片(类似SimpleHttpServer)
 
 - 支持团队服务器自定义配置文件,自定义Telegram的chat ID/Token上线通知
 
@@ -16,7 +20,9 @@
 
 - 用lua实现插件扩展，可以加载90% 以上的外部工具（包含市面上C#/Powershell/C/C++编写的渗透测试工具）
 
-- 用Golang编译后的客户端体积较大，因此免杀效果较差（Golang的编译器特征已经被许多AV/EDR厂商标黑了）
+- 用Golang编译后的客户端体积较大，因此免杀效果较差（Golang的编译器特征已经被部分AV/EDR厂商标黑了）
+
+  
 
   
 
@@ -78,7 +84,7 @@ demo
 
 
 
-## 3.命令列表
+## 命令列表
 
 
 
@@ -97,12 +103,28 @@ demo
 
 
 
-## 4.计划开发
+## 计划进行
 
-1.目前正反向代理和端口转发未开放，未来会完善这个功能。
+- 用C/C++/C#/Rust编写多阶段加载器（Multi-stage loader），体积尽量控制在150kb以内。
 
-2.正在开发WebSocket/RUDP/DNS/SMB协议的Session模式，Beacon模式只考虑开发HTTP/HTTPS
+- 目前正反向代理和端口转发未开放，未来考虑完善和开发这个功能。
+
+- 正在开发WebSocket/RUDP/SMB协议的Session模式，Beacon模式仅考虑开发HTTP/HTTPS/DNS。
+- 考虑开发shellcode(raw)、Powershell、VBscript、Hta、Jscript等载荷。
+
+- 编写lua更多的，集成更多的内网渗透插件。
+
+- 目前Golang的控制台隐藏问题还无法得到很好的方案，如果您知道如何解决请联系我。
 
 
 
-## 5.更新
+## 更新
+
+
+
+## 免责声明
+
+本工具仅用于渗透测试交流和研究，强烈不建议您用于任何的实际用途（包括黑灰产交易和割韭菜），
+
+
+

@@ -4,16 +4,6 @@
 
 
 
-
-
-
-
-
-
-
-
-
-
 # 一.函数原型
 
 ## AddCommand
@@ -21,8 +11,8 @@
 ```C#
 public static void AddCommand(
     string lpName, 
-    string FilePath, 
-    string LoadType, 
+    string filePath, 
+    string loadType, 
     string description,
     string usage
 )
@@ -32,8 +22,8 @@ public static void AddCommand(
 
 ```C#
  public void AddMenuItemA(
-     string MenuName, 
-     string IconPath
+     string menuName, 
+     string iconPath
  )
 ```
 
@@ -43,8 +33,8 @@ public static void AddCommand(
 
 ```C#
 public void AddMenuItemB(
-    string MenuName, 
-    string IconPath, 
+    string menuName, 
+    string iconPath, 
     NLua.LuaFunction clickEvent
 )
 ```
@@ -55,8 +45,8 @@ public void AddMenuItemB(
 
 ```C#
   public void AttackMenuExpand(
-      string MenuName,
-      string IconPath, 
+      string menuName,
+      string iconPath, 
       NLua.LuaFunction clickEvent  
   )
 ```
@@ -175,8 +165,8 @@ public ComboBox AddComBox(
 
 ```C#
 public static void ExecuteAssembly(
-    string FilePath, 
-    string Args
+    string filePath, 
+    string args
 )
 ```
 
@@ -186,8 +176,8 @@ public static void ExecuteAssembly(
 
 ```C#
  public static void Inlineassembly(
-     string FilePath, 
-     string Args
+     string filePath, 
+     string args
  )
 ```
 
@@ -196,7 +186,7 @@ public static void ExecuteAssembly(
 ## GetFileName
 
 ```C#
-public string GetFileName(string FilePath)
+public string GetFileName(string filePath)
 ```
 
 
@@ -204,7 +194,7 @@ public string GetFileName(string FilePath)
 ## MessageboxA
 
 ```C#
-public void MessageboxA(string Context)
+public void MessageboxA(string conText)
 ```
 
 
@@ -213,8 +203,8 @@ public void MessageboxA(string Context)
 
 ```C#
 public void MenuStripExpand(  
-    string MenuName,
-    string IconPath,
+    string menuName,
+    string iconPath,
     NLua.LuaFunction clickEvent   //Click Event
 )
 ```
@@ -225,8 +215,8 @@ public void MenuStripExpand(
 
 ```C#
 public static void Nopowershell(
-    string Command, 
-    string OutString
+    string command, 
+    string outString
 )
 ```
 
@@ -236,7 +226,7 @@ public static void Nopowershell(
 
 ```C#
 public static void Upload(
-    string UploadFilePath, 
+    string uploadFilePath, 
     string filePath
 )
 ```
@@ -247,7 +237,7 @@ public static void Upload(
 
 ```C#
 public static void PEloader(
-    string FilePath, 
+    string filePath, 
     string args
 )
 ```
@@ -255,7 +245,7 @@ public static void PEloader(
 ## Sessionlog
 
 ```C#
-public void Sessionlog(string Context)
+public void Sessionlog(string conText)
 ```
 
 
