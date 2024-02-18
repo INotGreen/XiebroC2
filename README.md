@@ -124,7 +124,7 @@ Teamserver.exe -c profile.json
 - 正在开发WebSocket/RUDP/SMB协议的Session模式，Beacon模式仅考虑开发HTTP/HTTPS/DNS。
 - 考虑开发shellcode(raw)、Powershell、VBscript、Hta、Jscript等载荷。
 
-- 编写lua更多的，集成更多的内网渗透插件。
+- 开放更多窗体和API接口，以便lua扩展插件
 
 - 目前Golang的控制台隐藏问题还无法得到很好的方案，如果您知道如何解决这个问题请联系我。
 
@@ -132,13 +132,21 @@ Teamserver.exe -c profile.json
 
 ## 更新
 
+[+] 2024.2.18 Xiebro-3.1发布
 
+随缘更新中。。。
+
+如果您喜欢该项目的话，可以左上角star + fork + follow，非常感谢！
 
 ## 免责声明
 
-本项目仅用于渗透测试学习交流和研究，强烈不建议您用于任何的实际用途（包括黑灰产交易和割韭菜）
+本项目仅用于渗透测试演练的学习交流和研究，强烈不建议您用于任何的实际途径（包括黑灰产交易、非法渗透攻击、割韭菜），网络不是法外之地！如果您使用该工具则应该自觉遵守以上要求
 
 
+
+## 提交Bug和建议
+
+<img src="C:\Users\Lenovo\AppData\Roaming\Typora\typora-user-images\image-20240218160818997.png" alt="image-20240218160818997"  />
 
 
 
