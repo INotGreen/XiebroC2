@@ -41,7 +41,7 @@
 
 ## 快速使用
 
-- 通过powershell下载
+- 通过powershell下载，密码：123456
 
 ```powershell
 Invoke-WebRequest -Uri "https://github.com/INotGreen/XiebroC2/releases/download/XieBroC2-v3.1/Xiebro-v3.1.7z -OutFile" -OutFile ".\XiebroC2-v3.1.7z"
