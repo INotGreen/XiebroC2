@@ -82,10 +82,6 @@ Teamserver.exe -c profile.json
 
 
 
-添加插件，学习编写lua插件:[Xiebro-Plugins](https://github.com/INotGreen/Xiebro-Plugins?tab=readme-ov-file#executeassembly)
-
-<video src="https://private-user-images.githubusercontent.com/89376703/305687743-fb39df88-0f29-4359-9cd4-fc4bfa698270.mp4" width="640" height="480" controls></video>
-
 
 
 ## 命令列表
@@ -106,6 +102,20 @@ Teamserver.exe -c profile.json
 | memfd            |      memfd <FilePath> <args>       |        PE loader in the memory for Linux         |
 | help             |                help                |                View command list                 |
 | cls              |                cls                 |                   Clear screen                   |
+
+
+
+
+
+添加插件，
+
+<video src="https://private-user-images.githubusercontent.com/89376703/305687743-fb39df88-0f29-4359-9cd4-fc4bfa698270.mp4" width="640" height="480" controls></video>
+
+
+
+## 插件编写
+
+学习编写lua插件:[Xiebro-Plugins](https://github.com/INotGreen/Xiebro-Plugins?tab=readme-ov-file#executeassembly)
 
 
 
