@@ -59,7 +59,7 @@ curl -o XiebroC2-v3.1.7z https://github.com/INotGreen/XiebroC2/releases/download
 
 ```json
 {
-    "TeamServerIP": "192.168.31.81",
+    "TeamServerIP": "192.168.31.80",
     "TeamServerPort": "8880",
     "Password": "123456",
     "StagerPort": "4050",
