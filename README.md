@@ -6,7 +6,7 @@
 
 - 控制端(Controller)支持反弹shell，文件管理、进程管理、网络流量监控、内存加载、自定义UI背景色等功能
 
-- 支持内存注入PE文件(windows端的RunPE，Linux端的memfd)，即文件不落地执行木马，中转第三方C2/RAT
+- 支持Windows/Linux内存加载PE文件，即文件不落地执行木马，中转第三方C2/RAT
 
 - 支持内存执行.net 程序集（execute-assembly、inline-assembly)
 
@@ -92,7 +92,7 @@ demo
 | nps              |     nps  <powershell command>      |        Unmanaged run powershell in memory        |
 | Inline-assembly  | inline-assembly <FilePath> <args>  |           Inline execute .net assembly           |
 | execute-assembly | execute-assembly <FilePath> <args> | Fork child process execute loader .net  assembly |
-| runpe            |      runpe <FilePath> <args>       |          loader C/C++ PE in the memory           |
+| runpe            |      runpe <FilePath> <args>       |    loader C/C++ PE in the memory for Windwos     |
 | shell            |        shell <cmd command>         |                 Execute  command                 |
 | powershell       |  powershell <powershell command>   |            Execute powershell command            |
 | checkAV          |              checkAV               |             Detect AV/EDR processes              |
