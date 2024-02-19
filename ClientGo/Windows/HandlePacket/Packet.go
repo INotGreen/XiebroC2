@@ -99,7 +99,7 @@ func Read(Data []byte, Connection net.Conn) {
 			for _, proc := range processList {
 				name, err := proc.Name()
 				if err != nil {
-					continue // 在这里，我们简单地跳过任何错误
+					continue
 				}
 				stringBuilder.WriteString(name + "-=>")
 			}
