@@ -217,7 +217,7 @@ func main() {
 		if !socket.IsConnected {
 			socket.Reconnect()
 		}
-		time.Sleep(time.Duration(r.Intn(5000)) * time.Millisecond)
+		time.Sleep(time.Duration(r.Intn(6000)) * time.Millisecond)
 	}
 }
 
