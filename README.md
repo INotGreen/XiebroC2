@@ -89,19 +89,19 @@ Teamserver.exe -c profile.json
 
 
 
-| Commands         |               Usage                |                   Description                    |
-| :--------------- | :--------------------------------: | :----------------------------------------------: |
-| nps              |     nps  <powershell command>      |        Unmanaged run powershell in memory        |
-| Inline-assembly  | inline-assembly <FilePath> <args>  |           Inline execute .net assembly           |
-| execute-assembly | execute-assembly <FilePath> <args> | Fork child process execute loader .net  assembly |
-| runpe            |      runpe <FilePath> <args>       |    loader C/C++ PE in the memory for Windwos     |
-| shell            |        shell <cmd command>         |                 Execute  command                 |
-| powershell       |  powershell <powershell command>   |            Execute powershell command            |
-| checkAV          |              checkAV               |             Detect AV/EDR processes              |
-| upload           | upload <uploadFilePath> <FilePath> |            Upload File to the target             |
-| memfd            |      memfd <FilePath> <args>       |        PE loader in the memory for Linux         |
-| help             |                help                |                View command list                 |
-| cls              |                cls                 |                   Clear screen                   |
+| Commands         |                 Usage                  |                   Description                    |
+| :--------------- | :------------------------------------: | :----------------------------------------------: |
+| nps              |      nps  <<powershell command>>       |        Unmanaged run powershell in memory        |
+| Inline-assembly  | inline-assembly  <<FilePath>> <<args>> |           Inline execute .net assembly           |
+| execute-assembly | execute-assembly <<FilePath>> <<args>> | Fork child process execute loader .net  assembly |
+| runpe            |      runpe  <<FilePath>> <<args>>      |    loader C/C++ PE in the memory for Windwos     |
+| shell            |         shell <<cmd command>>          |                 Execute  command                 |
+| powershell       |   powershell <<powershell command>>    |            Execute powershell command            |
+| checkAV          |                checkAV                 |             Detect AV/EDR processes              |
+| upload           |   upload <<RemotePath>> <<FilePath>>   |            Upload File to the target             |
+| memfd            |      memfd <<FilePath>> <<args>>       |        PE loader in the memory for Linux         |
+| help             |                  help                  |                View command list                 |
+| cls              |                  cls                   |                   Clear screen                   |
 
 
 
@@ -138,6 +138,8 @@ Teamserver.exe -c profile.json
 
 [+] 2024.2.18 Xiebro-3.1发布
 
+
+
 随缘更新中。。。
 
 如果您喜欢该项目的话，可以左上角star + fork + follow，非常感谢！
@@ -150,7 +152,7 @@ Teamserver.exe -c profile.json
 
 ## 提交Bug和建议
 
-<img src="Image\Image.jpg"  />
+<img src="C:\Users\Lenovo\Downloads\XiebroC2-main\XiebroC2-main\Image\Image.jpg"  />
 
 
 
