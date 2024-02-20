@@ -24,6 +24,8 @@
 
 - 支持通过lua扩展UI控件、Session命令，载荷生成（类似于CobaltStrike的cna脚本）
 
+- 支持自定义RDIshellcode（仅64位，32位需要手动编译client）或者用[donut](https://github.com/TheWover/donut)、[Godonut](https://github.com/Binject/go-donut)生成属于自己的shellcode
+
 - 支持Teamserver托管二进制文件、文本、图片(类似SimpleHttpServer)
 
 - 支持团队服务器自定义配置文件,自定义Telegram的chat ID/Token上线通知
@@ -122,6 +124,10 @@ Teamserver.exe -c profile.json
 ## 添加插件
 
 <video src="https://private-user-images.githubusercontent.com/89376703/305687743-fb39df88-0f29-4359-9cd4-fc4bfa698270.mp4" width="640" height="480" controls></video>
+
+## 拖拽式批量上传文件
+
+<video src="https://private-user-images.githubusercontent.com/89376703/306153487-551e96db-9253-4a9f-8c2d-5c99c0280c8a.mp4" width="640" height="480" controls></video>
 
 
 
