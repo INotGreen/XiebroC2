@@ -162,7 +162,7 @@ Teamserver.exe -c profile.json
 
 ## 提交Bug和建议
 
-<img src="C:\Users\Lenovo\Downloads\XiebroC2-main\XiebroC2-main\Image\Image.jpg"  />
+<img src="Image\Image.jpg"  />
 
 
 
