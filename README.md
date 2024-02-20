@@ -1,5 +1,11 @@
 
 
+
+
+## 使用说明（英文）
+
+[XiebroC2-v3.1-README](https://github.com/INotGreen/XiebroC2/blob/main/README_EN.md)
+
 ## 更新
 
 [+] 2024.2.18 XiebroC2-3.1发布
