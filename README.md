@@ -1,3 +1,19 @@
+
+
+## 更新
+
+[+] 2024.2.18 XiebroC2-3.1发布
+
+[+] 2024.2.20 XiebroC2-3.1 修复bug
+
+自定义RDIshellcode（仅支持64位）生成无阶段的shellcode(Raw), 修复文件上传、拖拽式上传文件、修复文件删除异常、修复powershell无回显、文件托管
+
+
+
+随缘更新中。。。
+
+如果您喜欢该项目的话，可以左上角star + fork + follow，非常感谢！
+
 ## 特点
 
 - 被控端(Client)由Golang编写，兼容WIndows、Linux、MacOS上线（未来会考虑移动端上线）
@@ -134,15 +150,7 @@ Teamserver.exe -c profile.json
 
 
 
-## 更新
 
-[+] 2024.2.18 Xiebro-3.1发布
-
-
-
-随缘更新中。。。
-
-如果您喜欢该项目的话，可以左上角star + fork + follow，非常感谢！
 
 ## 免责声明
 
