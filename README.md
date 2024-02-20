@@ -4,11 +4,7 @@
 
 [+] 2024.2.18 XiebroC2-3.1发布
 
-[+] 2024.2.20 XiebroC2-3.1 修复bug
-
-自定义RDIshellcode（仅支持64位）生成无阶段的shellcode(Raw), 修复文件上传、拖拽式上传文件、修复文件删除异常、修复powershell无回显、文件托管
-
-
+[+] 2024.2.20 XiebroC2-3.1 修复bug： [xiebroc2](https://github.com/INotGreen/XiebroC2/releases/download/XieBroC2-v3.1/XiebroC2-v3.1.7z)
 
 随缘更新中。。。
 
