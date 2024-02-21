@@ -84,7 +84,8 @@ curl -o XiebroC2-v3.1.7z https://github.com/INotGreen/XiebroC2/releases/download
     "Process86": "C:\\Windows\\SysWOW64\\notepad.exe",
     "WebServers": [],
     "listeners": [],
-    "s_Reflection_dll_x64": ""
+    "rdiShellcode64": "",
+    "rdiShellcode32": ""
 }
 ```
 
@@ -150,7 +151,7 @@ Teamserver.exe -c profile.json
 - 目前正反向代理和端口转发未开放，未来考虑完善和开发这个功能。
 
 - 正在开发WebSocket/RUDP/SMB协议的Session模式，Beacon模式仅考虑开发HTTP/HTTPS/DNS。
-- 考虑开发shellcode(raw)、Powershell、VBscript、Hta、Jscript等载荷。
+- 考虑开发Powershell、VBscript、Hta、Jscript等载荷。
 
 - 开放更多窗体和API接口，以便lua扩展插件
 

