@@ -1,0 +1,10 @@
+{
+    "files.associations": {
+        "ws2tcpip.h": "c",
+        "customloader.h": "c",
+        "stdio.h": "c",
+        "windows.h": "c",
+        "stdint.h": "c"
+    },
+    "C_Cpp.errorSquiggles": "disabled"
+}

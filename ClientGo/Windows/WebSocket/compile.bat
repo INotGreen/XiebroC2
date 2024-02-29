@@ -1,0 +1,1 @@
+set GOOS=Linux&&set GOARCH=amd64&&go build -a -ldflags="-s -w" -installsuffix cgo -o wslMain main.go
