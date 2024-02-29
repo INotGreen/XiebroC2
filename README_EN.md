@@ -4,6 +4,8 @@
 
 [+] Fixed bug in XiebroC2-3.1 on 2024.2.20: [xiebroc2](https://github.com/INotGreen/XiebroC2/releases/download/XieBroC2-v3.1/XiebroC2-v3.1.7z)
 
+[+] 2024.2.29 XiebroC2 updated, adding Websocket communication protocol, supporting domain front-end and cdn online, and fixing several bugs in 3.1:[xiebroc2-v3.1.1](https://github.com/INotGreen/XiebroC2/releases/download/XiebroC2-v3.1.1/XiebroC2-v3.1.1.7z)
+
 Updates will be released as they come.
 
 If you like this project, feel free to star + fork + follow on the top left corner. Thank you very much!

@@ -12,6 +12,12 @@
 
 [+] 2024.2.20 XiebroC2-3.1 修复bug： [xiebroc2](https://github.com/INotGreen/XiebroC2/releases/download/XieBroC2-v3.1/XiebroC2-v3.1.7z)
 
+[+] 2024.2.29 XiebroC2更新，添加Websocket通信协议，支持域前置和cdn上线、修复3.1中的数个bug:[xiebroc2-v3.1.1](https://github.com/INotGreen/XiebroC2/releases/download/XiebroC2-v3.1.1/XiebroC2-v3.1.1.7z)
+
+
+
+
+
 随缘更新中。。。
 
 如果您喜欢该项目的话，可以左上角star + fork + follow，非常感谢！
