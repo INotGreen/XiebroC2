@@ -20,7 +20,7 @@
 
 随缘更新中。。。
 
-如果您喜欢该项目的话，可以左上角star + fork + follow，非常感谢！
+如果您喜欢该项目的话，可以右上角star + fork + follow，非常感谢！
 
 ## 特点
 
@@ -60,7 +60,7 @@
 |        Windows10         |     Debian     | i386  |
 |       Windows8/8.1       |     CentOS     |  M1   |
 |         Windows7         |    ppc64le     |  M2   |
-|        Windwos-XP        |      mips      |       |
+|        Windows-XP        |      mips      |       |
 | Windows Server 2000-2022 |     s390x      |       |
 
 
