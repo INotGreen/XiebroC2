@@ -60,7 +60,7 @@
 |        Windows10         |     Debian     | i386  |
 |       Windows8/8.1       |     CentOS     |  M1   |
 |         Windows7         |    ppc64le     |  M2   |
-|        Windwos-XP        |      mips      |       |
+|        Windows-XP        |      mips      |       |
 | Windows Server 2000-2022 |     s390x      |       |
 
 
