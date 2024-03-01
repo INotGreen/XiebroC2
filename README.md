@@ -150,30 +150,25 @@ Teamserver.exe -c profile.json
 
 
 
-## 计划进行
-
-- 用C/C++/C#/Rust编写多阶段加载器（Multi-stage loader），体积尽量控制在150kb以内。
+## TODO
 
 - 目前正反向代理和端口转发未开放，未来考虑完善和开发这个功能。
-
-- 正在开发WebSocket/RUDP/SMB协议的Session模式，Beacon模式仅考虑开发HTTP/HTTPS/DNS。
+- 目前仅支持TCP/WebSocket协议的Session模式，它们是https的代替品，后续考虑开发可靠的UDP协议并且支持Beacon模式
 - 考虑开发Powershell、VBscript、Hta、Jscript等载荷。
-
 - 开放更多窗体和API接口，以便lua扩展插件
-
-- 目前Golang的控制台隐藏问题还无法得到很好的方案，如果您知道如何解决这个问题请联系我。
-
-
+- 控制台隐藏问题：已经被某0杀毒的Q某M引擎误杀、解决方案修改NT option heads中subsystem的值。不过这样仍然可能会被标记，因此您需要自定义RDIshellcode来生成shellcode实现二次免杀
 
 
 
 ## 免责声明
 
-本项目仅用于渗透测试演练的学习交流和研究，强烈不建议您用于任何的实际途径（包括黑灰产交易、非法渗透攻击、割韭菜），网络不是法外之地！如果您使用该工具则应该自觉遵守以上要求
+本项目仅用于渗透测试演练的学习交流和研究，强烈不建议您用于任何的实际途径（包括黑灰产交易、非法渗透攻击、割韭菜），网络不是法外之地！如果您使用该工具则应该自觉遵守以上要求。
 
-
+为了避免该工具被非法分子利用，所以本人已经将危害较大的功能删除，只留下部分功能作为渗透测试演练demo，teamserver和Controller不进行开源，不过我们仍然欢迎志同道合的朋友加入我们的开发小组一起交流。
 
 ## 提交Bug和建议
+
+
 
 <img src="Image\Image.jpg"  />
 
