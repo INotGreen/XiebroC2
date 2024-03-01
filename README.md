@@ -24,7 +24,7 @@
 
 ## 特点
 
-- 被控端(Client)由Golang编写，兼容WIndows、Linux、MacOS上线（未来会考虑移动端上线）
+- 被控端(Client)由Golang编写，兼容Windows、Linux、MacOS上线（未来会考虑移动端上线）
 
 - 团队服务器(Teamserver)由.net 8.0 编写、AOT编译，内存占用低，无需安装任何依赖，几乎可以兼容全平台系统
 
