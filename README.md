@@ -85,6 +85,10 @@ curl -o XiebroC2-v3.1.7z https://github.com/INotGreen/XiebroC2/releases/download
 
   3.shellcode目前只支持x64位，原谅我的懒惰，我觉得x86环境是比较罕见需求，因此在这里就忽略掉了，至于rdiShellcode64是怎么生成的，您需要仔细地研究[sRDI](https://github.com/monoxgas/sRDI)的原理，这并不是一句话能说清楚的
 
+  4.windows\Session\Reverse_tcp不支持域前置，您需要添加windows\Session\Reverse_Ws监听器才能使用域前置和cdn上线。
+
+  在配置文件（profile.json）中 可以自定义Route来修改websocket路由的特征。
+
 ```json
 {
     "TeamServerIP": "192.168.1.250",
