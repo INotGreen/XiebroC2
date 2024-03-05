@@ -70,7 +70,7 @@
 - 通过curl下载，密码：123456
 
 ```bash
-curl -o XiebroC2-v3.1.7z https://github.com/INotGreen/XiebroC2/releases/download/XieBroC2-v3.1/Xiebro-v3.1.7z
+curl -o XiebroC2-v3.1.7z https://github.com/INotGreen/XiebroC2/releases/download/XiebroC2-v3.1.1/XiebroC2.7z
 ```
 
 - 控制端需要运行在.Net Framework4.8以上（Win10/11无需安装，win7需要下载: [.net framworkd4.8下载](https://dotnet.microsoft.com/zh-cn/download/dotnet-framework/thank-you/net48-offline-installer)）
