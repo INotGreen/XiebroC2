@@ -77,21 +77,30 @@ curl -o XiebroC2-v3.1.7z https://github.com/INotGreen/XiebroC2/releases/download
 
 - 修改TeamServerIP和TeamServerPort为VPS的IP和端口，然后保存为profile.json
 
+- 需要解释的几个参数：
+
+  1.如果配置文件（profile.json）中的Fork为true，则在执行runpe和nps的时候会创建一个子进程，并且进行注入，这就是传统的Fork&&Run模式，如果Fork为flase，则为内联（inline）加载模式，如果在有严格AV/EDR的环境下，内联加载的方式显然更加的OPSEC
+
+  2.如果你需要上线Telegram提醒，您还需要去学习，TG的机器人消息提醒，在配置文件中填上Telegram_Token和Telegram_chat_ID
+
+  3.shellcode目前只支持x64位，原谅我的懒惰，我觉得x86环境是比较罕见需求，因此在这里就忽略掉了，至于rdiShellcode64是怎么生成的，您需要仔细地研究[sRDI](https://github.com/monoxgas/sRDI)的原理，这并不是一句话能说清楚的
+
 ```json
 {
-    "TeamServerIP": "192.168.31.81",
+    "TeamServerIP": "192.168.1.250",
     "TeamServerPort": "8880",
     "Password": "123456",
     "StagerPort": "4050",
     "Telegram_Token": "",
     "Telegram_chat_ID": "",
-    "Fork": true,
+    "Fork": false,
+    "Route": "www",
     "Process64": "C:\\windows\\system32\\notepad.exe",
     "Process86": "C:\\Windows\\SysWOW64\\notepad.exe",
     "WebServers": [],
     "listeners": [],
+    "rdiShellcode32": "",
     "rdiShellcode64": "",
-    "rdiShellcode32": ""
 }
 ```
 
