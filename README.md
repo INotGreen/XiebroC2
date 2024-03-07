@@ -169,7 +169,6 @@ Teamserver.exe -c profile.json
 - 目前仅支持TCP/WebSocket协议的Session模式，它们是https的代替品，后续考虑开发可靠的UDP协议并且支持Beacon模式
 - 考虑开发Powershell、VBscript、Hta、Jscript等载荷。
 - 开放更多窗体和API接口，以便lua扩展插件
-- 控制台隐藏问题：已经被某0杀毒的Q某M引擎误杀、解决方案修改NT option heads中subsystem的值。不过这样仍然可能会被标记，因此您需要自定义RDIshellcode来生成shellcode实现二次免杀
 
 
 
