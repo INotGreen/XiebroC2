@@ -14,7 +14,7 @@
 
 [+] 2024.2.29 XiebroC2更新，添加Websocket通信协议，支持域前置和cdn上线、修复3.1中的数个bug:[xiebroc2-v3.1.1](https://github.com/INotGreen/XiebroC2/releases/download/XiebroC2-v3.1.1/XiebroC2-v3.1.1.7z)
 
-
+[+] 2024.3.7 
 
 
 
@@ -67,13 +67,7 @@
 
 ## 快速使用
 
-- 通过curl下载，密码：123456
-
-```bash
-curl -o XiebroC2-v3.1.7z https://github.com/INotGreen/XiebroC2/releases/download/XiebroC2-v3.1.1/XiebroC2.7z
-```
-
-- 控制端需要运行在.Net Framework4.8以上（Win10/11无需安装，win7需要下载: [.net framworkd4.8下载](https://dotnet.microsoft.com/zh-cn/download/dotnet-framework/thank-you/net48-offline-installer)）
+- 无需安装任何环境直接使用：[XiebroC2](https://github.com/INotGreen/XiebroC2/releases)
 
 - 修改TeamServerIP和TeamServerPort为VPS的IP和端口，然后保存为profile.json
 
