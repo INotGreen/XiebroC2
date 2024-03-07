@@ -116,11 +116,16 @@ Online demo
 ## Ongoing Plans
 
 - Development of a multi-stage loader in C/C++/C#/Rust with the aim to keep the size under 150kb.
+
 - Currently, reverse proxy and port forwarding features are not available but are considered for future development.
+
 - Currently, only the Session mode of the TCP/WebSocket protocol is supported. They are replacements for https. We will consider developing a reliable UDP protocol and support the Beacon mode in the future.
+
 - Consideration for developing payloads for  Powershell, VBscript, Hta, Jscript, etc.
+
 - Opening more forms and API interfaces for lua extension plugins.
-- Console hidden problem: It has been mistakenly killed by a certain 0 antivirus Q and certain M engine. The solution is to modify the subsystem value in the NT option heads. However, this may still be flagged, so you need to customize RDI shellcode to generate shellcode to avoid secondary killing.
+
+  
 
 ## Disclaimer
 
