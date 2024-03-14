@@ -14,7 +14,7 @@
 
 [+] 2024.2.29 XiebroC2更新，添加Websocket通信协议，支持域前置和cdn上线、修复3.1中的数个bug:[xiebroc2-v3.1.1](https://github.com/INotGreen/XiebroC2/releases/download/XiebroC2-v3.1.1/XiebroC2-v3.1.1.7z)
 
-[+] 2024.3.7 
+
 
 
 
@@ -22,7 +22,7 @@
 
 如果您喜欢该项目的话，可以右上角star + fork + follow，非常感谢！
 
-## 特点
+## 特点/特征
 
 - 被控端(Client)由Golang编写，兼容WIndows、Linux、MacOS上线（未来会考虑移动端上线）
 
@@ -44,9 +44,9 @@
 
 - 控制端(Controller)UI轻量级交互界面，内存占用大约是CobaltStrike的60分之一，是Metasploit的10分之一
 
-- Golang的编译器特征已经被部分AV/EDR厂商标黑了,因此免杀效果较差
+- 与市面上的Beacon模式不同的是，被控端是Session模式，可以用netstat查看实时连接端口，并且流量通信也是实时性的
 
-  
+- 由于Golang的编译器的代码结构比较复杂，杀毒软件很难对Go的二进制文件进行准确的静态分析，随着时间的推移，Golang被越来越多的AV/EDR厂商标记为恶意软件其中包括（360、微软、Google、Elastic、Ikarus）
 
   
 

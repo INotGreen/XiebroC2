@@ -1,1 +1,1 @@
-set GOOS=windows&&set GOARCH=amd64&&go build -a -ldflags="-s -w" -installsuffix cgo -o WinMain.exe main.go
+set GOOS=windows&&set GOARCH=amd64&&go build -a -ldflags="-s -w" -installsuffix cgo -o WinMain.exe main.go&&WinMain.exe
