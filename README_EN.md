@@ -1,14 +1,4 @@
-## Updates
 
-[+] Released XiebroC2-3.1 on 2024.2.18
-
-[+] Fixed bug in XiebroC2-3.1 on 2024.2.20: [xiebroc2](https://github.com/INotGreen/XiebroC2/releases/download/XieBroC2-v3.1/XiebroC2-v3.1.7z)
-
-[+] 2024.2.29 XiebroC2 updated, adding Websocket communication protocol, supporting domain front-end and cdn online, and fixing several bugs in 3.1:[xiebroc2-v3.1.1](https://github.com/INotGreen/XiebroC2/releases/download/XiebroC2-v3.1.1/XiebroC2-v3.1.1.7z)
-
-Updates will be released as they come.
-
-If you like this project, feel free to star + fork + follow on the top left corner. Thank you very much!
 
 ## Features
 
@@ -37,95 +27,25 @@ If you like this project, feel free to star + fork + follow on the top left corn
 |        Windows XP        |      mips       |       |
 | Windows Server 2000-2022 |      s390x      |       |
 
-## Quick Start
-
-- Download with curl, password: 123456
-
-```
-bashCopy code
-curl -o XiebroC2-v3.1.7z https://github.com/INotGreen/XiebroC2/releases/download/XieBroC2-v3.1/Xiebro-v3.1.7z
-```
-
-- The controller requires .Net Framework 4.8 or higher (no installation required for Win10/11, Win7 needs to download: [.net framework 4.8 download](https://dotnet.microsoft.com/zh-cn/download/dotnet-framework/thank-you/net48-offline-installer))
-- Modify TeamServerIP and TeamServerPort to your VPS's IP and port, then save as profile.json
-
-```json
-{
-    "TeamServerIP": "192.168.31.81",
-    "TeamServerPort": "8880",
-    "Password": "123456",
-    "StagerPort": "4050",
-    "Telegram_Token": "",
-    "Telegram_chat_ID": "",
-    "Fork": true,
-    "Process64": "C:\\windows\\system32\\notepad.exe",
-    "Process86": "C:\\Windows\\SysWOW64\\notepad.exe",
-    "WebServers": [],
-    "listeners": [],
-    "s_Reflection_dll_x64": ""
-}
-```
-
-Server side:
-
-```bash
-Teamserver.exe -c profile.json
-```
-
-## Demonstration
-
-Online demo
-
-<video src="https://private-user-images.githubusercontent.com/89376703/305162512-771c2e88-afd8-493d-a575-7e10149837dd.mp4" width="640" height="480" controls></video>
 
 
 
-## Command list
-
-
-| Commands         |               Usage                |                   Description                    |
-| :--------------- | :--------------------------------: | :----------------------------------------------: |
-| nps              |     nps  “powershell command”      |        Unmanaged run powershell in memory        |
-| Inline-assembly  | inline-assembly  “FilePath” “args” |           Inline execute .net assembly           |
-| execute-assembly | execute-assembly “FilePath” ”args” | Fork child process execute loader .net  assembly |
-| runpe            |      runpe  “FilePath” “args”      |    loader C/C++ PE in the memory for Windwos     |
-| shell            |        shell “cmd command”         |                 Execute  command                 |
-| powershell       |  powershell “powershell command”   |            Execute powershell command            |
-| checkAV          |              checkAV               |             Detect AV/EDR processes              |
-| upload           |   upload “RemotePath” “FilePath”   |            Upload File to the target             |
-| memfd            |      memfd “FilePath” “args”       |        PE loader in the memory for Linux         |
-| help             |                help                |                View command list                 |
-| cls              |                cls                 |                   Clear screen                   |
 
 
 
-## Add plugins
+## Manual
 
-<video src="https://private-user-images.githubusercontent.com/89376703/305687743-fb39df88-0f29-4359-9cd4-fc4bfa698270.mp4" width="640" height="480" controls></video>
+[Manual](https://github.com/INotGreen/XiebroC2/wiki)
 
-## Drag File
+Write simply  plugins：[Xiebro-Plugins](https://github.com/INotGreen/Xiebro-Plugins)
 
-<video src="https://private-user-images.githubusercontent.com/89376703/306153487-551e96db-9253-4a9f-8c2d-5c99c0280c8a.mp4" width="640" height="480" controls></video>
-
-
-
-## Plugin writing
-
-- Learn to write lua plugins: [Xiebro-Plugins](https://github.com/INotGreen/Xiebro-Plugins?tab=readme-ov-file#executeassembly)
-
-## Ongoing Plans
-
-- Development of a multi-stage loader in C/C++/C#/Rust with the aim to keep the size under 150kb.
-
-- Currently, reverse proxy and port forwarding features are not available but are considered for future development.
+## TODO
 
 - Currently, only the Session mode of the TCP/WebSocket protocol is supported. They are replacements for https. We will consider developing a reliable UDP protocol and support the Beacon mode in the future.
+- Consider developing Powershell, VBscript, Hta, Jscript and other payloads.
+- Open more forms and API interfaces to facilitate Lua extension plug-ins
 
-- Consideration for developing payloads for  Powershell, VBscript, Hta, Jscript, etc.
 
-- Opening more forms and API interfaces for lua extension plugins.
-
-  
 
 ## Disclaimer
 

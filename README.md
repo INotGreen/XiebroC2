@@ -32,7 +32,7 @@
 
 - 控制端(Controller)UI轻量级交互界面，内存占用大约是CobaltStrike的60分之一，是Metasploit的10分之一
 
-- 与市面上的Beacon模式不同的是，被控端是Session模式，可以用netstat查看实时连接端口，并且流量通信也是实时性的
+- 与Beacon模式不同的是，被控端是Session模式，可以用netstat查看实时连接端口，并且流量通信也是实时性的
 
 - 由于Golang的编译器的代码结构比较复杂，杀毒软件很难对Go的二进制文件进行准确的静态分析，随着时间的推移，Golang被越来越多的AV/EDR厂商标记为恶意软件其中包括（360、微软、Google、Elastic、Ikarus）
 
