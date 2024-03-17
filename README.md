@@ -20,7 +20,7 @@
 
 - 支持内存执行shellcode、.NET 程序集（execute-assembly、inline-assembly)、PE文件（如内存加载fscan等扫描器、POC/EXP)
 
-- 支持反向代理功能，类似于frps、ew、Stowaway、但是速度不逊色于它们
+- 支持反向代理功能，类似于frps、ew、Stowaway、并且速度不逊色于它们
 
 - 支持通过lua扩展UI控件、Session命令，载荷生成（类似于CobaltStrike的cna脚本）
 
