@@ -64,6 +64,7 @@
 - 目前仅支持TCP/WebSocket协议的Session模式，它们是https的代替品，后续考虑开发可靠的UDP协议并且支持Beacon模式
 - 考虑开发Powershell、VBscript、Hta、Jscript等载荷。
 - 开放更多窗体和API接口，以便lua扩展插件
+- 考虑添加进程迁移和注入功能、AV/EDR对抗、进程断链等功能
 
 
 
