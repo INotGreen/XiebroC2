@@ -34,7 +34,7 @@
 
 - 与Beacon模式不同的是，被控端是Session模式，可以用netstat查看实时连接端口，并且流量通信也是实时性的
 
-- 由于Golang的编译器的代码结构比较复杂，杀毒软件很难对Go的二进制文件进行准确的静态分析，随着时间的推移，Golang被越来越多的AV/EDR厂商标记为恶意软件其中包括（360、微软、Google、Elastic、Ikarus）
+- 由于Golang编译器的代码结构比较复杂，杀毒软件很难对Go的二进制文件进行准确的静态分析，随着时间的推移，Golang被越来越多的AV/EDR厂商标记为恶意软件其中包括（360、微软、Google、Elastic、Ikarus）
 
   
 
@@ -57,12 +57,13 @@
 
 [快速使用](https://github.com/INotGreen/XiebroC2/wiki)
 
-简单地编写插件：[插件编写](https://github.com/INotGreen/Xiebro-Plugins)
+编写简单的插件：[插件编写](https://github.com/INotGreen/Xiebro-Plugins)
 
 ## TODO
 
-- 目前仅支持TCP/WebSocket协议的Session模式，它们是https的代替品，后续考虑开发可靠的UDP协议并且支持Beacon模式
-- 考虑开发Powershell、VBscript、Hta、Jscript等载荷。
+- 目前仅支持TCP/WebSocket协议的Session模式，它们是https的代替品,后续可能会添加TLS、wss协议
+- 后续考虑开发可靠的UDP协议并且支持Beacon心跳模式
+- 考虑添加Powershell、VBscript、Hta、Jscript等载荷。
 - 开放更多窗体和API接口，以便lua扩展插件
 - 考虑添加进程迁移和注入功能、AV/EDR对抗、进程断链等功能
 
