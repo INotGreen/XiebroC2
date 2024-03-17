@@ -53,7 +53,11 @@
 
 
 
+## 快速使用
 
+[快速使用](https://github.com/INotGreen/XiebroC2/wiki)
+
+简单地编写插件：[插件编写](https://github.com/INotGreen/Xiebro-Plugins)
 
 ## TODO
 
