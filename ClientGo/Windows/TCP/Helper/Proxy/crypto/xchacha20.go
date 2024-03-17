@@ -1,6 +1,3 @@
-/*
-Third-party chacha20 lib from https://github.com/Yawning/chacha20
-*/
 package crypto
 
 import (

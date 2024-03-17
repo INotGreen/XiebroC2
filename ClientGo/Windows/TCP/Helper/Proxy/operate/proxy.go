@@ -74,7 +74,8 @@ func ProxyRemote(remote string, encrypted bool) {
 			pb, err := readUntilEnd(ctlStream)
 			if err != nil {
 				logger.Warn("Control connection has been closed, exit now")
-				os.Exit(-1)
+				return
+				//os.Exit(-1)
 			}
 
 			p := unmarshal(pb)
@@ -156,7 +157,7 @@ func ProxyRemoteL2L(control string, local string, cenc bool, lenc bool) {
 				N:   0,
 			}))
 			logger.Success("Recv Ctrl+C, exit now")
-			os.Exit(0)
+			//os.Exit(0)
 		}()
 	}
 
@@ -169,14 +170,15 @@ func ProxyRemoteL2L(control string, local string, cenc bool, lenc bool) {
 			pb, err := readUntilEnd(ctlStream)
 			if err != nil {
 				logger.Warn("Control connection has been closed, exit now")
-				os.Exit(-1)
+				return
+				//os.Exit(-1)
 			}
 
 			p := unmarshal(pb)
 			switch p.CMD {
 			case CTL_CLEANUP:
 				logger.Success("Recv exit signal from remote, exit now")
-				os.Exit(0)
+				//os.Exit(0)
 			}
 		}
 	}()
@@ -197,7 +199,8 @@ func ProxyRemoteL2L(control string, local string, cenc bool, lenc bool) {
 			}))
 			if err != nil {
 				logger.Warn("Control connection has been closed, exit now")
-				os.Exit(-1)
+				return
+				//os.Exit(-1)
 			}
 		}
 	}()

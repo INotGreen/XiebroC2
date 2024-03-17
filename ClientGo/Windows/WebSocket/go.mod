@@ -15,6 +15,7 @@ require (
 	github.com/rawk77/goAssembly v0.0.0-20220812015350-2855b85a2fba // indirect
 	github.com/shirou/gopsutil v3.21.11+incompatible // indirect
 	github.com/togettoyou/wsc v1.3.1 // indirect
+	github.com/xtaci/smux v1.5.24 // indirect
 	github.com/yusufpapurcu/wmi v1.2.4 // indirect
 	golang.org/x/sys v0.16.0 // indirect
 	golang.org/x/text v0.14.0 // indirect
