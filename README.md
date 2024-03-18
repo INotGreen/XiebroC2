@@ -16,9 +16,7 @@
 
 - 控制端(Controller)支持反弹shell，文件管理、进程管理、网络流量监控、内存加载、自定义UI背景色等功能
 
-- 支持Windows/Linux内存加载PE文件，即文件不落地执行木马，中转第三方C2/RAT
-
-- 支持内存执行shellcode、.NET 程序集（execute-assembly、inline-assembly)、PE文件（如内存加载fscan等扫描器、POC/EXP)
+- 支持无文件落地，内存执行shellcode、.NET 程序集（execute-assembly、inline-assembly)、PE文件（如内存加载fscan等扫描器、POC/EXP)
 
 - 支持反向代理功能，类似于frps、ew、Stowaway、并且速度不逊色于它们
 
