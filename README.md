@@ -18,15 +18,15 @@
 
 - 支持无文件落地，内存执行shellcode、.NET 程序集（execute-assembly、inline-assembly)、PE文件（如内存加载fscan等扫描器、POC/EXP)
 
+- 支持websocket模式，以及cdn、域名上线PC
+
 - 支持反向代理功能，类似于frps、ew、Stowaway、并且速度不逊色于它们
 
-- 支持通过lua扩展UI控件、Session命令，载荷生成（类似于CobaltStrike的cna脚本）
-
-- 支持自定义前置RDIshellcode（仅64位，32位需要手动编译client）或者用[donut](https://github.com/TheWover/donut)、[Godonut](https://github.com/Binject/go-donut)生成属于自己的shellcode
+- 支持通过lua扩展UI控件、Session命令和载荷生成（类似于CobaltStrike的cna脚本）
 
 - 支持Teamserver托管二进制文件、文本、图片(类似SimpleHttpServer)
 
-- 支持团队服务器自定义配置文件,自定义Telegram的chat ID/Token上线通知
+- 支持Teamserver自定义配置文件：自定义内存加载方式（Fork&&run 或者Inline），自定义前置rdiShellcode64（仅64位，32位需要手动编译client）、Telegram的chat ID/Token上线通知、Websocket路由特征。
 
 - 控制端(Controller)UI轻量级交互界面，内存占用大约是CobaltStrike的60分之一，是Metasploit的10分之一
 
