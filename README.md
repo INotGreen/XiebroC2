@@ -73,11 +73,6 @@
 
 为了避免该工具被非法分子利用，所以本人已经将危害较大的功能删除，只留下部分功能作为渗透测试演练demo，teamserver和Controller不进行开源
 
-## 提交Bug和建议
-
-
-
-<img src="Image\Image.jpg"  />
 
 
 
