@@ -29,9 +29,9 @@
 
 The payload in XiebroC2 currently only supports the x64-bit AMD architecture. If you have application scenarios in other environments, you need to compile the Go source code yourself.
 
-## Manual
+## How to use
 
-[Manual](https://github.com/INotGreen/XiebroC2/wiki)
+[xiebroC2 instruction manual](https://github.com/INotGreen/XiebroC2/wiki)
 
 Write simply  plugins：[Xiebro-Plugins](https://github.com/INotGreen/Xiebro-Plugins)
 
