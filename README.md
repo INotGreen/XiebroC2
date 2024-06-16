@@ -2,7 +2,7 @@
 
 ## Features
 
-- The client side (Client) is written in Golang, compatible with Windows, Linux, MacOS (mobile platforms are under consideration for future updates).
+- The client side (Implant) is written in Golang, compatible with Windows, Linux, MacOS (mobile platforms are under consideration for future updates).
 - The team server (Teamserver) is written in .net 8.0 and AOT compiled, featuring low memory usage without the need for any dependencies, nearly compatible with all platform systems.
 - The controller (Controller) supports reverse shell, file management, process management, network traffic monitoring, memory loading, custom UI background colors, and more.
 - Supports in-memory loading of PE files on Windows/Linux, allowing the execution of trojans without dropping files to disk, and facilitating the use of third-party C2/RATs.
@@ -34,6 +34,14 @@ The payload in XiebroC2 currently only supports the x64-bit AMD architecture. If
 [xiebroC2 instruction manual](https://github.com/INotGreen/XiebroC2/wiki)
 
 Write simply  plugins：[Xiebro-Plugins](https://github.com/INotGreen/Xiebro-Plugins)
+
+
+
+## Topology
+
+See network traffic distribution through a visual topology map![Topology](Image\image-20240616214300666.png)
+
+
 
 ## TODO
 
