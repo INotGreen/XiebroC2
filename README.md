@@ -39,7 +39,9 @@ Write simply  plugins：[Xiebro-Plugins](https://github.com/INotGreen/Xiebro-Plu
 
 ## Topology
 
-See network traffic distribution through a visual topology map![Topology](Image\image-20240616214300666.png)
+See network traffic distribution through a visual topology map
+
+[Topology](Image\image-20240616214300666.png)
 
 
 
