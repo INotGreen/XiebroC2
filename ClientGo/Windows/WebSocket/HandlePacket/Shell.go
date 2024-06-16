@@ -1,7 +1,6 @@
 package HandlePacket
 
 import (
-	"log"
 	"os"
 	"path/filepath"
 	"strings"
@@ -19,12 +18,12 @@ func executeCommandAndHandleCD(cmdString string) {
 			// 检查cd目标目录是否存在
 			if dirExists, err := directoryExists(arg); !dirExists {
 				if err != nil {
-					log.Printf("检查目录存在时发生错误: %v\n", err)
+					//log.Printf("检查目录存在时发生错误: %v\n", err)
 				} else {
-					log.Printf("目录不存在: %s\n", arg)
+					//log.Printf("目录不存在: %s\n", arg)
 				}
 			} else {
-				log.Printf("目标目录: %s\n", arg)
+				//log.Printf("目标目录: %s\n", arg)
 			}
 			ProcessPath = arg
 
@@ -32,7 +31,7 @@ func executeCommandAndHandleCD(cmdString string) {
 	}
 }
 
-// directoryExists 检查指定的路径是否存在且为目录
+// directoryExists checks whether the specified path exists and is a directory
 func directoryExists(path string) (bool, error) {
 	info, err := os.Stat(path)
 	if err != nil {
