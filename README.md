@@ -49,7 +49,7 @@ See network traffic distribution through a visual topology map
 
 - Currently, only the Session mode of the TCP/WebSocket protocol is supported. They are replacements for https. We will consider developing a reliable UDP protocol and support the Beacon mode in the future.
 - Consider developing Powershell, VBscript, Hta, Jscript and other payloads.
-- Open more forms and API interfaces to facilitate Lua extension plug-ins
+- Open more forms and API interfaces to facilitate Lua extension plugins
 
 
 
