@@ -4,7 +4,7 @@
 
 - The client side (Implant) is written in Golang, compatible with Windows, Linux, MacOS (mobile platforms are under consideration for future updates).
 - The team server (Teamserver) is written in .net 8.0 and AOT compiled, featuring low memory usage without the need for any dependencies, nearly compatible with all platform systems.
-- The controller (Controller) supports reverse shell, file management, process management, network traffic monitoring, memory loading, custom UI background colors, and more.
+- The controller supports reverse shell, file management, process management, network traffic monitoring, memory loading, reverse proxy (based on [IOX](https://github.com/EddieIvan01/iox) model), and screenshots.
 - Supports in-memory loading of PE files on Windows/Linux, allowing the execution of trojans without dropping files to disk, and facilitating the use of third-party C2/RATs.
 - Supports in-memory execution of .net assemblies (execute-assembly, inline-assembly).
 - Supports extension of UI widgets, Session commands, and payload generation through lua (similar to CobaltStrike's cna scripts).
@@ -41,7 +41,7 @@ Write simply  plugins：[Xiebro-Plugins](https://github.com/INotGreen/Xiebro-Plu
 
 See network traffic distribution through a visual topology map
 
-[Topology](Image\image-20240616214300666.png)
+![image](https://github.com/INotGreen/XiebroC2/blob/main/Image/image-20240616214300666.png)
 
 
 
@@ -57,7 +57,5 @@ See network traffic distribution through a visual topology map
 
 This project is intended for educational and research purposes only in penetration testing exercises and is in beta. It is prohibited to use it for any illegal activities (including black market transactions, unauthorized penetration attacks, or financial exploitation)! The Internet is not a lawless space! If you choose to use this tool, you must comply with the above requirements.
 
-
-
-
+In order to prevent the tool from being used by criminals, I have deleted the most harmful functions and only left some functions as penetration test drill demos. Teamserver and Controller are not open source.
 
