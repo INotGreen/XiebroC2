@@ -55,13 +55,7 @@ See network traffic distribution through a visual topology map
 
 ## Star History
 
-<a href="https://star-history.com/#INotGreen/XiebroC2&Date">
- <picture>
-   <source media="(prefers-color-scheme: dark)" srcset="https://api.star-history.com/svg?repos=INotGreen/XiebroC2&type=Date&theme=dark" />
-   <source media="(prefers-color-scheme: light)" srcset="https://api.star-history.com/svg?repos=INotGreen/XiebroC2&type=Date" />
-   <img alt="Star History Chart" src="https://api.star-history.com/svg?repos=INotGreen/XiebroC2&type=Date" />
- </picture>
-</a>
+[![Star History Chart](https://api.star-history.com/svg?repos=INotGreen/XiebroC2&type=Date)](https://star-history.com/#INotGreen/XiebroC2&Date)
 
 ## Disclaimer
 
