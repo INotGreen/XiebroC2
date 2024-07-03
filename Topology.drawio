@@ -1,0 +1,120 @@
+<mxfile host="65bd71144e">
+    <diagram id="eHtKVLYI_KQlInBDWnDv" name="第 1 页">
+        <mxGraphModel dx="1584" dy="1227" grid="0" gridSize="10" guides="0" tooltips="1" connect="0" arrows="0" fold="1" page="0" pageScale="1" pageWidth="827" pageHeight="1169" background="none" math="0" shadow="1">
+            <root>
+                <mxCell id="0"/>
+                <mxCell id="1" parent="0"/>
+                <mxCell id="17" value="" style="edgeStyle=none;html=1;exitX=0;exitY=0.5;exitDx=0;exitDy=0;entryX=1;entryY=0.5;entryDx=0;entryDy=0;align=center;" parent="1" source="4" target="7" edge="1">
+                    <mxGeometry relative="1" as="geometry"/>
+                </mxCell>
+                <mxCell id="65" style="edgeStyle=none;html=1;exitX=1;exitY=0.5;exitDx=0;exitDy=0;align=center;" parent="1" source="4" edge="1">
+                    <mxGeometry relative="1" as="geometry">
+                        <mxPoint x="684.0319213867188" y="187.36499855735065" as="targetPoint"/>
+                    </mxGeometry>
+                </mxCell>
+                <mxCell id="66" style="edgeStyle=none;html=1;exitX=1;exitY=0.25;exitDx=0;exitDy=0;entryX=0.025;entryY=0.475;entryDx=0;entryDy=0;entryPerimeter=0;align=center;" parent="1" source="4" edge="1">
+                    <mxGeometry relative="1" as="geometry">
+                        <mxPoint x="640.25" y="83.85000000000014" as="targetPoint"/>
+                    </mxGeometry>
+                </mxCell>
+                <mxCell id="67" style="edgeStyle=none;html=1;exitX=1;exitY=0.75;exitDx=0;exitDy=0;entryX=-0.037;entryY=0.545;entryDx=0;entryDy=0;entryPerimeter=0;align=center;" parent="1" source="4" target="58" edge="1">
+                    <mxGeometry relative="1" as="geometry"/>
+                </mxCell>
+                <mxCell id="70" value="WebSocket" style="edgeStyle=none;html=1;exitX=1;exitY=0.25;exitDx=0;exitDy=0;align=center;" parent="1" source="4" target="69" edge="1">
+                    <mxGeometry relative="1" as="geometry"/>
+                </mxCell>
+                <mxCell id="4" value="Nginx" style="image;html=1;image=img/lib/clip_art/computers/Server_Tower_128x128.png;align=center;" parent="1" vertex="1">
+                    <mxGeometry x="428" y="159" width="52" height="67" as="geometry"/>
+                </mxCell>
+                <mxCell id="9" value="Tcp" style="edgeStyle=none;html=1;exitX=1;exitY=0.5;exitDx=0;exitDy=0;align=center;" parent="1" source="5" target="7" edge="1">
+                    <mxGeometry relative="1" as="geometry"/>
+                </mxCell>
+                <mxCell id="5" value="XiebroC2" style="image;html=1;image=img/lib/clip_art/computers/Monitor_128x128.png;align=center;" parent="1" vertex="1">
+                    <mxGeometry x="-105" y="178" width="48" height="48" as="geometry"/>
+                </mxCell>
+                <mxCell id="39" value="WebSocket" style="edgeStyle=none;html=1;exitX=1;exitY=0.5;exitDx=0;exitDy=0;entryX=0;entryY=0.5;entryDx=0;entryDy=0;align=center;" parent="1" source="7" target="4" edge="1">
+                    <mxGeometry relative="1" as="geometry"/>
+                </mxCell>
+                <mxCell id="40" style="edgeStyle=none;html=1;exitX=0.75;exitY=0;exitDx=0;exitDy=0;entryX=0;entryY=1;entryDx=0;entryDy=0;align=center;" parent="1" source="7" edge="1">
+                    <mxGeometry relative="1" as="geometry">
+                        <mxPoint x="308" y="46" as="targetPoint"/>
+                    </mxGeometry>
+                </mxCell>
+                <mxCell id="41" value="Tcp" style="edgeStyle=none;html=1;exitX=1;exitY=0.75;exitDx=0;exitDy=0;entryX=0;entryY=0;entryDx=0;entryDy=0;align=center;" parent="1" source="7" edge="1">
+                    <mxGeometry relative="1" as="geometry">
+                        <mxPoint x="298" y="374" as="targetPoint"/>
+                    </mxGeometry>
+                </mxCell>
+                <mxCell id="47" style="edgeStyle=none;html=1;exitX=1;exitY=0.75;exitDx=0;exitDy=0;entryX=0;entryY=0.25;entryDx=0;entryDy=0;align=center;" parent="1" source="7" target="43" edge="1">
+                    <mxGeometry relative="1" as="geometry"/>
+                </mxCell>
+                <mxCell id="7" value="TeamServer(api.whowii.us.com" style="image;html=1;image=img/lib/clip_art/computers/Server_Rack_128x128.png;align=center;" parent="1" vertex="1">
+                    <mxGeometry x="159" y="163.5" width="59" height="69" as="geometry"/>
+                </mxCell>
+                <mxCell id="13" style="edgeStyle=none;html=1;exitX=0;exitY=1;exitDx=0;exitDy=0;entryX=0.75;entryY=0;entryDx=0;entryDy=0;align=center;" parent="1" target="7" edge="1">
+                    <mxGeometry relative="1" as="geometry">
+                        <mxPoint x="308" y="46" as="sourcePoint"/>
+                    </mxGeometry>
+                </mxCell>
+                <mxCell id="22" value="TCP'" style="edgeLabel;html=1;align=center;verticalAlign=middle;resizable=0;points=[];" parent="13" vertex="1" connectable="0">
+                    <mxGeometry x="-0.1544" y="-1" relative="1" as="geometry">
+                        <mxPoint as="offset"/>
+                    </mxGeometry>
+                </mxCell>
+                <mxCell id="14" value="WebSocket" style="edgeStyle=none;html=1;exitX=0;exitY=0.5;exitDx=0;exitDy=0;entryX=1;entryY=0.5;entryDx=0;entryDy=0;align=center;" parent="1" target="4" edge="1">
+                    <mxGeometry relative="1" as="geometry">
+                        <mxPoint x="679" y="188.5" as="sourcePoint"/>
+                    </mxGeometry>
+                </mxCell>
+                <mxCell id="53" value="WebSocket" style="edgeStyle=none;html=1;exitX=0;exitY=0.25;exitDx=0;exitDy=0;entryX=1;entryY=0.5;entryDx=0;entryDy=0;align=center;" parent="1" target="43" edge="1">
+                    <mxGeometry relative="1" as="geometry">
+                        <mxPoint x="700" y="416.5" as="sourcePoint"/>
+                    </mxGeometry>
+                </mxCell>
+                <mxCell id="45" value="WebSocket" style="edgeStyle=none;html=1;exitX=0;exitY=1;exitDx=0;exitDy=0;entryX=1;entryY=0.25;entryDx=0;entryDy=0;align=center;" parent="1" source="42" target="7" edge="1">
+                    <mxGeometry relative="1" as="geometry"/>
+                </mxCell>
+                <mxCell id="42" value="Https Server" style="image;html=1;image=img/lib/clip_art/computers/Server_Tower_128x128.png;align=center;" parent="1" vertex="1">
+                    <mxGeometry x="451" y="33" width="52" height="67" as="geometry"/>
+                </mxCell>
+                <mxCell id="46" value="WebSocket" style="edgeStyle=none;html=1;exitX=0;exitY=0.25;exitDx=0;exitDy=0;entryX=1;entryY=0.75;entryDx=0;entryDy=0;align=center;" parent="1" source="43" target="7" edge="1">
+                    <mxGeometry relative="1" as="geometry"/>
+                </mxCell>
+                <mxCell id="43" value="Nginx" style="image;html=1;image=img/lib/clip_art/computers/Server_Tower_128x128.png;align=center;" parent="1" vertex="1">
+                    <mxGeometry x="450" y="315" width="52" height="67" as="geometry"/>
+                </mxCell>
+                <mxCell id="54" value="WebSocket" style="edgeStyle=none;html=1;exitX=0;exitY=1;exitDx=0;exitDy=0;entryX=0.75;entryY=0;entryDx=0;entryDy=0;align=center;" parent="1" source="62" target="42" edge="1">
+                    <mxGeometry relative="1" as="geometry">
+                        <mxPoint x="599" y="-83" as="sourcePoint"/>
+                    </mxGeometry>
+                </mxCell>
+                <mxCell id="51" value="WebSocket" style="edgeStyle=none;html=1;exitX=0;exitY=0.5;exitDx=0;exitDy=0;entryX=1;entryY=0.75;entryDx=0;entryDy=0;align=center;" parent="1" source="58" target="4" edge="1">
+                    <mxGeometry relative="1" as="geometry">
+                        <mxPoint x="689" y="288" as="sourcePoint"/>
+                    </mxGeometry>
+                </mxCell>
+                <mxCell id="58" value="Linux" style="aspect=fixed;html=1;points=[];align=center;image;fontSize=12;image=img/lib/mscae/VM_Linux_Non_Azure.svg;" parent="1" vertex="1">
+                    <mxGeometry x="678" y="272" width="50" height="46" as="geometry"/>
+                </mxCell>
+                <mxCell id="59" value="Windows 11&lt;br&gt;" style="aspect=fixed;html=1;points=[];align=center;image;fontSize=12;image=img/lib/mscae/VirtualMachineWindows.svg;" parent="1" vertex="1">
+                    <mxGeometry x="698" y="401" width="50" height="46" as="geometry"/>
+                </mxCell>
+                <mxCell id="60" value="Windows 10" style="aspect=fixed;html=1;points=[];align=center;image;fontSize=12;image=img/lib/mscae/VM_Windows_Non_Azure.svg;" parent="1" vertex="1">
+                    <mxGeometry x="689" y="163.5" width="50" height="46" as="geometry"/>
+                </mxCell>
+                <mxCell id="62" value="Windows Server2016" style="aspect=fixed;html=1;points=[];align=center;image;fontSize=12;image=img/lib/mscae/Non_Azure_Machine.svg;" parent="1" vertex="1">
+                    <mxGeometry x="583.5" y="-108" width="31" height="50" as="geometry"/>
+                </mxCell>
+                <mxCell id="64" value="MacOS" style="image;html=1;image=img/lib/clip_art/computers/iMac_128x128.png;align=center;" parent="1" vertex="1">
+                    <mxGeometry x="301" y="8" width="58" height="64" as="geometry"/>
+                </mxCell>
+                <mxCell id="68" value="Windows 10" style="aspect=fixed;html=1;points=[];align=center;image;fontSize=12;image=img/lib/mscae/VirtualMachineWindows.svg;" parent="1" vertex="1">
+                    <mxGeometry x="279" y="374" width="50" height="46" as="geometry"/>
+                </mxCell>
+                <mxCell id="69" value="Win7" style="aspect=fixed;html=1;points=[];align=center;image;fontSize=12;image=img/lib/mscae/VirtualMachineWindows.svg;" parent="1" vertex="1">
+                    <mxGeometry x="613" y="63" width="50" height="46" as="geometry"/>
+                </mxCell>
+            </root>
+        </mxGraphModel>
+    </diagram>
+</mxfile>
