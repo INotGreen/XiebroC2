@@ -53,6 +53,16 @@ See network traffic distribution through a visual topology map
 
 
 
+## Star History
+
+<a href="https://star-history.com/#INotGreen/XiebroC2&Date">
+ <picture>
+   <source media="(prefers-color-scheme: dark)" srcset="https://api.star-history.com/svg?repos=INotGreen/XiebroC2&type=Date&theme=dark" />
+   <source media="(prefers-color-scheme: light)" srcset="https://api.star-history.com/svg?repos=INotGreen/XiebroC2&type=Date" />
+   <img alt="Star History Chart" src="https://api.star-history.com/svg?repos=INotGreen/XiebroC2&type=Date" />
+ </picture>
+</a>
+
 ## Disclaimer
 
 This project is intended for educational and research purposes only in penetration testing exercises and is in beta. It is prohibited to use it for any illegal activities (including black market transactions, unauthorized penetration attacks, or financial exploitation)! The Internet is not a lawless space! If you choose to use this tool, you must comply with the above requirements.
