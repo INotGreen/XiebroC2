@@ -1,6 +1,8 @@
 package sysinfo
 
 import (
+	"fmt"
+	"runtime"
 	"syscall"
 	"unsafe"
 )
@@ -35,8 +37,24 @@ func WindosVersion() string {
 	if err != nil {
 		return ""
 	}
-	return version
+	return version + GetOSAndArch()
 }
+func GetOSAndArch() string {
+	var osArch string
+
+	// 判断系统架构
+	switch runtime.GOARCH {
+	case "amd64":
+		osArch += " (64bit)"
+	case "386":
+		osArch += "(386)"
+	default:
+		osArch += fmt.Sprintf("%s", runtime.GOARCH)
+	}
+
+	return osArch
+}
+
 func OSVersion() (string, error) {
 	majorVersion, minorVersion, buildNumber := RtlGetNtVersionNumbers()
 	// fmt.Printf("majorVersion:%d ,minorVersion:%d ,buildNumber:%d \n", majorVersion, minorVersion, buildNumber)
@@ -166,13 +184,13 @@ func OSVersion() (string, error) {
 // Dll: ntdll.dll
 // RtlGetNtVersionNumbers
 // 获取系统的版本号
-/*
-   HINSTANCE hinst = LoadLibrary("ntdll.dll");
-   DWORD dwMajor,dwMinor,dwBuildNumber;
-   NTPROC proc = (NTPROC)GetProcAddress(hinst,"RtlGetNtVersionNumbers");
-   proc(&dwMajor,&dwMinor,&dwBuildNumber);
-   dwBuildNumber&=0xffff;
-*/
+
+//    HINSTANCE hinst = LoadLibrary("ntdll.dll");
+//    DWORD dwMajor,dwMinor,dwBuildNumber;
+//    NTPROC proc = (NTPROC)GetProcAddress(hinst,"RtlGetNtVersionNumbers");
+//    proc(&dwMajor,&dwMinor,&dwBuildNumber);
+//    dwBuildNumber&=0xffff;
+
 func RtlGetNtVersionNumbers() (majorVersion, minorVersion, buildNumber uint32) {
 	//var majorVersion, minorVersion, buildNumber uint32
 	ntdll := syscall.NewLazyDLL("ntdll.dll")

@@ -503,23 +503,23 @@ func Read(Data []byte, Connection *wsc.Wsc) {
 			os.Exit(0)
 
 		}
-	case "execPty":
+	case "shell":
 		{
-			//fmt.Println(unmsgpack.ForcePathObject("Controler_HWID").GetAsString())
-			go PtyCmd(unmsgpack.ForcePathObject("Controler_HWID").GetAsString(), Connection)
+			Controler_HWID := unmsgpack.ForcePathObject("Controler_HWID").GetAsString()
+			go PtyCmd(Controler_HWID, *unmsgpack, Connection)
 			break
 		}
 
-	case "ptyData":
+	case "shellWriteInput":
 		{
 			//fmt.Println(unmsgpack.ForcePathObject("Command").GetAsString())
-			sendUserId := unmsgpack.ForcePathObject("Controler_HWID").GetAsString()
-			m, exist := setchannel.GetPtyDataChan(sendUserId)
+			Controler_HWID := unmsgpack.ForcePathObject("Controler_HWID").GetAsString()
+			m, exist := setchannel.GetPtyDataChan(Controler_HWID)
 			if !exist {
 				m = make(chan interface{})
-				setchannel.AddPtyDataChan(sendUserId, m)
+				setchannel.AddPtyDataChan(Controler_HWID, m)
 			}
-			m <- []byte(strings.Replace(unmsgpack.ForcePathObject("Command").GetAsString(), "\r\n", "", -1) + "\n")
+			m <- []byte(strings.Replace(unmsgpack.ForcePathObject("WriteInput").GetAsString(), "\r\n", "", -1) + "\n")
 			return
 		}
 

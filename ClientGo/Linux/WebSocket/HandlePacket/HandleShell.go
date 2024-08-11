@@ -1,6 +1,7 @@
 package HandlePacket
 
 import (
+	"main/MessagePack"
 	"main/util/setchannel"
 	"main/util/setchannel/ptyopt"
 	"os"
@@ -13,15 +14,15 @@ import (
 	"golang.org/x/term"
 )
 
-func PtyCmd(sendUserId string, Connection *wsc.Wsc) {
+func PtyCmd(Controler_HWID string, unmsgpack MessagePack.MsgPack, Connection *wsc.Wsc) {
 	var err error
 	// 初始化Pty终端数据通道
-	ptyDataChan, exist := setchannel.GetPtyDataChan(sendUserId)
+	ptyDataChan, exist := setchannel.GetPtyDataChan(Controler_HWID)
 	if !exist {
 		ptyDataChan = make(chan interface{})
-		setchannel.AddPtyDataChan(sendUserId, ptyDataChan)
+		setchannel.AddPtyDataChan(Controler_HWID, ptyDataChan)
 	}
-	defer setchannel.DeletePtyDataChan(sendUserId)
+	defer setchannel.DeletePtyDataChan(Controler_HWID)
 	// Start the command with a pty.
 	ptmx := ptyopt.InitPtmx()
 
@@ -54,7 +55,7 @@ func PtyCmd(sendUserId string, Connection *wsc.Wsc) {
 		return
 	}
 	time.Sleep(300 * time.Millisecond)
-	ptyopt.RetPtyResult(buffer, sendUserId, Connection)
+	ptyopt.RetPtyResult(buffer, Controler_HWID, unmsgpack, Connection)
 
 	func() {
 		for {
@@ -83,7 +84,7 @@ func PtyCmd(sendUserId string, Connection *wsc.Wsc) {
 				if err != nil {
 					return
 				}
-				ptyopt.RetPtyResult(buffer, sendUserId, Connection)
+				ptyopt.RetPtyResult(buffer, "", unmsgpack, Connection)
 				time.Sleep(300 * time.Millisecond)
 			}
 		}

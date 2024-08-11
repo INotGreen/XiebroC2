@@ -24,6 +24,7 @@ var Port string = ""
 var ListenerName string = ""
 var SleepTime string = "SleepAAAABBBBCCCCDDDD"
 var ClientComputer = ""
+var AesKey = ""
 
 func GetProcessID() string {
 	return strconv.Itoa(os.Getpid())

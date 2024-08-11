@@ -1,5 +1,5 @@
-github.com/andreburgaud/crypt2go v1.5.0 h1:7hz8l9WjaMEtAUL4+nMm64Of7HzUr1H4JhmNof7BCLc=
-github.com/andreburgaud/crypt2go v1.5.0/go.mod h1:ZEu8s+aLbZdRNdSHr//o6gCSMYKgT24sjNX6r4uAI8U=
+github.com/andreburgaud/crypt2go v1.4.1 h1:qiVttvdoXLutIP9cvgOIWR4DWf8qFulToVPU4SZc9bY=
+github.com/andreburgaud/crypt2go v1.4.1/go.mod h1:/63zApooScgRnoJxCK/17N0IdpiilSAHaZYMDRsh6Mc=
 github.com/creack/pty v1.1.21 h1:1/QdRyBaHHJP61QkWMXlOIBfsgdDeeKfK8SYVUWJKf0=
 github.com/creack/pty v1.1.21/go.mod h1:MOBLtS5ELjhRRrroQr9kyvTxUAFNvYEK993ew/Vr4O4=
 github.com/go-ole/go-ole v1.2.6 h1:/Fpf6oFPoeFik9ty7siob0G6Ke8QvQEuVcuChpwXzpY=

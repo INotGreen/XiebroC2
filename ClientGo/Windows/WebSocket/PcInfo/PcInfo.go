@@ -27,6 +27,7 @@ var Port string = ""
 var ListenerName string = ""
 var SleepTime string = "SleepAAAABBBBCCCCDDDD"
 var IsDotNetFour bool = false
+var AesKey = ""
 var (
 	modKernel32       = syscall.NewLazyDLL("kernel32.dll")
 	procGetVersionExW = modKernel32.NewProc("GetVersionExW")

