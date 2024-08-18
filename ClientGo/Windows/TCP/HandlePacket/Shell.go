@@ -9,14 +9,13 @@ import (
 
 func executeCommandAndHandleCD(cmdString string) {
 	if strings.HasPrefix(cmdString, "cd ") {
-		arg := strings.TrimSpace(cmdString[3:]) // 获取cd命令后的参数
+		arg := strings.TrimSpace(cmdString[3:])
 
 		if arg == ".." {
-			// 处理cd .. 返回父目录
 
 			ProcessPath = filepath.Dir(ProcessPath)
 		} else {
-			// 检查cd目标目录是否存在
+
 			if dirExists, err := directoryExists(arg); !dirExists {
 				if err != nil {
 					log.Printf("检查目录存在时发生错误: %v\n", err)

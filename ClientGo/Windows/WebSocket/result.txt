@@ -1,0 +1,78 @@
+192.168.1.4:139 open
+192.168.1.4:8880 open
+192.168.1.4:7680 open
+192.168.1.1:8080 open
+192.168.1.4:445 open
+192.168.1.4:135 open
+192.168.1.1:80 open
+192.168.1.1:445 open
+192.168.1.4:9999 open
+[*] WebTitle http://192.168.1.1        code:401 len:141    title:Login
+[*] WebTitle http://192.168.1.1:8080   code:200 len:12     title:None
+[*] WebTitle http://192.168.1.4:9999   code:400 len:0      title:None
+[*] WebTitle http://192.168.1.4:8880   code:501 len:0      title:None
+192.168.1.4:135 open
+192.168.1.4:445 open
+192.168.1.4:139 open
+192.168.1.4:8880 open
+192.168.1.1:445 open
+192.168.1.1:80 open
+192.168.1.4:7680 open
+192.168.1.1:8080 open
+192.168.1.4:9999 open
+[*] WebTitle http://192.168.1.4:9999   code:400 len:0      title:None
+[*] WebTitle http://192.168.1.1        code:401 len:141    title:Login
+[*] WebTitle http://192.168.1.1:8080   code:200 len:12     title:None
+[*] WebTitle http://192.168.1.4:8880   code:501 len:0      title:None
+192.168.1.4:8880 open
+192.168.1.4:445 open
+192.168.1.4:139 open
+192.168.1.4:135 open
+192.168.1.4:7680 open
+192.168.1.1:8080 open
+192.168.1.1:80 open
+192.168.1.1:445 open
+192.168.1.4:9999 open
+[*] WebTitle http://192.168.1.4:9999   code:400 len:0      title:None
+[*] WebTitle http://192.168.1.1        code:401 len:141    title:Login
+[*] WebTitle http://192.168.1.1:8080   code:200 len:12     title:None
+[*] WebTitle http://192.168.1.4:8880   code:501 len:0      title:None
+192.168.1.4:7680 open
+192.168.1.4:139 open
+192.168.1.4:135 open
+192.168.1.4:8880 open
+192.168.1.1:445 open
+192.168.1.1:8080 open
+192.168.1.4:445 open
+192.168.1.1:80 open
+192.168.1.4:9999 open
+[*] WebTitle http://192.168.1.4:9999   code:400 len:0      title:None
+[*] WebTitle http://192.168.1.1        code:401 len:141    title:Login
+[*] WebTitle http://192.168.1.1:8080   code:200 len:12     title:None
+[*] WebTitle http://192.168.1.4:8880   code:501 len:0      title:None
+192.168.1.4:139 open
+192.168.1.4:445 open
+192.168.1.4:8880 open
+192.168.1.1:80 open
+192.168.1.4:135 open
+192.168.1.4:7680 open
+192.168.1.1:445 open
+192.168.1.1:8080 open
+192.168.1.4:9999 open
+[*] WebTitle http://192.168.1.4:9999   code:400 len:0      title:None
+[*] WebTitle http://192.168.1.1        code:401 len:141    title:Login
+[*] WebTitle http://192.168.1.1:8080   code:200 len:12     title:None
+[*] WebTitle http://192.168.1.4:8880   code:501 len:0      title:None
+192.168.1.4:135 open
+192.168.1.4:445 open
+192.168.1.4:7680 open
+192.168.1.4:8880 open
+192.168.1.4:139 open
+192.168.1.1:80 open
+192.168.1.1:8080 open
+192.168.1.1:445 open
+192.168.1.4:9999 open
+[*] WebTitle http://192.168.1.4:9999   code:400 len:0      title:None
+[*] WebTitle http://192.168.1.1        code:401 len:141    title:Login
+[*] WebTitle http://192.168.1.1:8080   code:200 len:12     title:None
+[*] WebTitle http://192.168.1.4:8880   code:501 len:0      title:None

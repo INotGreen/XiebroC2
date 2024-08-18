@@ -13,9 +13,11 @@ require (
 	github.com/kbinani/screenshot v0.0.0-20240809223827-e520a411f991 // indirect
 	github.com/lxn/win v0.0.0-20210218163916-a377121e959e // indirect
 	github.com/shirou/gopsutil v3.21.11+incompatible // indirect
+	github.com/tklauser/go-sysconf v0.3.14 // indirect
+	github.com/tklauser/numcpus v0.8.0 // indirect
 	github.com/togettoyou/wsc v1.3.1 // indirect
 	github.com/xtaci/smux v1.5.27 // indirect
 	github.com/yusufpapurcu/wmi v1.2.4 // indirect
-	golang.org/x/sys v0.11.0 // indirect
+	golang.org/x/sys v0.19.0 // indirect
 	golang.org/x/text v0.17.0 // indirect
 )

