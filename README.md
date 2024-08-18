@@ -7,7 +7,7 @@
 - 控制器支持反向shell，文件管理，进程管理，网络流量监控，内存加载，反向代理（基于[IOX](https://github.com/EddieIvan01/iox）模型)和屏幕截图
 - 支持在Windows / Linux上内存中加载PE文件，允许文件不接触磁盘的情况下进行加载
 - 支持内存中执行.net程序集（execute-assembly，inline-assembly）
-- 支持通过 lua 扩展命令中心核菜单扩展（这一点和cna脚本类似）
+- 支持通过 lua 脚本扩展命令中心以及菜单栏（这一点和cna脚本类似）
 - 自定义 RDI shellcode 支持（仅限 64 位，32 位需要手动客户端编译）或使用 [donut](https://github.com/TheWover/donut)、[Godonut](https://github.com/Binject/go-donut) 生成自己的 shellcode
 - Teamserver 支持托管二进制文件、文本、图片（类似于 SimpleHttpServer）
 - 通过修改profile.json中的Chat  ID、API Token参数来设置Telegram 主机上线通知
@@ -50,6 +50,14 @@
 通过可视化拓扑图查看网络流量分布
 
 ![image](https://github.com/INotGreen/XiebroC2/blob/main/Image/image-20240616214300666.png)
+
+
+
+## 视频演示
+
+
+
+
 
 
 
