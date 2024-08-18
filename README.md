@@ -49,9 +49,7 @@
 
 通过可视化拓扑图查看网络流量分布
 
-![image](https://github.com/INotGreen/XiebroC2/blob/main/Image/image-20240616214300666.png)
-
-
+![image-20240818150825557](Image/image-20240818150825557.png)
 
 ## 视频演示
 
