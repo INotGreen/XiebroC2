@@ -39,7 +39,9 @@ XiebroC2中的payload目前只支持x64位AMD架构，如果有其他环境的�
 
 ## 如何使用
 
-[xiebroC2 instruction manual](https://github.com/INotGreen/XiebroC2/wiki)
+直接使用：[Release](https://github.com/INotGreen/XiebroC2/releases)
+
+使用说明wiki: [xiebroC2 instruction manual](https://github.com/INotGreen/XiebroC2/wiki)
 
 插件使用和编写：[Xiebro-Plugins](https://github.com/INotGreen/Xiebro-Plugins)
 
