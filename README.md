@@ -2,32 +2,30 @@
 
 ## 主要功能
 
-- 客户端（Implant）使用Golang编写，兼容Windows、Linux、MacOS（移动平台正在考虑未来更新）。
+- 客户端（Implant）使用Golang编写，兼容Windows、Linux、MacOS（移动平台正在考虑未来更新）
 - 团队服务器（Teamserver）使用.net 6.0编写，不依赖.NET Core环境运行
-- 控制器支持反向shell，文件管理，进程管理，网络流量监控，内存加载，反向代理（基于[IOX](https://github.com/EddieIvan01/iox）模型)和屏幕截图。
+- 控制器支持反向shell，文件管理，进程管理，网络流量监控，内存加载，反向代理（基于[IOX](https://github.com/EddieIvan01/iox）模型)和屏幕截图
 - 支持在Windows / Linux上内存中加载PE文件，允许文件不接触磁盘的情况下进行加载
-- 支持内存中执行.net程序集（execute-assembly，inline-assembly）。
+- 支持内存中执行.net程序集（execute-assembly，inline-assembly）
 - 支持通过 lua 扩展命令中心核菜单扩展（这一点和cna脚本类似）
-- 自定义 RDI shellcode 支持（仅限 64 位，32 位需要手动客户端编译）或使用 [donut](https://github.com/TheWover/donut)、[Godonut](https://github.com/Binject/go-donut) 生成自己的 shellcode。
-- Teamserver 支持托管二进制文件、文本、图片（类似于 SimpleHttpServer）。
-- 可自定义的团队服务器配置文件，带有自定义 Telegram 聊天 ID/Token 用于通知主机上线。
+- 自定义 RDI shellcode 支持（仅限 64 位，32 位需要手动客户端编译）或使用 [donut](https://github.com/TheWover/donut)、[Godonut](https://github.com/Binject/go-donut) 生成自己的 shellcode
+- Teamserver 支持托管二进制文件、文本、图片（类似于 SimpleHttpServer）
+- 通过修改profile.json中的Chat  ID、API Token参数来设置Telegram 主机上线通知
 - Controller和Teamserver的占用都比较低，支持高并发
-- Golang 的编译器功能已被一些 AV/EDR 制造商列入黑名单，导致逃避能力较差。
 
 ## 支持的平台
 
 **Implant(Session)**
 
-|    Windows (x86_x64)     | Linux (x86_x64) | MacOS |
-| :----------------------: | :-------------: | :---: |
-|        Windows 11        |     Ubuntu      | AMD64 |
-|        Windows 10        |     Debian      | i386  |
-|      Windows 8/8.1       |     CentOS      |  M1   |
-|        Windows 7         |     ppc64le     |  M2   |
-|        Windows XP        |      mips       |       |
-| Windows Server 2000-2022 |      s390x      |       |
+- Windows ：win7-win11，windows server2008-2022
+- Linux：支持 glibc 2.17以上 的，Ubuntu、Debian、CentOS等系统
+- MacOS: 10.15以上
 
-XiebroC2中的payload目前只支持x64位AMD架构，如果有其他环境的应用场景，需要自行编译Go源码。
+为了兼容性，这里选中了用1.20编译
+
+值得注意的是Go 1.20以上已经不支持win7、windows Server2008和一些古老的Linux系统了，并且XiebroC2中的payload目前只支持x64位的架构，如果你想上线更古老的系统，需要自行编译源码，并且将Go的版本降低到1.19-1.16以下
+
+
 
 **Teamserver**
 
