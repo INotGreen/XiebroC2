@@ -41,7 +41,7 @@
 
 使用说明wiki: [xiebroC2 instruction manual](https://github.com/INotGreen/XiebroC2/wiki)
 
-插件使用和编写：[Xiebro-Plugins](https://github.com/INotGreen/Xiebro-Plugins)
+新增插件：[Xiebro-Plugins](https://github.com/INotGreen/Xiebro-Plugins)
 
 
 
