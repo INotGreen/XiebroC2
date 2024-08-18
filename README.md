@@ -5,9 +5,9 @@
 - 客户端（Implant）使用Golang编写，兼容Windows、Linux、MacOS（移动平台正在考虑未来更新）。
 - 团队服务器（Teamserver）使用.net 6.0编写，不依赖.NET Core环境运行
 - 控制器支持反向shell，文件管理，进程管理，网络流量监控，内存加载，反向代理（基于[IOX](https://github.com/EddieIvan01/iox）模型)和屏幕截图。
-- 支持在Windows / Linux上内存中加载PE文件，允许无文件
+- 支持在Windows / Linux上内存中加载PE文件，允许文件不接触磁盘的情况下进行加载
 - 支持内存中执行.net程序集（execute-assembly，inline-assembly）。
-- 支持通过 lua 扩展命令中心核菜单扩展,这一点和cna脚本类似
+- 支持通过 lua 扩展命令中心核菜单扩展（这一点和cna脚本类似）
 - 自定义 RDI shellcode 支持（仅限 64 位，32 位需要手动客户端编译）或使用 [donut](https://github.com/TheWover/donut)、[Godonut](https://github.com/Binject/go-donut) 生成自己的 shellcode。
 - Teamserver 支持托管二进制文件、文本、图片（类似于 SimpleHttpServer）。
 - 可自定义的团队服务器配置文件，带有自定义 Telegram 聊天 ID/Token 用于通知主机上线。
