@@ -1,20 +1,20 @@
 
 
-## Features
+## 主要功能
 
-- The client side (Implant) is written in Golang, compatible with Windows, Linux, MacOS (mobile platforms are under consideration for future updates).
-- The team server (Teamserver) is written in .net 8.0 and AOT compiled, featuring low memory usage without the need for any dependencies, nearly compatible with all platform systems.
-- The controller supports reverse shell, file management, process management, network traffic monitoring, memory loading, reverse proxy (based on [IOX](https://github.com/EddieIvan01/iox) model), and screenshots.
-- Supports in-memory loading of PE files on Windows/Linux, allowing the execution of trojans without dropping files to disk, and facilitating the use of third-party C2/RATs.
-- Supports in-memory execution of .net assemblies (execute-assembly, inline-assembly).
-- Supports extension of UI widgets, Session commands, and payload generation through lua (similar to CobaltStrike's cna scripts).
-- Custom RDI shellcode support (64-bit only, 32-bit requires manual client compilation) or use [donut](https://github.com/TheWover/donut), [Godonut](https://github.com/Binject/go-donut) to generate your own shellcode.
-- Teamserver supports hosting binary files, text, pictures (similar to SimpleHttpServer).
-- Customizable team server configuration files, with custom Telegram chat ID/Token for notifications.
-- The Controller UI is lightweight, with memory usage approximately 1/60th of CobaltStrike and 1/10th of Metasploit.
-- Golang's compiler features have been blacklisted by some AV/EDR manufacturers, resulting in poor evasion capabilities.
+- 客户端（Implant）使用Golang编写，兼容Windows、Linux、MacOS（移动平台正在考虑未来更新）。
+- 团队服务器（Teamserver）使用.net 6.0编写，不依赖.NET Core环境运行
+- 控制器支持反向shell，文件管理，进程管理，网络流量监控，内存加载，反向代理（基于[IOX](https://github.com/EddieIvan01/iox）模型)和屏幕截图。
+- 支持在Windows / Linux上内存中加载PE文件，允许无文件
+- 支持内存中执行.net程序集（execute-assembly，inline-assembly）。
+- 支持通过 lua 扩展命令中心核菜单扩展,这一点和cna脚本类似
+- 自定义 RDI shellcode 支持（仅限 64 位，32 位需要手动客户端编译）或使用 [donut](https://github.com/TheWover/donut)、[Godonut](https://github.com/Binject/go-donut) 生成自己的 shellcode。
+- Teamserver 支持托管二进制文件、文本、图片（类似于 SimpleHttpServer）。
+- 可自定义的团队服务器配置文件，带有自定义 Telegram 聊天 ID/Token 用于通知主机上线。
+- Controller和Teamserver的占用都比较低，支持高并发
+- Golang 的编译器功能已被一些 AV/EDR 制造商列入黑名单，导致逃避能力较差。
 
-## Supported Platforms
+## 支持的平台
 
 **Implant(Session)**
 
@@ -27,19 +27,27 @@
 |        Windows XP        |      mips       |       |
 | Windows Server 2000-2022 |      s390x      |       |
 
-The payload in XiebroC2 currently only supports the x64-bit AMD architecture. If you have application scenarios in other environments, you need to compile the Go source code yourself.
+XiebroC2中的payload目前只支持x64位AMD架构，如果有其他环境的应用场景，需要自行编译Go源码。
 
-## How to use
+**Teamserver**
+
+- Windows ：win8-win11，windows server2012-2022
+
+- Linux：支持 glibc 2.17以上 的系统
+
+  
+
+## 如何使用
 
 [xiebroC2 instruction manual](https://github.com/INotGreen/XiebroC2/wiki)
 
-Write simply  plugins：[Xiebro-Plugins](https://github.com/INotGreen/Xiebro-Plugins)
+插件使用和编写：[Xiebro-Plugins](https://github.com/INotGreen/Xiebro-Plugins)
 
 
 
-## Topology
+## 网络拓扑
 
-See network traffic distribution through a visual topology map
+通过可视化拓扑图查看网络流量分布
 
 ![image](https://github.com/INotGreen/XiebroC2/blob/main/Image/image-20240616214300666.png)
 
@@ -47,9 +55,8 @@ See network traffic distribution through a visual topology map
 
 ## TODO
 
-- Currently, only the Session mode of the TCP/WebSocket protocol is supported. They are replacements for https. We will consider developing a reliable UDP protocol and support the Beacon mode in the future.
-- Consider developing Powershell, VBscript, Hta, Jscript and other payloads.
-- Open more forms and API interfaces to facilitate Lua extension plugins
+- 考虑开发Powershell、VBscript、Hta、Jscript等payload。
+- 开放更多表单和API接口，方便Lua扩展插件
 
 
 
@@ -57,9 +64,8 @@ See network traffic distribution through a visual topology map
 
 [![Star History Chart](https://api.star-history.com/svg?repos=INotGreen/XiebroC2&type=Date)](https://star-history.com/#INotGreen/XiebroC2&Date)
 
-## Disclaimer
+## 免责声明
 
-This project is intended for educational and research purposes only in penetration testing exercises and is in beta. It is prohibited to use it for any illegal activities (including black market transactions, unauthorized penetration attacks, or financial exploitation)! The Internet is not a lawless space! If you choose to use this tool, you must comply with the above requirements.
+本项目仅用于渗透测试练习中的教育和研究目的，目前处于测试阶段。禁止将其用于任何非法活动（包括黑市交易、未经授权的渗透攻击或金融剥削）！互联网不是法外之地！如果您选择使用此工具，则必须遵守上述要求。
 
-In order to prevent the tool from being used by criminals, I have deleted the most harmful functions and only left some functions as penetration test drill demos. Teamserver and Controller are not open source.
-
+为了防止该工具被犯罪分子利用，我删除了最有害的功能，只留下一些功能作为渗透测试演练演示。Teamserver 和 Controller 不开源。
