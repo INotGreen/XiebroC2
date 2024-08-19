@@ -9,9 +9,10 @@
 - 支持内存中执行.net程序集（execute-assembly，inline-assembly）
 - 支持通过 lua 脚本扩展命令中心以及菜单栏（这一点和cna脚本类似）
 - 自定义 RDI shellcode 支持（仅限 64 位，32 位需要手动客户端编译）或使用 [donut](https://github.com/TheWover/donut)、[Godonut](https://github.com/Binject/go-donut) 生成自己的 shellcode
+- 支持Windows进程注入和迁移，RunPE和Linux内存加载（memfd）
 - Teamserver 支持托管二进制文件、文本、图片（类似于 SimpleHttpServer）
 - 通过修改profile.json中的Chat  ID、API Token参数来设置Telegram 主机上线通知
-- Controller和Teamserver的占用都比较低，支持高并发
+- Controller和Teamserver的占用主打一个轻量级，支持高并发
 
 ## 支持的平台
 
@@ -37,11 +38,11 @@
 
 ## 如何使用
 
-直接使用：[Release](https://github.com/INotGreen/XiebroC2/releases)
+直接使用二进制文件：[Release](https://github.com/INotGreen/XiebroC2/releases)
 
-使用说明wiki: [xiebroC2 instruction manual](https://github.com/INotGreen/XiebroC2/wiki)
+使用说明: [xiebroC2 Wiki](https://github.com/INotGreen/XiebroC2/wiki)
 
-新增插件：[Xiebro-Plugins](https://github.com/INotGreen/Xiebro-Plugins)
+将外部的工具扩充成插件：[Xiebro-Plugins](https://github.com/INotGreen/Xiebro-Plugins)
 
 
 
