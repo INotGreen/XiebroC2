@@ -2,9 +2,9 @@
 
 ## 主要功能
 
-- 客户端（Implant）使用Golang编写，兼容Windows、Linux、MacOS（移动平台正在考虑未来更新）
+- 植入端（Implant）使用Golang编写，兼容Windows、Linux、MacOS（移动平台正在考虑未来更新）
 - 团队服务器（Teamserver）使用.net 6.0编写，不依赖.NET Core环境运行
-- 控制器支持反向shell，文件管理，进程管理，网络流量监控，内存加载，反向代理（基于[IOX](https://github.com/EddieIvan01/iox）模型)和屏幕截图
+- 控制器（Controller）支持反向shell，文件管理，进程管理，网络流量监控，内存加载，反向代理（基于[IOX](https://github.com/EddieIvan01/iox）模型)和屏幕截图
 - 支持在Windows / Linux上内存中加载PE文件，允许文件不接触磁盘的情况下进行加载
 - 支持内存中执行.net程序集（execute-assembly，inline-assembly）
 - 支持通过 lua 脚本扩展命令中心以及菜单栏（这一点和cna脚本类似）
