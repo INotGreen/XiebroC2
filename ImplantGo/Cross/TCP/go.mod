@@ -3,7 +3,7 @@ module main
 go 1.19
 
 require (
-	github.com/andreburgaud/crypt2go v1.5.0 // indirect
+	github.com/andreburgaud/crypt2go v1.4.1 // indirect
 	github.com/creack/pty v1.1.21 // indirect
 	github.com/go-ole/go-ole v1.2.6 // indirect
 	github.com/shirou/gopsutil v3.21.11+incompatible // indirect
