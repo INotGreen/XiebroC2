@@ -158,15 +158,15 @@ var ClientWorking bool
 func main() {
 
 	//release
-	// Host := "HostAAAABBBBCCCCDDDDEEEEFFFFGGGGHHHHJJJJ"
-	// Port := "PortAAAABBBBCCCCDDDD"
-	// ListenerName := "ListenNameAAAABBBBCCCCDDDD"
-	// route := "RouteAAAABBBBCCCCDDDD"
-	// PcInfo.AesKey = "AeskAAAABBBBCCCC"
-	// PcInfo.Host = strings.ReplaceAll(Host, " ", "")
-	// PcInfo.Port = strings.ReplaceAll(Port, " ", "")
-	//PcInfo.ListenerName = strings.ReplaceAll(ListenerName, " ", "")
-	PcInfo.PcInfo.GetHWID()
+	Host := "HostAAAABBBBCCCCDDDDEEEEFFFFGGGGHHHHJJJJ"
+	Port := "PortAAAABBBBCCCCDDDD"
+	ListenerName := "ListenNameAAAABBBBCCCCDDDD"
+	route := "RouteAAAABBBBCCCCDDDD"
+	PcInfo.AesKey = "AeskAAAABBBBCCCC"
+	PcInfo.Host = strings.ReplaceAll(Host, " ", "")
+	PcInfo.Port = strings.ReplaceAll(Port, " ", "")
+	PcInfo.ListenerName = strings.ReplaceAll(ListenerName, " ", "")
+	//PcInfo.PcInfo.GetHWID()
 	PcInfo.ClientComputer = GetClientComputer()
 	///Debug
 	// Host := "192.168.1.4"
