@@ -4,7 +4,7 @@ ClientGo/
 bin/
 Binaries/
 packages/*
-XiebroC2.wiki/
+XiebroC2.wiki/*
 obj/
 *.exe
 *.pdb
