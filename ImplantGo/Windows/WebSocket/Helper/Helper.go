@@ -6,28 +6,9 @@ import (
 	"os"
 	"strings"
 
-	"golang.org/x/sys/windows/registry"
 	"golang.org/x/text/encoding/simplifiedchinese"
 	"golang.org/x/text/transform"
 )
-
-func checkDotNetFramework40() (bool, error) {
-	// 检查注册表项是否存在
-	key, err := registry.OpenKey(registry.LOCAL_MACHINE, `SOFTWARE\Microsoft\NET Framework Setup\NDP\v4\Full`, registry.QUERY_VALUE)
-	if err != nil {
-		return false, err
-	}
-	defer key.Close()
-
-	// 检查Release DWORD值
-	release, _, err := key.GetIntegerValue("Release")
-	if err != nil {
-		return false, err
-	}
-
-	// .NET Framework 4.0的Release版本号是 378389
-	return release >= 378389, nil
-}
 
 func deleteStringFromFile(filePath, strToDelete string) error {
 	file, err := os.Open(filePath)

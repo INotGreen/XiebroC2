@@ -5,7 +5,7 @@ import (
 	"compress/gzip"
 	"crypto/aes"
 	"io/ioutil"
-	"main/PcInfo"
+	PcInfo "main/PcInfo/Windows"
 
 	"github.com/andreburgaud/crypt2go/ecb"
 	"github.com/andreburgaud/crypt2go/padding"
