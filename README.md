@@ -9,6 +9,7 @@
     </a>
 </p>
 
+> **Note**: For the English version of this documentation [README in English](README_EN.md).
 
 
 ## 主要功能
