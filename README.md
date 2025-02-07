@@ -9,7 +9,6 @@
     </a>
 </p>
 
-> **Note**: For the English version of this documentation [README in English](README_EN.md).
 
 
 ## 主要功能
@@ -18,9 +17,9 @@
 
 - 团队服务器（Teamserver）使用.net 6.0编写，不依赖.NET Core环境运行
 
-- 控制器（Controller）支持反向shell，文件管理，进程管理，网络流量监控，内存加载，反向代理（基于[IOX](https://github.com/EddieIvan01/iox）模型))、屏幕截图、进程注入和迁移。检测AV/EDR进程，内联powershell命令
+- 控制器（Controller）支持反向shell，文件管理，进程管理，网络流量监控，内存加载，反向代理、屏幕截图、进程注入和迁移。检测AV/EDR进程，内联powershell命令
 
-- 支持在Windows / Linux上内存中加载PE文件，支持进程注入和迁移，允许文件不接触磁盘的情况下进行加载
+- 支持在Windows / Linux上内存中加载PE文件(inline-execute 、inline-execute-bin)
 
 - 支持内存中执行.net程序集（execute-assembly，inline-assembly）
 
@@ -51,6 +50,40 @@
 - Windows ：win8-win11，windows server2012-2022
 
 - Linux：支持 glibc 2.17以上 的系统
+
+
+
+## 图片展示
+
+拓扑结构
+
+![image-20250114152703571](Image/image-20250114152703571.png)
+
+命令列表
+
+![image-20250114162852363](Image/image-20250114162852363.png)
+
+
+
+内存加载Mimikatz
+
+
+
+![image-20250114162708390](Image/image-20250114162708390.png)
+
+文件管理
+
+![image-20250114162940873](Image/image-20250114162940873.png)
+
+
+
+
+
+反向代理
+
+![image-20250114180254731](Image/image-20250114180254731.png)
+
+
 
 
 
