@@ -3,7 +3,7 @@
     <a href="https://github.com/INotGreen/XiebroC2/releases"><img src="https://img.shields.io/github/downloads/INotGreen/XiebroC2/total?color=blueviolet"></a>
     <img src="https://badgen.net/github/issues/INotGreen/XiebroC2">
     <a href="https://github.com/INotGreen/XiebroC2/wiki" style="text-decoration:none;">
-     <img src="https://img.shields.io/badge/%E6%96%87%E5%BA%93-wiki-yellow">
+     <img src="https://img.shields.io/badge/Documentation-wiki-yellow">
     </a>
 </p>
 
@@ -33,6 +33,28 @@ The project is compiled using Go 1.20 for compatibility. Note that Go 1.20+ does
 - **Windows**: Windows 8–11, Windows Server 2012–2022
 - **Linux**: Supports glibc 2.17+ systems.
 
+## Screenshots
+
+Topology Structure
+
+![image-20250114152703571](Image/image-20250114152703571.png)
+
+Command List
+
+![image-20250114162852363](Image/image-20250114162852363.png)
+
+Memory Loading Mimikatz
+
+![image-20250114162708390](Image/image-20250114162708390.png)
+
+File Management
+
+![image-20250114162940873](Image/image-20250114162940873.png)
+
+Reverse Proxy
+
+![image-20250114180254731](Image/image-20250114180254731.png)
+
 ## How to Use
 
 - Download binaries directly from: [Release](https://github.com/INotGreen/XiebroC2/releases)
@@ -45,7 +67,7 @@ View network traffic distribution with a visual topology diagram.
 
 ![Network Topology](Image/image-20240818150942815.png)
 
-## Video Demonstration
+## Video Demo
 
 [Demo](https://private-user-images.githubusercontent.com/89376703/305162512-771c2e88-afd8-493d-a575-7e10149837dd.mp4)
 
