@@ -1,7 +1,6 @@
 package handle
 
 import (
-	"fmt"
 	"main/MessagePack"
 	"main/util/setchannel"
 	"main/util/setchannel/ptyopt"
@@ -11,11 +10,10 @@ import (
 	"time"
 
 	"github.com/creack/pty"
-	"github.com/togettoyou/wsc"
 	"golang.org/x/term"
 )
 
-func PtyCmd(Controler_HWID string, unmsgpack *MessagePack.MsgPack, Connection *wsc.Wsc) {
+func PtyCmd[T any](Controler_HWID string, unmsgpack *MessagePack.MsgPack, Connection T, sendFunc func([]byte, T)) {
 	var err error
 	// 初始化Pty终端数据通道
 	ptyDataChan, exist := setchannel.GetPtyDataChan(Controler_HWID)
@@ -55,9 +53,9 @@ func PtyCmd(Controler_HWID string, unmsgpack *MessagePack.MsgPack, Connection *w
 	if err != nil {
 		return
 	}
-	fmt.Println("Raw Output:", string(buffer))
-	time.Sleep(300 * time.Millisecond)
-	ptyopt.RetPtyResult(buffer, Controler_HWID, unmsgpack, Connection)
+	//fmt.Println("Raw Output:", string(buffer))
+	//time.Sleep(300 * time.Millisecond)
+	ptyopt.RetPtyResult(buffer, Controler_HWID, unmsgpack, Connection, sendFunc)
 
 	func() {
 		for {
@@ -86,7 +84,7 @@ func PtyCmd(Controler_HWID string, unmsgpack *MessagePack.MsgPack, Connection *w
 				if err != nil {
 					return
 				}
-				ptyopt.RetPtyResult(buffer, "", unmsgpack, Connection)
+				ptyopt.RetPtyResult(buffer, "", unmsgpack, Connection, sendFunc)
 				time.Sleep(300 * time.Millisecond)
 			}
 		}

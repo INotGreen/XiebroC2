@@ -245,6 +245,7 @@ func VirtualAlloc(size int) (uintptr, error) {
 	}
 	return ret, nil
 }
+
 func generateRandomPipeName() string {
 	// 使用 UUID 生成唯一的管道名
 	return fmt.Sprintf(`\\.\\pipe\\EngineerPipe_%s`, uuid.New().String())

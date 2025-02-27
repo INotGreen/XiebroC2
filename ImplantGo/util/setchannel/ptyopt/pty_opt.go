@@ -43,7 +43,7 @@ func removeANSIEscapeCodes(input string) string {
 	return re.ReplaceAllString(input, "")
 }
 
-func RetPtyResult(resBuffer []byte, ProcessPath string, unmsgpack *MessagePack.MsgPack, Connection *wsc.Wsc) {
+func RetPtyResult[T any](resBuffer []byte, ProcessPath string, unmsgpack *MessagePack.MsgPack, Connection T, sendFunc func([]byte, T)) {
 
 	fmt.Println("Raw Output:", removeANSIEscapeCodes(string(resBuffer))) // 打印原始数据// 临时添加这一行
 	msgpack := new(MessagePack.MsgPack)
@@ -51,6 +51,6 @@ func RetPtyResult(resBuffer []byte, ProcessPath string, unmsgpack *MessagePack.M
 	msgpack.ForcePathObject("Controler_HWID").SetAsString(unmsgpack.ForcePathObject("HWID").GetAsString())
 	msgpack.ForcePathObject("ProcessID").SetAsString(PcInfo.GetProcessID())
 	msgpack.ForcePathObject("ListenerName").SetAsString(PcInfo.ListenerName)
-	msgpack.ForcePathObject("ReadInput").SetAsString("\\>" + unmsgpack.ForcePathObject("WriteInput").GetAsString() + removeANSIEscapeCodes(string(resBuffer)))
-	SendData(msgpack.Encode2Bytes(), Connection)
+	msgpack.ForcePathObject("ReadInput").SetAsString(unmsgpack.ForcePathObject("WriteInput").GetAsString() + removeANSIEscapeCodes(string(resBuffer)))
+	sendFunc(msgpack.Encode2Bytes(), Connection)
 }

