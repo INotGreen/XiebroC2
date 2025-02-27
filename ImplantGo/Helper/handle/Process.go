@@ -39,7 +39,7 @@ func KillProcess(pid int) error {
 func ListAllProcessInfo() string {
 	processes, err := process.Processes()
 	if err != nil {
-		fmt.Printf("Error: %s\n", err)
+		//fmt.Printf("Error: %s\n", err)
 		return ""
 	}
 

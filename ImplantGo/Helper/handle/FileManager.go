@@ -63,7 +63,7 @@ func FileRead[T any](Connection T, sendFunc func([]byte, T), unmsgpack *MessageP
 func RefreshDir[T any](Connection T, sendFunc func([]byte, T), unmsgpack *MessagePack.MsgPack) {
 	result, err := ListDir(unmsgpack.ForcePathObject("Path").GetAsString())
 	if err != nil {
-		fmt.Printf("Error: %s\n", err)
+		//fmt.Printf("Error: %s\n", err)
 		result = err.Error()
 		return
 	}

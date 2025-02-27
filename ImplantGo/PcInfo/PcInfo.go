@@ -52,11 +52,11 @@ func Init() {
 	AesKey = strings.ReplaceAll("AeskAAAABBBBCCCC", " ", "")
 
 	///Debug
-	HostPort = "10.211.55.4:8888"
-	Protocol = "Session/Reverse_Ws"
-	ListenerName = "www"
-	AesKey = "QWERt_CSDMAHUATW"
-	URL = "ws://10.211.55.4:5000/www"
+	// HostPort = "10.211.55.4:8888"
+	// Protocol = "Session/Reverse_Ws"
+	// ListenerName = "www"
+	// AesKey = "QWERt_CSDMAHUATW"
+	// URL = "ws://10.211.55.4:5000/www"
 
 	//demo url
 	//url := "ws://www.sftech.shop:443//www"
