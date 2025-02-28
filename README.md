@@ -104,9 +104,13 @@
 
 ## 视频演示
 
+[![XiebroC2 演示](https://img.youtube.com/vi/iZpltGdu4Y4/0.jpg)](https://www.youtube.com/watch?v=iZpltGdu4Y4)
+
+## 视频演示
 
 
-<iframe width="1280" height="800" src="https://www.youtube.com/embed/iZpltGdu4Y4" title="The XiebroC2 Penetration Testing Framework For Red Team Work" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
+
+
 
 
 
