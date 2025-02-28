@@ -108,11 +108,6 @@
 
 为了防止该工具被犯罪分子利用，我删除了最有害的功能，只留下一些功能作为渗透测试演练演示。Teamserver 和 Controller 不开源。
 
-## 终端演示
-
- <video width="500" height="250" controls="controls" >
-    <source src="https://www.youtube.com/watch?v=iZpltGdu4Y4" type="video/mp4">
-</video>
 
 ## TODO
 
