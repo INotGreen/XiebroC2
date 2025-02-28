@@ -112,8 +112,6 @@
 
 
 
-
-
 - 考虑开发Powershell、VBscript、Hta、Jscript等payload。
 - 开放更多表单和API接口，方便Lua扩展插件。
 
