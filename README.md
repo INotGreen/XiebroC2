@@ -104,11 +104,15 @@
 
 ## 视频演示
 
-[demo](https://private-user-images.githubusercontent.com/89376703/305162512-771c2e88-afd8-493d-a575-7e10149837dd.mp4)
+
+
+<iframe width="1280" height="800" src="https://www.youtube.com/embed/iZpltGdu4Y4" title="The XiebroC2 Penetration Testing Framework For Red Team Work" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
 
 
 
-## TODO
+
+
+
 
 - 考虑开发Powershell、VBscript、Hta、Jscript等payload。
 - 开放更多表单和API接口，方便Lua扩展插件。
