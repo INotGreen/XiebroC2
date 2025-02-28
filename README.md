@@ -96,28 +96,14 @@
 
 将外部的渗透测试工具扩展成Lua插件：[Xiebro-Plugins](https://github.com/INotGreen/Xiebro-Plugins)
 
+基础教程：[观看Youtube完整视频](https://www.youtube.com/watch?v=iZpltGdu4Y4)
+
 ## 网络拓扑
 
 通过可视化拓扑图查看网络流量分布
 
 ![image-20240818150942815](Image/image-20240818150942815.png)
 
-## 视频演示
-
-[![XiebroC2 演示](https://img.youtube.com/vi/iZpltGdu4Y4/0.jpg)](https://www.youtube.com/watch?v=iZpltGdu4Y4)
-
-## 视频演示
-
-
-
-
-
-
-
-
-
-- 考虑开发Powershell、VBscript、Hta、Jscript等payload。
-- 开放更多表单和API接口，方便Lua扩展插件。
 
 ## Star History
 
@@ -128,3 +114,14 @@
 本项目仅用于渗透测试练习中的教育和研究目的，目前处于测试阶段。禁止将其用于任何非法活动（包括黑市交易、未经授权的渗透攻击）！互联网不是法外之地！如果您选择使用此工具，则必须遵守上述要求。
 
 为了防止该工具被犯罪分子利用，我删除了最有害的功能，只留下一些功能作为渗透测试演练演示。Teamserver 和 Controller 不开源。
+
+## 终端演示
+
+ <video width="500" height="250" controls="controls" >
+    <source src="https://www.youtube.com/watch?v=iZpltGdu4Y4" type="video/mp4">
+</video>
+
+## TODO
+
+- 考虑开发Powershell、VBscript、Hta、Jscript等payload。
+- 开放更多表单和API接口，方便Lua扩展插件。

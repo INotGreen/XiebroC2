@@ -69,7 +69,7 @@ View network traffic distribution with a visual topology diagram.
 
 ## Video Demo
 
-[Demo](https://private-user-images.githubusercontent.com/89376703/305162512-771c2e88-afd8-493d-a575-7e10149837dd.mp4)
+[Watch the XiebroC2 Demo on YouTube](https://www.youtube.com/watch?v=iZpltGdu4Y4)
 
 ## TODO
 
